@@ -71,7 +71,7 @@ installhook:
 	cp README $(DIR)/README
 	cp doc/BUGS $(DIR)/BUGS
 	echo -n $(VERSION) > $(DIR)/LATEST-VERSION-IS
-	ln -sf /home/joey/debian/unstable/pdmenu_$(VERSION).tar.gz pdmenu_$(VERSION).tar.gz && \
+	ln -sf /home/joey/debian/unstable/pdmenu_$(VERSION).tar.gz $(DIR)
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary
