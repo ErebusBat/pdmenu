@@ -10,7 +10,7 @@ Architecture: any
 Depends: ${shlibs:Depends}
 Suggests: menu (>= 2.0.0-5)
 Conflicts: menu (<< 2.0.0-5)
-Description: Simple full screen menu program. 
+Description: simple full screen menu program
  A simple full screen menu program, intended to be comfortable 
  login shell for inexperienced users.
  .
