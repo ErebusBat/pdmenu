@@ -1,15 +1,7 @@
 #!/usr/bin/make -f
 
-# DEB_BUILD_OPTIONS support.
-CFLAGS=-O2 -Wall
-ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
-CFLAGS += -g
-endif
-
+CFLAGS=-O2 -Wall -g
 INSTALL_PROGRAM=install
-ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-INSTALL_PROGRAM += -s
-endif
 
 # gpm is currently broken or something on s/390
 ifeq (s390,$(shell dpkg --print-architecture))
@@ -48,6 +40,7 @@ binary-arch: build
 	dh_installexamples -X.in -X.pl examples/*
 	dh_installchangelogs
 	dh_compress -X examples/
+	dh_strip
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol
