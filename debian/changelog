@@ -1,3 +1,11 @@
+pdmenu (1.2.57) unstable; urgency=low
+
+  * Block signals before running command, so if it receives a signal while
+    the command it running, it doesn't wake up and fight with the command for
+    the tty.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 13 Jan 2000 12:49:53 -0800
+
 pdmenu (1.2.56) unstable; urgency=low
 
   * Ah, I figured out the shadow weirdness issue at last -- fixed.
