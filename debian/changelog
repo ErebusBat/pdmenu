@@ -1,3 +1,10 @@
+pdmenu (1.2.85) unstable; urgency=low
+
+  * First translation, to French. Closes: #253877
+  * Fixed mo file building and installation.
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 11 Jun 2004 13:09:58 -0400
+
 pdmenu (1.2.84) unstable; urgency=low
 
   * Patch from Martin Quinson to avoid use of string concatenation and make
