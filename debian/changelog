@@ -1,3 +1,9 @@
+pdmenu (1.2.74) unstable; urgency=low
+
+  * Moved DEB_BUILD_OPTIONS cruft out of makeinfo.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 12 Jun 2002 13:05:32 -0400
+
 pdmenu (1.2.73) unstable; urgency=low
 
   * Moved stuff to /usr/share/

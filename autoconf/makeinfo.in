@@ -15,8 +15,3 @@ DEFINES		= -DETCDIR=\"${SYSCONFDIR}/\" -DVER=\"${VER}\" @DEFS@ \
 CFLAGS		= $(DEFINES) @gcc_cflags@ @CFLAGS@
 LIBS		= @LIBS@ $(EFENCE)
 INSTALL_PROGRAM	= ${INSTALL}
-
-# DEB_BUILD_OPTIONS suport, to control binary stripping.
-ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
-INSTALL_PROGRAM += -s
-endif

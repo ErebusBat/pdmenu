@@ -1,9 +1,21 @@
 #!/usr/bin/make -f
 
+# DEB_BUILD_OPTIONS support.
+CFLAGS=-O2 -Wall
+ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
+CFLAGS += -g
+endif
+
+INSTALL_PROGRAM=install
+ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
+INSTALL_PROGRAM += -s
+endif
+
 build: link-stamp build-stamp
 build-stamp:
 	dh_testdir
-	./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
+	./configure --prefix=/usr --sysconfdir=/etc \
+		--mandir=/usr/share/man CFLAGS="$(CFLAGS)"
 	$(MAKE)
 	touch build-stamp
 
@@ -20,7 +32,8 @@ binary-arch: build
 	dh_testdir
 	dh_testroot
 	dh_clean
-	$(MAKE) INSTALL_PREFIX=debian/pdmenu install
+	$(MAKE) INSTALL_PREFIX=debian/pdmenu \
+		INSTALL_PROGRAM="$(INSTALL_PROGRAM)" install
 	dh_install debian/pdmenurc etc
 	dh_install debian/cpp.pl usr/share/pdmenu
 	dh_installdirs var/lib/pdmenu
