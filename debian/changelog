@@ -1,10 +1,17 @@
-pdmenu (1.2.59) frozen unstable; urgency=low
+pdmenu (1.2.60) frozen unstable; urgency=low
 
   * Modified spec file so it will work with .tar.gz files that do not
     include the version number. I am currently generating that type of
     tarball.
+  * Merged potato branch. (Words archealogists of the future will long ponder).
 
  -- Joey Hess <joeyh@debian.org>  Mon,  3 Apr 2000 14:30:44 -0700
+
+pdmenu (1.2.59) frozen unstable; urgency=low
+
+  * Rebuilt to remove cvs cruft "man pages". No code changes. Closes: #58030
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 13 Feb 2000 14:55:09 -0800
 
 pdmenu (1.2.58) frozen unstable; urgency=low
 
