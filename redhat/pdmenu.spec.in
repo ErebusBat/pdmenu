@@ -15,7 +15,7 @@ A simple full screen menu program, intended to be a comfortable
 login shell for inexperienced users.
 
 %prep
-%setup
+%setup -n pdmenu
 ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
 
 %build
