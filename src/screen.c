@@ -51,7 +51,8 @@ void DrawBase (char *base) {
   SLsmg_gotorc(SLtt_Screen_Rows-1,SLtt_Screen_Cols-1);
 }
 
-/* Draw a shadow "under" a given rectangle.
+/*
+ * Draw a shadow "under" a given rectangle.
  * Shadows are omitted in B&W mode.
  */
 void DrawShadow (int x,int y,int dx,int dy) {
@@ -63,21 +64,21 @@ void DrawShadow (int x,int y,int dx,int dy) {
       SLsmg_gotorc(c+1+y,x+dx);
       /*
        * Note: 0x02 corresponds to the current color.  0x80FF gets the
-       * character plus alternate character set attribute. -- JED 
+       * character plus alternate character set attribute. -- JED
        */
       ch = SLsmg_char_at();
       ch = (ch & 0x80FF) | (0x02 << 8);
-      SLsmg_write_raw (&ch,SHADOW);
+      SLsmg_write_raw(&ch,1);
       SLsmg_gotorc(c+1+y,x+dx+1);
       ch = SLsmg_char_at();
       ch = (ch & 0x80FF) | (0x02 << 8);
-      SLsmg_write_raw (&ch,SHADOW);
+      SLsmg_write_raw(&ch,1);
     }
     for (c=0;c<dx;c++) {
       SLsmg_gotorc(y+dy,x+2+c);
       ch = SLsmg_char_at();
       ch = (ch & 0x80FF) | (0x02 << 8);
-      SLsmg_write_raw (&ch,SHADOW);
+      SLsmg_write_raw(&ch,1);
     }
   }
 }

@@ -1,3 +1,9 @@
+pdmenu (1.2.56) unstable; urgency=low
+
+  * Ah, I figured out the shadow weirdness issue at last -- fixed.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  7 Jan 2000 14:05:34 -0800
+
 pdmenu (1.2.55) unstable; urgency=low
 
   * Corrected off-by-one error in SHADOW.
