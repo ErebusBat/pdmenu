@@ -5,7 +5,9 @@ PATH += :debian
 build: link-stamp build-stamp
 build-stamp:
 	dh_testdir
-	./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
+	# Shadows are broken because debian uses a wide patched slang.
+	./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man \
+		--enable-broken-shadows
 	$(MAKE)
 	touch build-stamp
 
@@ -36,7 +38,9 @@ binary-arch: build
 		examples/pdmenurc.complex examples/README examples/ba.lpd
 	# Examples dh_installexamples cannot handle installing.
 	install -d debian/tmp/usr/share/doc/pdmenu/examples/newbie
-	install examples/newbie/{pdmenurc.newbie,rpm-info-on-command,modem-check} \
+	install examples/newbie/pdmenurc.newbie \
+		examples/newbie/rpm-info-on-command \
+		examples/newbie/modem-check \
 		debian/tmp/usr/share/doc/pdmenu/examples/newbie
 	dh_installchangelogs
 	dh_link var/lib/pdmenu/.pdmenurc_auto var/lib/pdmenu/pdmenurc_auto

@@ -1,154 +1,118 @@
 /* Handles a set of windows on screen. */
 
 /*
- * Copyright (c) 1995, 1996, 1997 Joey Hess (joey@kite.ml.org)
+ * Copyright (c) 1995-1999 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
 #include "global.h"
 #include "screen.h"
 #include "menu.h"
-#include "mouse.h"
 #include "slang.h"
 #include "window.h"
 #include "actions.h"
 #include "rc.h"
+#include "error.h"
 #include <stdlib.h>
 #include <strings.h>
 #include <string.h>
 
+/*
+ * This is a pointer to the first window that pdmenu pops up.
+ * This is only used by DrawAll, where we need to draw the screen starting
+ * with the first menu, and then onwards. Technically, we don't need this, 
+ * but I'd prefer not to have to walk back through the whole linked list of 
+ * windows to find the first one each time DrawAll is called.
+ */
+Window_List_Type *FirstWindow;
+
 /* Draw the whole screen, with menus on it. */
 void DrawAll () {
-	int c;
+  Window_List_Type *this_window=FirstWindow;
 
-	DrawTitle(DEFAULTTITLE);
-	DrawDesktop();
+  DrawTitle(ScreenTitle);
+  DrawDesktop();
 
-	if (strlen(OnScreen[NumOnScreen]->helptext)>0)
-		DrawBase(OnScreen[NumOnScreen]->helptext);
-	else
-		DrawBase(DEFAULTBASE);
+  if (strlen(CurrentWindow->menu->helptext)>0)
+    DrawBase(CurrentWindow->menu->helptext);
+  else
+    DrawBase(DEFAULTBASE);
+  
+  /* Follow the linked list, but do not process the last element. */
+  while (this_window->next) {
+    DrawMenu(this_window->menu,0);
+    this_window=this_window->next;
+  }
+  /* Now draw the last element differently. */
+  DrawMenu(this_window->menu,1);
 
-	for (c=0;c<=NumOnScreen-1;c++) {
-		DrawMenu(OnScreen[c],0);
-	}
-	DrawMenu(OnScreen[NumOnScreen],1);
-
- 	SLsmg_refresh(); 
+  SLsmg_refresh(); 
 }
 
 /* Force a redraw of the screen. Clear screen, then redraw everything. */
 void Force_Redraw () {
-	Screen_Reset();
-	Screen_Init(); 
-	DrawAll();
+  Screen_Reset();
+  Screen_Init();
+  DrawAll();
+}
+
+/*
+ * Pass it a menu, and it will return 1 if it is visible on the screen, 
+ * 0 if not 
+ */
+int IsVisible (Menu_Type *m) {
+  Window_List_Type *this_window=CurrentWindow;
+  while (this_window) {
+    if (this_window->menu == m)
+      return 1;
+    this_window=this_window->last;
+  }
+  return 0;
 }
 
 /*
  * Call this whenever the screen size changes. It repositions all the windows
  * on the screen to fit the new screen.
- * You will typically wany to call Force_Redraw() after this function.
+ * You will typically want to call Force_Redraw() after this function.
  */
 void Resize_Screen () {
-	int c;
-	Menu_Type *m;
+  Window_List_Type *this_window=CurrentWindow;
 
-	Want_Screen_Resize = 0;
-	SetScreensize();
-	for (c=0;c<=NumMenus;c++) {
-		m=menus[c];
-		m->recalc=1;
-		CalcMenu(m);
-	}
-}                       
+  Want_Screen_Resize = 0;
+  SetScreensize();
+  while (this_window) {
+    this_window->menu->recalc=1;
+    CalcMenu(this_window->menu);
+    this_window=this_window->last;
+  }
+}
 
-/* Add a window to the group onscreen, displaying the passed menu. */
+/* Add a window to the group onscreen. */
 void AddWindow (Menu_Type *m) {
-	if (NumOnScreen==MAX_WINDOWS) {
-#ifdef GPM_SUPPORT
-		EndMouse();
-#endif
-		Screen_Reset();
-		fprintf(stderr,TOO_MANY_WINDOWS,MAX_WINDOWS);
-		exit(1);
-	}
-	OnScreen[++NumOnScreen]=m;
+  if (CurrentWindow) {
+    CurrentWindow->next=malloc(sizeof(Window_List_Type));
+    CurrentWindow->next->last=CurrentWindow;
+    CurrentWindow=CurrentWindow->next;
+  }
+  else {
+    /* This is the first window we've added. */
+    CurrentWindow=malloc(sizeof(Window_List_Type));
+    FirstWindow=CurrentWindow;
+    CurrentWindow->last=NULL;
+  }
+  CurrentWindow->next=NULL;
+  CurrentWindow->menu=m;
 }
 
-/* Remove the topmost window. Returns the number of the menu in array. */
-int RemoveWindow () {
-	return --NumOnScreen;
-}
+/* Exit and remove the current window. */
+void ExitWindow () {
+  Window_List_Type *w=CurrentWindow;
 
-/* Exit the current window. Returns pointer to new current menu. */
-Menu_Type *ExitWindow (Menu_Type* m) {
-	if (NumOnScreen>0) { /* Pop down current menu, back to parent */
-		m=menus[RemoveWindow()];
-		DrawAll();
-		return m;
-	}
-	else
-		return m; /* Can;t exit menu if there are no others up. */
-}                                                                       
-
-/*
- * Free up memory for a menu, and also remove it from the menus[] array. 
- * Pass the name of the menu. 
- */
-void RemoveMenuByTitle (char *menuid) {
-	int m;
-	
-	/* Find the menu that we were asked to remove. */
-	for(m=0;m<NumMenus;m++) {
-		if (strcmp(menus[m]->name,menuid)==0) {
-			RemoveMenu(menus[m]);
-
-			/*
-			 * Is this safe? Only if we *always* refer to menus by pointers, not
-			 * by array index. Hope we do...
-			 */
-			menus[m]=menus[--NumMenus];
-
-			break;
-		}	
-	}	  
-}
-
-/*
- * Display a message in a window.
- * Returns the index of the selected item when the window is exited. 
- * (-1 is returned if they hit q or ESC)
- */
-signed int ShowMessage(char *title,char *helptext,char *message[],int arraysize) {
-	Menu_Type *m;
-	int c=0, ret=-1;
-
-	/* allocate memory for the window */
-	menus[NumMenus]=malloc(sizeof(Menu_Type));            
-	m=menus[NumMenus++];
-
-	/* load up the menu with the appropriate values */
-	strncpy(m->title,title,TITLELEN);
-	m->selected=0;
-	for (c=0;c<arraysize;c++) {
-		m->items[c]=malloc(sizeof(Menu_Item_Type));
-		strncpy(m->items[c]->text,message[c],MENU_ITEM_TEXTSIZE);
-		m->items[c]->hotkey=-1;
-		m->items[c]->next=NULL;
-	}
-	m->num=arraysize;
-	m->recalc=1;
-
-	/* display the menu until they hit q or exit */
-	AddWindow(m);
-	DrawAll();
-	c=DoMenu(m,NullAction,Handle_Ctrl_C);
-	if (c==QUIT_EXIT)
-		ret=m->selected;	
-	RemoveWindow();
-	DrawAll();
-	RemoveMenu(m);
-	NumMenus--;
-
-	return ret;
+  /* Don't remove the very last window. */
+  if (CurrentWindow->last) {
+    CurrentWindow=CurrentWindow->last;
+    free(w);
+    CurrentWindow->next=NULL;
+    DrawAll();
+  }
 }

@@ -1,3 +1,18 @@
+pdmenu (1.2.66) unstable; urgency=low
+
+  * Use printf in pdmenurc.debian, not echo -e, so it will work with ash.
+  * Copyright updates.
+  * Added a title command to the pdmenurc after several user requests.
+  * Compiles cleanly with -Wall once more, there were some prototype
+    changes in slang.
+  * Lost the yellow on red text ("pleasing color scheme"?? what was I
+    thinking?)
+  * Damn and blast. Debian's patching of slang for wide character set
+    support has gone and broken my shadow code, and I don't know how to fix
+    it. I've reverted to stupid shadows in the Debian binary. :-(
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 11 May 2001 17:08:38 -0400
+
 pdmenu (1.2.65) unstable; urgency=low
 
   * Patch from Jan Rafaj <Jan.Rafaj@cedric.vabo.cz> to make it

@@ -177,6 +177,8 @@ int main (int argc, char **argv) {
   menus=NULL;
   CurrentWindow=NULL;
 
+  ScreenTitle=strdup(DEFAULTTITLE);
+  
   /* If COLORTERM is set, use color by default */
   Use_Color=!(getenv("COLORTERM")==NULL);
   Q_Exits=1;

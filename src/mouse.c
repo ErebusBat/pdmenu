@@ -62,7 +62,7 @@ int CheckMouse() {
   }
 }
 
-#ifdef 0
+#if 0
 void ClearMouse(void) {
   fd_set rfds;
   struct timeval tv;

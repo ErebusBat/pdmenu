@@ -57,27 +57,39 @@ void DrawBase (char *base) {
  */
 void DrawShadow (int x,int y,int dx,int dy) {
   int c;
-  unsigned short ch;
-
+  SLsmg_Char_Type ch;
+  
   if (SLtt_Use_Ansi_Colors) {
     for (c=0;c<dy-1;c++) {
       SLsmg_gotorc(c+1+y,x+dx);
+#ifndef BROKEN_SHADOWS
       /*
        * Note: 0x02 corresponds to the current color.  0x80FF gets the
        * character plus alternate character set attribute. -- JED
        */
       ch = SLsmg_char_at();
       ch = (ch & 0x80FF) | (0x02 << 8);
+#else
+      ch = 32;
+#endif
       SLsmg_write_raw(&ch,1);
       SLsmg_gotorc(c+1+y,x+dx+1);
+#ifndef BROKEN_SHADOWS
       ch = SLsmg_char_at();
       ch = (ch & 0x80FF) | (0x02 << 8);
+#else
+      ch = 32;
+#endif
       SLsmg_write_raw(&ch,1);
     }
     for (c=0;c<dx;c++) {
       SLsmg_gotorc(y+dy,x+2+c);
+#ifndef BROKEN_SHADOWS
       ch = SLsmg_char_at();
       ch = (ch & 0x80FF) | (0x02 << 8);
+#else
+      ch = 32;
+#endif
       SLsmg_write_raw(&ch,1);
     }
   }
