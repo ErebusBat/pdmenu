@@ -2,12 +2,13 @@ Source: pdmenu
 Section: shells
 Priority: optional
 Maintainer: Joey Hess <joeyh@master.debian.org>
-Standards-Version: 2.1.1.0
+Standards-Version: 3.0.1.1
 
 Package: pdmenu
 Architecture: any
-Depends: ${shlibs:Depends}, perl, menu (>= 0.10), libgpm1 (>= 1.10)
-Recommends: cpp
+Depends: ${shlibs:Depends}
+Suggests: menu (>= 1.4)
+Conflicts: menu (<< 1.4)
 Description: Simple full screen menu program. 
  A simple full screen menu program, intended to be comfortable 
  login shell for inexperienced users.

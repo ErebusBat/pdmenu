@@ -5,7 +5,7 @@ PATH += :debian
 build: link-stamp build-stamp
 build-stamp:
 	dh_testdir
-	./configure --prefix=/usr --sysconfdir=/etc
+	./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
 	$(MAKE)
 	touch build-stamp
 
@@ -34,9 +34,9 @@ binary-arch: build
 	dh_installdocs doc/BUGS README doc/TODO doc/ANNOUNCE
 	dh_installexamples
 	# Examples dh_installexamples cannot handle installing.
-	install -d debian/tmp/usr/doc/pdmenu/examples/newbie
+	install -d debian/tmp/usr/share/doc/pdmenu/examples/newbie
 	install examples/newbie/{pdmenurc.newbie,rpm-info-on-command,modem-check} \
-		debian/tmp/usr/doc/pdmenu/examples/newbie
+		debian/tmp/usr/share/doc/pdmenu/examples/newbie
 	dh_installchangelogs
 	dh_link var/lib/pdmenu/.pdmenurc_auto var/lib/pdmenu/pdmenurc_auto
 	dh_compress
@@ -44,7 +44,6 @@ binary-arch: build
 	dh_shlibdeps
 	dh_gencontrol
 	dh_fixperms
-	chmod a+x debian/tmp/usr/doc/pdmenu/examples/pdmenurc*
 	dh_md5sums
 	dh_builddeb
 

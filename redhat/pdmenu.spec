@@ -1,15 +1,17 @@
 Summary: A simple text-based menu program
 Name: pdmenu
-Packager: Joey Hess <joey@kite.ml.org>
-Version: 0.6.1
+Packager: jeff.covey@pobox.com
+Version: 1.2.42
 Release: 1
-Source: ftp://kite.ml.org/pub/code/pdmenu_0.6.1.tar.gz
+Url: http://kitenet.net/programs/pdmenu/
+Source: ftp://kitenet.net/pub/code/pdmenu/pdmenu_1.2.42.tar.gz
 Copyright: GPL
 Group: Shells/Menus
 Buildroot: /tmp
+Requires: gpm, slang >= 0.99.34
 
 %description
-A simple full screen menu program, intended to be comfortable
+A simple full screen menu program, intended to be a comfortable
 login shell for inexperienced users.
 
 %prep
@@ -22,9 +24,21 @@ make
 %install
 make INSTALL_PREFIX=$RPM_BUILD_ROOT install
 
+install examples/newbie/modem-check examples/newbie/rpm-info-on-command \
+    /tmp/usr/lib/pdmenu
+
+# What a hack.
+cp -a examples redhat/examples
+rm -f redhat/examples/*.in
+rm -f redhat/examples/newbie/*.in
+rm -f redhat/examples/newbie/modem-check 
+rm -f redhat/examples/newbie/rpm-info-on-command
+rm -f redhat/examples/editdir.pl redhat/examples/showdir.pl
+
 %files
 %config /etc/pdmenurc
 /usr/bin/pdmenu
-/usr/man/man1/pdmenu.1
-/usr/man/man5/pdmenurc.5
-%doc README CHANGES BUGS TODO pdmenurc.monitor
+/usr/share/man/man1/pdmenu.1
+/usr/share/man/man5/pdmenurc.5
+/usr/lib/pdmenu
+%doc README doc/BUGS doc/TODO doc/ANNOUNCE debian/changelog redhat/examples
