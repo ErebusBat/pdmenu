@@ -1,3 +1,9 @@
+pdmenu (1.2.53) unstable; urgency=low
+
+  * Build deps added.
+
+ -- Joey Hess <joeyh@debian.org>  Sat,  4 Dec 1999 15:09:54 -0800
+
 pdmenu (1.2.52) unstable; urgency=low
 
   * Reupload, the source in the debian archive is borked.
