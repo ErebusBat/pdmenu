@@ -1,3 +1,9 @@
+pdmenu (1.2.50) unstable; urgency=low
+
+  * Fixed a file descriptior leak. Closes: #46885
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu,  7 Oct 1999 14:00:10 -0700
+
 pdmenu (1.2.49) unstable; urgency=low
 
   * First actual code change since february. Fixed a problem with pdmenu not
