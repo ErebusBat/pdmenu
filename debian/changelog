@@ -1,3 +1,9 @@
+pdmenu (1.2.76) unstable; urgency=low
+
+  * Solaris needs #include <locale.h>
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 17 Aug 2002 23:16:03 -0400
+
 pdmenu (1.2.75) unstable; urgency=low
 
   * Don't use dh_installmanpages.

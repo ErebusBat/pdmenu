@@ -20,6 +20,7 @@
 #include <string.h>
 #include <math.h>
 #include "slang.h"
+#include <locale.h>
 #include <libintl.h>
 #define _(String) gettext (String)
 
