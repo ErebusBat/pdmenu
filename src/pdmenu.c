@@ -201,7 +201,7 @@ int main (int argc, char **argv) {
   strcpy(ScreenObjNames[2],SHADOW_NAME);	
   strcpy(FG[1],SHADOW_FG_DEFAULT); /* note that shadows have to be color #1 */
   strcpy(BG[1],SHADOW_BG_DEFAULT); /* Slsmg_write_raw is weird that way */
-  strcpy(ScreenObjNames[7],MENU_HI_NAME);	
+  strcpy(ScreenObjNames[7],MENU_HI_NAME);
   strcpy(FG[6],MENU_HI_FG_DEFAULT);	
   strcpy(BG[6],MENU_HI_BG_DEFAULT);
   strcpy(ScreenObjNames[8],SELBAR_HI_NAME);	
@@ -221,7 +221,7 @@ int main (int argc, char **argv) {
     BASE=3;
     MENU=4;
     SELBAR=5;
-    SHADOW=2;
+    SHADOW=1;
     MENU_HI=7;
     SELBAR_HI=8;
     UNSEL_MENU=9;

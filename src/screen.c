@@ -67,21 +67,17 @@ void DrawShadow (int x,int y,int dx,int dy) {
        */
       ch = SLsmg_char_at();
       ch = (ch & 0x80FF) | (0x02 << 8);
-      /*
-       * Notice that we have to subtract 1 from the color specification, for 
-       * some reason.
-       */
-      SLsmg_write_raw (&ch,SHADOW - 1);
+      SLsmg_write_raw (&ch,SHADOW);
       SLsmg_gotorc(c+1+y,x+dx+1);
       ch = SLsmg_char_at();
       ch = (ch & 0x80FF) | (0x02 << 8);
-      SLsmg_write_raw (&ch,SHADOW - 1);
+      SLsmg_write_raw (&ch,SHADOW);
     }
     for (c=0;c<dx;c++) {
       SLsmg_gotorc(y+dy,x+2+c);
       ch = SLsmg_char_at();
       ch = (ch & 0x80FF) | (0x02 << 8);
-      SLsmg_write_raw (&ch,SHADOW - 1);
+      SLsmg_write_raw (&ch,SHADOW);
     }
   }
 }

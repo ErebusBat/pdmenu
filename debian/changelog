@@ -1,3 +1,9 @@
+pdmenu (1.2.55) unstable; urgency=low
+
+  * Corrected off-by-one error in SHADOW.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  7 Jan 2000 02:59:05 -0800
+
 pdmenu (1.2.54) unstable; urgency=low
 
   * Modified menu method to not crash if ran as a user -- it just doesn't do
