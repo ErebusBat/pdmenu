@@ -92,19 +92,28 @@ AC_CHECK_FUNCS(getopt_long, , [
 	])
 AC_CHECK_FUNCS(asprintf)
 
+# Allow user to control whether gpm is linked in.
+AC_ARG_WITH([gpm],
+	    AC_HELP_STRING([--with-gpm], [link in gpm (default is YES if available)]),
+	    [ac_cv_use_gpm=$withval], [ac_cv_use_gpm=yes])
+AC_CACHE_CHECK([whether to use gpm],
+	       [ac_cv_use_gpm], [ac_cv_use_gpm=yes])
+
 dnl Checks for gpm, first the headers, then functions needed, then the library.
-AC_CHECK_HEADERS(gpm.h)
-dnl Mouse support requires the select function.
-AC_CHECK_FUNCS(select)
-if test "$ac_cv_header_gpm_h" = yes && test "$ac_cv_func_select" = yes ; then
-	AC_CHECK_LIB(gpm, Gpm_Close)
-	if test "$ac_cv_lib_gpm_Gpm_Close" != yes ; then 
-		AC_MSG_WARN(pdmenu will be built without GPM mouse support.)
+if test "$ac_cv_use_gpm" = yes ; then
+	AC_CHECK_HEADERS(gpm.h)
+	dnl Mouse support requires the select function.
+	AC_CHECK_FUNCS(select)
+	if test "$ac_cv_header_gpm_h" = yes && test "$ac_cv_func_select" = yes ; then
+		AC_CHECK_LIB(gpm, Gpm_Close)
+		if test "$ac_cv_lib_gpm_Gpm_Close" != yes ; then 
+			AC_MSG_WARN(pdmenu will be built without GPM mouse support.)
+		else
+			AC_DEFINE(GPM_SUPPORT)
+		fi
 	else
-		AC_DEFINE(GPM_SUPPORT)
+		AC_MSG_WARN(pdmenu will be built without GPM mouse support.)
 	fi
-else
-	AC_MSG_WARN(pdmenu will be built without GPM mouse support.)
 fi
 
 dnl If we cannot find terminfo, link with termcap.

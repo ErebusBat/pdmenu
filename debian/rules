@@ -11,10 +11,15 @@ ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 INSTALL_PROGRAM += -s
 endif
 
+# gpm is currently broken or something on s/390
+ifeq (s390,$(shell dpkg --print-architecture))
+GPMCONFIG = --without-gpm
+endif
+
 build: link-stamp build-stamp
 build-stamp:
 	dh_testdir
-	./configure --prefix=/usr --sysconfdir=/etc \
+	./configure $(GPMCONFIG) --prefix=/usr --sysconfdir=/etc \
 		--mandir=/usr/share/man CFLAGS="$(CFLAGS)"
 	$(MAKE)
 	touch build-stamp

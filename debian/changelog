@@ -1,3 +1,13 @@
+pdmenu (1.2.77) unstable; urgency=low
+
+  * Added --with-gpm/--without-gpm to configure script.
+  * In debian/rules, configure gpm out on s/390, since it seems that gpm
+    crashes pdmenu there, and gpm makes little sense on s/390's consoles.
+    Closes: #165560
+  * No need to build-dep on libgpm for s390.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 20 Oct 2002 20:32:32 -0400
+
 pdmenu (1.2.76) unstable; urgency=low
 
   * Solaris needs #include <locale.h>
