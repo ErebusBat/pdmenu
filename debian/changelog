@@ -1,3 +1,14 @@
+pdmenu (1.2.81) unstable; urgency=low
+
+  * At suggestion of Bill Allombert, redo debian menu support, so there are
+    three separate menu-methods, that generate three separate menus, for text,
+    x11, and vc. /etc/pdmenurc then just inlcudes whichever ones is
+    appropriate for the environment, no nasty cpp.pl hacks. This will also
+    play nicer with menu's hints and collapsing code, since menu will know
+    what items are really in each menu.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 27 May 2003 21:49:37 -0400
+
 pdmenu (1.2.80) unstable; urgency=low
 
   * Fix from Lou Sortman for bug if an _ was escaped, and then a hotkey placed

@@ -3,7 +3,7 @@ Section: shells
 Priority: optional
 Build-Depends: debhelper (>= 4.0.8), slang1-dev (>= 1.4.4-3), libgpmg1-dev [!hurd-i386 !s390], gettext, dpkg-dev (>= 1.9.0)
 Maintainer: Joey Hess <joeyh@debian.org>
-Standards-Version: 3.5.9.0
+Standards-Version: 3.5.10.0
 
 Package: pdmenu
 Architecture: any
@@ -11,8 +11,8 @@ Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: menu (>= 2.0.0-5)
 Conflicts: menu (<< 2.0.0-5)
 Description: simple full screen menu program
- A simple full screen menu program, intended to be comfortable 
- login shell for inexperienced users.
+ A full screen menu program, intended to be comfortable login shell
+ for inexperienced users.
  .
  Pdmenu interfaces with Debian's menu system, to provide
  automatically-generated lists of installed programs.

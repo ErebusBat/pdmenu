@@ -1,6 +1,6 @@
 #!/usr/sbin/install-menu
 #
-# pdmenu menu-method for menus of plain text programs
+# pdmenu menu-method for menus that include VC programs
 
 # The verson of the menu package that can process this.
 compat="menu-1"
@@ -9,7 +9,7 @@ compat="menu-1"
 !include menu.h
 
 # Filename of the pdmenurc file we will generate.
-genmenu="pdmenurc.new"
+genmenu="pdmenurc.vc.new"
 
 # Where the system wide generated file is placed.
 rootprefix="/var/lib/pdmenu/"
@@ -38,6 +38,7 @@ submenutitle="	show:" esc(escfirst(title(),$hotkey,"_"),":") "..::" esc($section
 
 # The supported display types, in order of preference.
 supported
+vc=	"       exec:" esc(escfirst(title(),$hotkey,"_"),":") "::" $command "\n"
 text=	"	exec:" esc(escfirst(title(),$hotkey,"_"),":") "::" $command "\n"
 endsupported
 
@@ -46,4 +47,4 @@ endmenu= "\n"
 
 # Command to run at end. This overwrites the old menu file with the new one
 # we just made.
-postrun="mv -f " prefix() "pdmenurc.new " prefix() "pdmenurc 2>/dev/null"
+postrun="mv -f " prefix() "pdmenurc.vc.new " prefix() "pdmenurc.vc 2>/dev/null"

@@ -1,18 +1,21 @@
-#!/bin/sh
-set -e
+#!/bin/sh -e
 
-inst=/etc/menu-methods/pdmenu
+# Handle two menu methods not installed by debhelper.
+for inst in /etc/menu-methods/pdmenu-vc /etc/menu-methods/pdmenu-x11; do
+	if [ "$1" = "remove" ] && [ -f "$inst" ]; then chmod a-x $inst ; fi
+	# update-menus will be run below
+done
+
+#DEBHELPER#
+
 case "$1" in
-  remove)
-	chmod a-x $inst
-  ;;
   purge)
+	rm -rf /var/lib/pdmenu
   ;;
   upgrade);;
+  remove);;
   *)
 	echo "postrm called with unknown argument \`$1'" >&2
 	exit 0
   ;;
 esac
-
-if [ -x /usr/bin/update-menus ] ; then update-menus; fi

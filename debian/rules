@@ -40,13 +40,13 @@ binary-arch: build
 	$(MAKE) INSTALL_PREFIX=debian/pdmenu \
 		INSTALL_PROGRAM="$(INSTALL_PROGRAM)" install
 	dh_install debian/pdmenurc etc
-	dh_install debian/cpp.pl usr/share/pdmenu
 	dh_installdirs var/lib/pdmenu
 	dh_installmenu
+	install debian/menu-method-x11 debian/pdmenu/etc/menu-methods/pdmenu-x11
+	install debian/menu-method-vc  debian/pdmenu/etc/menu-methods/pdmenu-vc
 	dh_installdocs doc/BUGS README doc/TODO doc/ANNOUNCE
 	dh_installexamples -X.in -X.pl examples/*
 	dh_installchangelogs
-	dh_link var/lib/pdmenu/.pdmenurc_auto var/lib/pdmenu/pdmenurc_auto
 	dh_compress -X examples/
 	dh_installdeb
 	dh_shlibdeps
