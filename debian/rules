@@ -62,7 +62,7 @@ installhook:
 	cp doc/TODO /home/pub/programs/pdmenu/TODO
 	cp README /home/pub/programs/pdmenu/README
 	cp doc/BUGS /home/pub/programs/pdmenu/BUGS
-	echo $(VERSION) > /home/pub/programs/pdmenu/LATEST-VERSION-IS
+	echo -n $(VERSION) > /home/pub/programs/pdmenu/LATEST-VERSION-IS
 	cd /home/ftp/pub/code/pdmenu && \
 		ln -sf ../debian/pdmenu_$(VERSION).tar.gz pdmenu_$(VERSION).tar.gz && \
 		ln -sf ../debian/pdmenu_$(VERSION).tar.gz pdmenu.tar.gz
