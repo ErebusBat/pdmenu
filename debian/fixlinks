@@ -1,0 +1,4 @@
+#!/bin/sh -e
+# Clean up after cvs's dreadful symlink handling, by making all the symlinks
+# this package needs.
+ln -sf showdir.pl examples/editdir.pl
