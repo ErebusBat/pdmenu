@@ -1,3 +1,12 @@
+pdmenu (1.2.63) unstable; urgency=low
+
+  * Applied a patch from Kees Schoenmakers <KeesS@milltronics.com>
+    that is supposed to fix a problem where pdmenu spins in the background
+    if the xterm it was running in is closed. I cannot reproduce this one
+    myself.
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  7 Aug 2000 22:02:29 -0700
+
 pdmenu (1.2.62) unstable; urgency=low
 
   * Fixed a dead email address.

@@ -251,6 +251,7 @@ int main (int argc, char **argv) {
 
   do {
     ret=DoMenu(m,Pdmenu_Action,Handle_Ctrl_C);
+    if (tcgetpgrp(0) == -1) break; /* Detect tty gone away. */
   } while ((ret!=QUIT_EXIT) && !((ret==Q_KEY_EXIT) && (Q_Exits)));
 
 #ifdef GPM_SUPPORT
