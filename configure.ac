@@ -232,6 +232,5 @@ AC_CONFIG_FILES([makeinfo:autoconf/makeinfo.in
 	src/slang.h
 	redhat/pdmenu.spec 
 	doc/pdmenu-$VER.lsm:doc/pdmenu.lsm.in
-	po/Makefile:po/Makefile.in.in
 ])
 AC_OUTPUT

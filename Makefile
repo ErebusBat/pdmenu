@@ -1,14 +1,16 @@
-all: pdmenu
+CFLAGS_FOR_GCC	= -Wall
+SRCDIR		= src
+XGETTEXT	= xgettext --keyword=_ --keyword=N_ --add-comments=TRANS:
+POTFILE		= po/pdmenu.pot
+SRCFILES	= $(wildcard $(SRCDIR)/*.c)
+OBJFILES	:= $(SRCFILES:%.c=%.o)
+LANGS		= fr
+MOS		:= $(addprefix po/, $(addsuffix .mo, $(LANGS)))
+LOCALEDIR	= $(INSTALL_PREFIX)/usr/share/locale
+
+all: pdmenu $(POTFILE) $(MOS)
 
 include makeinfo
-
-CFLAGS_FOR_GCC  = -Wall
-SRCDIR          = src
-
-OBJFILES=$(SRCDIR)/pdmenu.o $(SRCDIR)/screen.o $(SRCDIR)/rc.o \
-	$(SRCDIR)/menu.o $(SRCDIR)/inputbox.o $(SRCDIR)/mouse.o \
-	$(SRCDIR)/keyboard.o $(SRCDIR)/pdstring.o $(SRCDIR)/actions.o \
-	$(SRCDIR)/window.o $(SRCDIR)/error.o $(SRCDIR)/pdgetline.o
 
 pdmenu: .dep $(OBJFILES)
 	${CC} -o pdmenu $(OBJFILES) $(CFLAGS) $(LIBS)
@@ -21,7 +23,7 @@ dep: .dep
 		< makeinfo.bak > makeinfo
 	-rm -f makeinfo.bak
 	echo "# DO NOT REMOVE THIS LINE" >> makeinfo
-	$(CC) -MM $(SRCDIR)/*.c | sed 's!^\(.*\)\.o[ :]!$(SRCDIR)/\1.o:!' \
+	$(CC) -MM $(SRCFILES) | sed 's!^\(.*\)\.o[ :]!$(SRCDIR)/\1.o:!' \
 		>> makeinfo
 	touch .dep
 
@@ -35,9 +37,8 @@ distclean: clean
 		.dep gmon.out doc/pdmenu.man doc/pdmenurc.man
 
 clean:
-	$(MAKE) -C po clean
-	$(MAKE) -C po pdmenu.pot # make sure translators' input is ready
-	rm -f src/*.o pdmenu
+	$(MAKE) $(POTFILE) # make sure translators' input is ready
+	rm -f $(OBJFILES) pdmenu $(MOS)
 
 install: all
 	$(INSTALL) -d $(INSTALL_PREFIX)/$(BINDIR) \
@@ -55,7 +56,10 @@ install: all
 	$(INSTALL) examples/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc -m 0644
 	$(INSTALL) examples/showdir.pl $(INSTALL_PREFIX)/$(DATADIR)/pdmenu
 	cd $(INSTALL_PREFIX)/$(DATADIR)/pdmenu && $(LN_S) -f showdir.pl editdir.pl
-	$(MAKE) -C po install
+	for lang in $(LANGS); do \
+		[ ! -d $(LOCALEDIR)/$$lang/LC_MESSAGES/ ] && mkdir -p $(LOCALEDIR)/$$lang/LC_MESSAGES/; \
+		install -m 644 po/$$lang.mo $(LOCALEDIR)/$$lang/LC_MESSAGES/pdmenu.mo; \
+	done
 
 test: pdmenu
 	./pdmenu examples/pdmenurc
@@ -74,5 +78,21 @@ makeinfo: autoconf/makeinfo.in config.status
 
 .c.o:
 	cd $(SRCDIR) && $(CC) -c ../$< $(CFLAGS)
+
+$(POTFILE): $(SRCFILES)
+	$(XGETTEXT) -o $(POTFILE)-update $(SRCFILES)
+	if test -f $(POTFILE); then \
+	  if diff -I '^"POT-Creation-Date:' -I '^Report-Msgid-Bugs-To:' $(POTFILE) $(POTFILE)-update >/dev/null 2>&1; then \
+	      rm -f $(POTFILE)-update; \
+	  else \
+	      rm -f $(POTFILE); \
+	      mv $(POTFILE)-update $(POTFILE); \
+	  fi; \
+	else \
+	  mv $(POTFILE)-update $(POTFILE); \
+	fi
+
+%.mo: %.po
+	msgfmt -o $@ $<
 
 .PHONY: debian test install clean distclean

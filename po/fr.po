@@ -1,0 +1,151 @@
+# French translation of pdmenu.
+# Copyright (C) 2004 THE pdmenu'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the pdmenu package.
+# Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>, 2004.
+# 
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: pdmenu 1.2.83\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-06-02 10:56-0700\n"
+"PO-Revision-Date: 2004-06-02 21:25+0200\n"
+"Last-Translator: Jean-Luc Coulon (f5ibh) <jean-luc.coulon@wanadoo.fr>\n"
+"Language-Team: French <debian-l10n-french@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-15\n"
+"Content-Transfer-Encoding: 8bit"
+
+#. Display wait text.
+#: src/actions.c:95
+msgid "Please wait..."
+msgstr "Veuillez patienter..."
+
+#: src/actions.c:108
+msgid "Press Esc to close window."
+msgstr "Pressez la touche « Échap » pour fermer la fenêtre."
+
+#: src/actions.c:200
+msgid "Command returned no output"
+msgstr "La commande n'a produit aucune sortie."
+
+#. pause 1st
+#: src/actions.c:316
+msgid "Press Enter to return to Pdmenu."
+msgstr "Pressez la touche « Entrée » pour retourner à Pdmenu."
+
+#: src/error.c:31
+#, c-format
+msgid "pdmenu error: "
+msgstr "Erreur de pdmenu : "
+
+#: src/inputbox.c:53 src/inputbox.c:77
+msgid "Press Enter when done, or Esc to cancel"
+msgstr "Pressez « Entrée » pour valider ou « Échap » pour abandonner"
+
+#. They hit a bad key. Display help.
+#: src/menu.c:427
+msgid "Arrow keys move, Esc exits current menu, Enter runs program"
+msgstr ""
+"Les touches directionnelles permettent de se déplacer, « Échap » quitte "
+"le menu en cours, « Entrée » lance le programme "
+
+#: src/menu.c:458
+#, c-format
+msgid "Attempt to remove menu \"%s\" failed: menu is on screen."
+msgstr ""
+"La tentative pour supprimer le menu « %s » a échoué : le menu est affiché."
+
+#: src/pdmenu.c:29
+#, c-format
+msgid ""
+"Usage: pdmenu [options] [menufiles ..]\n"
+"\tmenufiles                 the rc files to read instead of\n"
+"\t                          ~/.pdmenurc or %spdmenurc\n"
+"\t-h        --help          display this help\n"
+"\t-c        --color         enable color\n"
+"\t-u        --unpark        cursor moves to current selection\n"
+"\t-q        --quit          'q' key does not exit program\n"
+"\t-mmenuid  --menu=menuid   display menu with this menuid on startup\n"
+"\t-v        --version       show version information\n"
+"\t-r        --retro         draw menus using old style\n"
+"\t-l        --lowbit        do not use high bit line drawing characters\n"
+"\t-n        --numeric       do not use 8 and 2 for moving up and down\n"
+msgstr "Usage : pdmenu [options] [fichiers de menus...]\n"
+"\tfichier de menus          fichiers rc à lire à la place de\n"
+"\t                          ~/.pdmenurc ou %spdmenurc\n"
+"\t-h        --help          afficher cette aide\n"
+"\t-c        --color         mettre en couleurs\n"
+"\t-u        --unpark        déplacer le curseur vers la sélection en cours\n"
+"\t-q        --quit          la touche « q » ne permet pas de quitter le\n"
+"\t                          programme\n"
+"\t-midmenu  --menu=idmenu   afficher le menu avec cet idmenu au démarrage\n"
+"\t-v        --version       afficher la version du programme\n"
+"\t-r        --retro         dessiner les menus en utilisant l'ancien style\n"
+"\t-l        --lowbit        ne pas utiliser les caractères semi-graphiques\n"
+"\t-n        --numeric       ne pas utiliser les touches 8 et 2 pour se\n"
+"\t                          déplacer vers le haut ou vers le bas\n"
+
+#: src/pdmenu.c:44
+msgid "(Long options are disabled.)"
+msgstr "(Les options longues ne sont pas actives)."
+
+#: src/pdmenu.c:51
+#, c-format
+msgid "Pdmenu %s GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>\n"
+msgstr ""
+"menu %s GPL Copyright (C) 1995-2002 par Joey Hess <joey@kitenet.net>\n"
+
+#: src/pdmenu.c:159
+msgid "Unable to find any pdmenurc files, or all pdmenurc files are empty."
+msgstr ""
+"Impossible de trouver aucun fichier pdmenurc ou tous ces fichiers sont vides."
+
+#. Couldn't find the menu if we get to here.
+#: src/pdmenu.c:170
+#, c-format
+msgid "Menu \"%s\" is not defined."
+msgstr "Le menu « %s » n'est pas défini."
+
+#: src/pdmenu.c:197
+msgid "Pdmenu"
+msgstr "Pdmenu"
+
+#: src/rc.c:186
+#, c-format
+msgid "%s:%i Invalid screen part name, \"%s\"."
+msgstr "%s:%i nom de la partie d'écran incorrecte, « %s »."
+
+#: src/rc.c:197
+#, c-format
+msgid "%s:%i \"endgroup\" found outside of group block."
+msgstr "%s:%i « endgroup » placé en dehors d'un bloc de groupe."
+
+#: src/rc.c:201
+#, c-format
+msgid "%s:%i Invalid or misplaced keyword, \"%s\"."
+msgstr "%s:%i mot-clé incorrect ou mal placé, « %s »."
+
+#: src/rc.c:241
+#, c-format
+msgid "%s:%i Nested \"group\" commands."
+msgstr "%s:%i commandes « group » imbriquées."
+
+#: src/rc.c:333
+#, c-format
+msgid "%s: \"group\" command used without \"endgroup\"."
+msgstr "%s : commande « group » utilisée sans « endgroup »."
+
+#: src/screen.c:147
+msgid "Unable to initialize key mappings."
+msgstr "Impossible d'initialiser les affectations des touches."
+
+#: src/screen.c:193
+msgid "Error: The screen is too small."
+msgstr "Erreur : l'écran est trop petit."
+
+#: src/window.c:36
+#, c-format
+msgid "Welcome to Pdmenu %s by Joey Hess <joey@kitenet.net>"
+msgstr "Bienvenue dans Pdmenu %s par Joey·Hess·<joey@kitenet.net>"
+
