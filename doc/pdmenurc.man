@@ -1,5 +1,5 @@
 .\" -*- nroff -*-
-.TH PDMENURC 5 "November 15 2000" "pdmenu" "File formats"
+.TH PDMENURC 5 "December 06 2000" "pdmenu" "File formats"
 .SH NAME
 pdmenurc \- menu definitions file for pdmenu
 .SH SYNOPSIS
