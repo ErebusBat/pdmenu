@@ -1,5 +1,5 @@
 .\" -*- nroff -*-
-.TH PDMENU 1 "September 26 2000" "1.2.65" "Commands"
+.TH PDMENU 1 "November 15 2000" "1.2.65" "Commands"
 .SH NAME
 pdmenu \- simple full screen menu program
 .SH SYNOPSIS
@@ -115,7 +115,7 @@ If menufile is "-", pdmenu will read standard input as a menu file.
 To use the mouse to cut and paste as usual, hold down on the shift key when
 you use the mouse.
 .SH FILES
-.I /etc/pdmenurc
+.I /usr/local/etc/pdmenurc
 .RS
 Default config file. See
 .BR pdmenurc (5)
@@ -123,7 +123,7 @@ for details.
 .RE
 .I ~/.pdmenurc
 .RS
-If this exists, it overrides /etc/pdmenurc. See
+If this exists, it overrides /usr/local/etc/pdmenurc. See
 .BR pdmenurc (5)
 for details.
 .SH ENVIRONMENT
