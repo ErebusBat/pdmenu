@@ -1,10 +1,11 @@
 /*
- * Copyright (c) 1995, 1996, 1997 Joey Hess (joey@kite.ml.org)
+ * Copyright (c) 1995, 1996, 1997 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 /*
  * How many characters to read in at a time. Should be greater than the
@@ -23,35 +24,36 @@
  * Note also that any trailing \n on the line will be removed.
  */
 char *pdgetline(FILE *fp, int allow_cont) {
-	char *str=NULL;
-	int strsize=0;
+  char *str=NULL;
+  int strsize=0;
 
-	if (feof(fp))
-		return NULL;
+  if (feof(fp))
+    return NULL;
 
-	do {
-		str=realloc(str,strsize+BUF_INC+1);
-		if (! fgets(str + strsize,BUF_INC,fp)) {
-			if (strsize == 0) {
-				free(str);
-				return NULL; /* reached eof with empty string */
-			}
-			else {
-				str[strsize]='\0'; /* work around a bug (?) in fgets */
-				break;
-			}
-		}
-		strsize=strlen(str);
-	} while (
-		/* continuation line */
-		(strsize>1 && str[strsize-2] == '\\' && (strsize=strsize-2)) ||
-		/* long line */
-		(allow_cont && strsize>0 && str[strsize-1] != '\n')
-	);
+  do {
+    str=realloc(str,strsize+BUF_INC+1);
+    if (! fgets(str + strsize,BUF_INC,fp)) {
+      if (strsize == 0) {
+	free(str);
+	return NULL; /* reached eof with empty string */
+      }
+      else {
+	str[strsize]='\0'; /* work around a bug (?) in fgets */
+	break;
+      }
+    }
+    strsize=strlen(str);
+  } while (
+	   /* continuation line */
+	   (allow_cont && strsize>1 && str[strsize-2] == '\\' && 
+	    (strsize=strsize-2)) ||
+	   /* long line */
+	   (strsize>0 && str[strsize-1] != '\n')
+	   );
 
-	/* remove trailing \n */
-	if (str[strsize-1] == '\n')
-		str[strsize-1]='\0';
+  /* remove trailing \n */
+  if (str[strsize-1] == '\n')
+    str[strsize-1]='\0';
 
-	return str;
+  return str;
 }

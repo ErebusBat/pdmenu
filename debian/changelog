@@ -1,3 +1,11 @@
+pdmenu (1.2.69) unstable; urgency=low
+
+  * Removed -fstrict-protoypes since gcc 3.0 does not understand it (why?)
+    Closes: #104615
+  * Made it build clean on gcc 3.0.
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 14 Jul 2001 23:26:26 -0400
+
 pdmenu (1.2.68) unstable; urgency=low
 
   * Need to rebuild pdmenu now that slang has gone back to non-multibyte
