@@ -1,9 +1,9 @@
 /*
- * Colors 
+ * Colors
  */
 
 /* 
- * Copyright (c) 1995, 1996, 1997 Joey Hess (joey@kite.ml.org)
+ * Copyright (c) 1995-1999 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
@@ -23,7 +23,7 @@
 #define SELBAR_FG_DEFAULT MENU_BG_DEFAULT
 #define SELBAR_BG_DEFAULT MENU_FG_DEFAULT
 
-#define SHADOW_FG_DEFAULT "white"
+#define SHADOW_FG_DEFAULT "gray"
 #define SHADOW_BG_DEFAULT "black"
 
 #define MENU_HI_FG_DEFAULT "white"
@@ -31,3 +31,6 @@
 
 #define SELBAR_HI_FG_DEFAULT "white"
 #define SELBAR_HI_BG_DEFAULT "black"
+
+#define UNSEL_MENU_FG_DEFAULT "black"
+#define UNSEL_MENU_BG_DEFAULT "lightgray"

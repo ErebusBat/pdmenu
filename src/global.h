@@ -3,28 +3,36 @@
  */
 
 /* 
- * Copyright (c) 1995, 1996, 1997 Joey Hess (joey@kite.ml.org)
+ * Copyright (c) 1995-1999 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
 #include "config.h"
-#include "pdmenu.h"
 #include "menutype.h"
-#include "screen.h"
-#include "menu.h"
-#include "rc.h"
-#include "inputbox.h"
-#include "keyboard.h"
-#include "mouse.h"
+#include "windowtype.h"
 
-/* Global variable */
-Menu_Type *OnScreen[MAX_WINDOWS];	/* Pointers to windows on the screen */
-signed int NumOnScreen;           /* Number of windows currently onscreen */
-Menu_Type menus[MAX_NUM_MENUS];   /* Holds all info about each menu */
-int NumMenus;                     /* Number of menus that have been loaded from menufiles */
-int Use_Color;                    /* 0=no color, 1=color */
-int Q_Exits;                      /* 0=no, 1=yes */
+/* Global variables */
+
+/* Pointer to linked list of all windows on the screen */
+Window_List_Type *CurrentWindow;
+/* Pointer to linked list of all available menus. */
+Menu_Type *menus;
+/* Pointer to the menu that will be modified by new rc commands. */
+Menu_Type *current_rc_menu;
+
+/* Boolean variables, 0=no, 1=yes */
+int Use_Color;
+int Q_Exits;
+int Unpark_Cursor;
 #ifdef GPM_SUPPORT
-int gpm_ok;                       /* 0=no mouse detected, 1=mouse detected */
+/* Was the mouse detected? */
+int gpm_ok;
 #endif
-int Want_Screen_Resize;						/* 1=the window has been resized */
+/* Set when the screen has resized */
+int Want_Screen_Resize;
+/* Use old-style look if set. */
+int Retro;
+/* Don't use high bit line drawing chars. */
+int Lowbit;
+/* Don't use 2 or 8 for up and down if set */
+int Numeric;

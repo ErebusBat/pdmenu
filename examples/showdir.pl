@@ -1,6 +1,10 @@
 #!/usr/bin/perl
 #
-# Syntax: showdir.pl <directory> <old-directory>
+# Syntax: showdir.pl <directory> <old-directory> <menuname>
+#         editdir.pl <directory> <old-directory> <menuname>
+#
+# If called as showdir, it will display files. If called as editdir, 
+# it edits files.
 #
 # Where <directory> is the directory to display, and <old-directory>
 # is the optional name of the directory they were on previously.
@@ -8,21 +12,32 @@
 # program.
 #
 # Generates a pdmenurc file at stdout that lets the user view files in the 
-# directory, and change to other directories.
+# directory (or edit them if the program is run as "editdir.pl"), and change
+# to other directories. The file will define a menu named 
+# "show_directory_<directory>", unless the <menuname> option is passed, 
+# in which case the menu will be named <namename>
+
+if ($0=~m/editdir/ ne undef) {
+	$mode='edit';
+	$editor=$ENV{EDITOR} || $ENV{VISUAL} || 'pico';
+}
+else {
+	$mode='show';
+}
 
 $dir=shift;
 $dir.='/' if $dir=~m#/$# eq undef; # make sure there is a trailing / on $dir.
 $olddir=shift;
 $olddir.='/' if $olddir=~m#/$# eq undef; # make sure there is a trailing / on $olddir.
+$menuname=shift;
+$menuname="show_directory_$dir" if !$menuname;
 
-# Make sure to remove the menu we are about to show, so we do not inaverdently
-# add on one with the same name that already exists.
-print "remove:show_directory_$dir\n";
-print "menu:show_directory_$dir:Files in $dir:";
-print "Select a file to display it or select a directory to move into it.\n";
+print "menu:$menuname:Files in $dir:";
+print "Select a file to $mode it or select a directory to move into it.\n";
 
 opendir(PWD,$dir);
-while ($fn=readdir(PWD)) {
+@dirlist=readdir(PWD);
+foreach $fn (sort(@dirlist)) {
 	# Make a version of $fn that has ':' and '\' and '_' characters
 	# escaped out.
 	$fne=$fn;
@@ -34,8 +49,11 @@ while ($fn=readdir(PWD)) {
 		# See if the directory the selected is the directory we were just on 
 		# previously.
 		if ("$dir$fn/" ne $olddir) {
-			# Run this program again for a submenu.
-			print "exec:$fne/:m:$0 $dir$fn/ $dir\n"
+			print "group:$fne/\n";
+			print "exec::makemenu:$0 $dir$fne/ $dir\n";
+			print "show:::show_directory_$dir$fne/\n";
+			print "remove:::show_directory_$dir$fne/\n";
+			print "endgroup\n";
 		}
 		else {
 			print "exit:$fne/\n";
@@ -49,15 +67,23 @@ while ($fn=readdir(PWD)) {
 		# we were just on previously, then exit the menu instead of displaying
 		# a new one.
 		if ($parent ne $olddir) {
-			print "exec:$fne/:m:$0 $parent $dir\n";
+			print "group:$fne/\n";
+			print "exec::makemenu:$0 $parent $dir\n";
+			print "show:::show_directory_$parent\n";
+			print "remove:::show_directory_$parent\n";
+			print "endgroup\n";
 		}
 		else {
 			print "exit:$fne/\n";
 		}
 	}
 	elsif ($fn ne '.' && $fn ne '..') {
-		# View a file.
-		print "exec:$fne:d:cat $dir$fn\n";
+		if ($mode eq 'show') {
+			print "exec:$fne:display:cat $dir$fn 2>/dev/null\n";
+		}
+		else {
+			print "exec:$fne:pause:$editor $dir$fn\n";
+		}
 	}
 }
 closedir(PWD);

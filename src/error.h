@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1997 Joey Hess (joey@kite.ml.org)
+ * Copyright (c) 1997-1999 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 

@@ -7,9 +7,9 @@ Description:	Simple full screen menu program. Can be used
 		Features color, mouse support, and powerful 
 		(but simple!) menu definition files.
 Keywords:	menu shell
-Author:		joey@kite.ml.org
+Author:		joey@kitenet.net
 Primary-site:	sunsite.unc.edu /pub/Linux/utils/shell
 		@TAR_FILE_SIZE_GUESS@	pdmenu-@VER@.tar.gz
-Alternate-site:	kite.ml.org /pub/code/
+Alternate-site:	kitenet.net /pub/code/pdmenu/
 Copying-policy:	GPL
 End

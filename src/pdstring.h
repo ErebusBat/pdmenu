@@ -1,7 +1,7 @@
 /*
- * Copyright (c) 1995, 1996, 1997 Joey Hess (joey@kite.ml.org)
+ * Copyright (c) 1995-1999 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
-extern char *unescape (char *,char);
-extern char *pdstrtok (char *, char);
+char *unescape (char *, char);
+char *pdstrtok (char *, char);
