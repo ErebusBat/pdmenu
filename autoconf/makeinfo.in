@@ -8,13 +8,15 @@ prefix		= @prefix@
 exec_prefix	= @exec_prefix@
 BINDIR		= @bindir@
 MANDIR		= @mandir@
+LIBDIR		= @libdir@/pdmenu
 SYSCONFDIR	= @sysconfdir@
 CC		= @CC@
 INSTALL		= @INSTALL@
 LN_S		= @LN_S@
 VER		= @VER@
-DEFINES		= -DETCDIR=\"${SYSCONFDIR}/\" -DVER=\"${VER}\" @DEFS@ $(PROFILE) -D__USE_FIXED_PROTOTYPES__
-CFLAGS_FOR_GCC	= -pipe -Wall -fstrict-prototypes
+DEFINES		= -DETCDIR=\"${SYSCONFDIR}/\" -DVER=\"${VER}\" @DEFS@ \
+		  $(PROFILE) -D__USE_FIXED_PROTOTYPES__ -D_GNU_SOURCE
+CFLAGS_FOR_GCC	= -Wall -fstrict-prototypes
 CFLAGS		= $(DEFINES) @gcc_cflags@ @CFLAGS@
 LIBS		= @LIBS@ $(EFENCE)
 SRCDIR		= src
@@ -50,8 +52,9 @@ distclean: clean
 	find . -name '\#*\#' -o -name '*.bak' -o -name '.??*' -o \
 		-name '*~' -o -name '.gdb_history' -exec rm {} \;
 	rm -f examples/pdmenurc examples/pdmenurc.monitor \
-		examples/pdmenurc.complex src/slang.h \
-		config.cache config.log config.status makeinfo .dep gmon.out
+		examples/pdmenurc.complex examples/newbie/pdmenurc.newbie \
+		src/slang.h config.cache config.log config.status makeinfo \
+		.dep gmon.out
 
 clean:
 	rm -f src/*.o pdmenu
@@ -60,8 +63,9 @@ install: all
 	$(INSTALL) -d $(INSTALL_PREFIX)/$(BINDIR) \
 		$(INSTALL_PREFIX)/$(MANDIR)/man1 \
 		$(INSTALL_PREFIX)/$(MANDIR)/man5 \
-		$(INSTALL_PREFIX)/$(SYSCONFDIR)
-	$(INSTALL) -s pdmenu $(INSTALL_PREFIX)/$(BINDIR) -m 0755
+		$(INSTALL_PREFIX)/$(SYSCONFDIR) \
+		$(INSTALL_PREFIX)/$(LIBDIR)
+	$(INSTALL) -s pdmenu $(INSTALL_PREFIX)/$(BINDIR)
 	$(INSTALL) doc/pdmenu.man $(INSTALL_PREFIX)/$(MANDIR)/man1/pdmenu.1 -m 0644
 	$(INSTALL) doc/pdmenurc.man $(INSTALL_PREFIX)/$(MANDIR)/man5/pdmenurc.5 -m 0644
 	if [ -e $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc ]; then \
@@ -69,6 +73,8 @@ install: all
 		cp $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc.old ; \
 	fi
 	$(INSTALL) examples/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc -m 0644
+	$(INSTALL) examples/showdir.pl $(INSTALL_PREFIX)/$(LIBDIR)
+	cd $(INSTALL_PREFIX)/$(LIBDIR) && $(LN_S) -f showdir.pl editdir.pl
 
 test: pdmenu
 	./pdmenu examples/pdmenurc
@@ -76,31 +82,5 @@ test: pdmenu
 debian:
 	dpkg-buildpackage -tc -rfakeroot
 
-localdist:
-# Install in the proper location on my ftp server and web server. Not intended
-# for use by anyone except the author.
-	if [ `hostname` = 'kite' ] ; then \
-		cp ../pdmenu_@VER@.tar.gz ../../public; \
-		rm /home/ftp/pub/code/pdmenu/* || true; \
-		cp doc/*.lsm /home/ftp/pub/code/pdmenu; \
-		cp debian/changelog /home/pub/programs/pdmenu/CHANGES; \
-		echo @VER@ > /home/pub/programs/pdmenu/LATEST-VERSION-IS; \
-		cd ..; rm -rf pdmenu-@OLD_VER@; \
-		[ -f ../public/pdmenu_@OLD_VER@.tar.gz ] && \
-		tar zxf ../public/pdmenu_@OLD_VER@.tar.gz || \
-		tar zxf ../outdated/pdmenu_@OLD_VER@.tar.gz; \
-		diff -r -u --new-file --exclude pdmenu.spec \
-			--exclude \*.lsm \
-			--exclude \*.man pdmenu-@OLD_VER@ pdmenu-@VER@ > \
-			/home/ftp/pub/code/pdmenu/diffs/pdmenu-@VER@.diff; \
-		gzip -9f /home/ftp/pub/code/pdmenu/diffs/pdmenu-@VER@.diff; \
-		cd /home/ftp/pub/code/pdmenu; \
-		$(LN_S) -f ../debian/pdmenu_@VER@.tar.gz pdmenu_@VER@.tar.gz; \
-		$(LN_S) -f ../debian/pdmenu_@VER@.tar.gz pdmenu.tar.gz ; \
-		$(LN_S) pdmenu-@VER@.lsm pdmenu.lsm ; \
-	fi
-
-dist: debian localdist
-
-.PHONY: dist localdist debian test install clean distclean
+.PHONY: debian test install clean distclean
 

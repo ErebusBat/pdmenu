@@ -1,3 +1,10 @@
+pdmenu (1.2.44) unstable; urgency=low
+
+  * Corrected CHANGES link.
+  * Integrated with my local build system to auto-update home page.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 27 Aug 1999 20:11:26 -0700
+
 pdmenu (1.2.43) unstable; urgency=low
 
   * Rebuilt with new slang1-dev to fix slang dependancy.

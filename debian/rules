@@ -53,5 +53,17 @@ link-stamp:
 	sh -e debian/fixlinks
 	touch link-stamp
 
+VERSION=$(shell expr "`dpkg-parsechangelog 2>/dev/null |grep Version:`" : '.*Version: \(.*\)')
+
+installhook:
+	cp debian/changelog /home/pub/programs/pdmenu/CHANGES
+	cp TODO /home/pub/programs/pdmenu/TODO
+	cp README /home/pub/programs/pdmenu/README
+	cp BUGS /home/pub/programs/pdmenu/BUGS
+	echo $(VER) > /home/pub/programs/pdmenu/LATEST-VERSION-IS
+	cd /home/ftp/pub/code/pdmenu && \
+		ln -sf ../debian/pdmenu_$(VERSION).tar.gz pdmenu_$(VERSION).tar.gz && \
+		ln -sf ../debian/pdmenu_$(VERSION).tar.gz pdmenu.tar.gz
+
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary
