@@ -1,3 +1,9 @@
+pdmenu (1.2.51) unstable; urgency=low
+
+  * Built with a newer slang library, Closes: #50689
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 25 Oct 1999 10:44:53 -0700
+
 pdmenu (1.2.50) unstable; urgency=low
 
   * Fixed a file descriptior leak. Closes: #46885
