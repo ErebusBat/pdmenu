@@ -1,12 +1,12 @@
 .\" -*- nroff -*-
-.TH PDMENU 1 "February 28 1997" "0.6.3" "Commands"
+.TH PDMENU 1 "September 30 1999" "1.2.48" "Commands"
 .SH NAME
 pdmenu \- simple full screen menu program
 .SH SYNOPSIS
-.B pdmenu [\-h] [\-c] [\-n] [\fImenufile\fP ...]
+.B pdmenu [\fIoptions\fP] [\fImenufile\fP ...]
 .SH DESCRIPTION
 .I pdmenu 
-is a simple menu program for Linux that displays a menu from which the 
+is a simple menu program that displays a menu from which the 
 user can pick programs to run. Submenus are supported.
 .PP
 When you run 
@@ -15,7 +15,9 @@ When you run
 keys to move to the program you want to run, and press Enter to run the
 program. When the program ends, you will be returned to the menu.
 .PP
-If you are running pdmenu at the linux console, and gpm is running, you can
+If you are running 
+.I pdmenu
+at the linux console, and gpm is running, you can
 move the mouse and click to navigate through the menus.
 .PP
 Some menu items are actually submenus, and will take you to another menu.
@@ -43,7 +45,10 @@ if used on the first menu. Does not
 work in the text edit windows. (This will not work if there is also a hotkey 
 set up for \*(L'q\*(R', the hotkey takes precedence.)
 .IP "ESC"
-Close the currently active window, and return to the perious window.
+Close the currently active window, and return to the previous window, or
+exit 
+.I pdmenu
+if used on the first menu.
 .IP "[ctrl-c]"
 Exit 
 .I pdmenu
@@ -65,6 +70,16 @@ Use color. By default,
 .I pdmenu 
 will display in black and white mode. If your 
 terminal supports color, use this switch.
+.IP "-u, --unpark"
+"Unparks" the cursor from the bottom of the screen. When this option is
+selected, the cursor moves to be on the line of the menu that is currently
+selected. This makes 
+.I pdmenu
+more useable with speech synthesis systems that
+need to know what line is the current line on the screen.
+.IP "-mmenuid, --menu=menuid"
+Instead of displaying the first menu from the menufile, select the menu
+with the id "menuid" and display it.
 .IP "-q, --quit"
 By default, at the opening menu, 'q' will exit \fIpdmenu\fP.
 If the \-q switch is
@@ -73,14 +88,34 @@ the user from ever exiting \fIpdmenu\fP.
 .SP
 This also disables control-c and the right mouse button from exiting
 \fIpdmenu\fP.
+.IP "-r, --retro"
+This makes
+.I pdmenu
+use an old style for displaying menus. Menus in the background don't change
+color, or lose their hotkeys. Note that this will also be a little bit
+faster than the default on slow terminals and the like.
+.IP "-l, --lowbit"
+By default, 
+.I pdmenu
+will use nice high bit line drawing characters if it
+thinks your terminal is capable. Sometimes it gets this wrong and you get
+borders that look all messed up. Then you should use this --lowbit switch to
+force it to use low bit line draing characters.
+.IP "-n, --numeric"
+Disables the use of the keys 2 and 8 for moving up and down. This is useful
+if you want to use numbered hotkeys.
 .IP "menufile ..."
 Specify a menu definition file or files to use. If you specify multiple
-files, they will all be loaded in together.
+files, they will all be loaded in together. By default, the first menu in
+the first menufile will be displayed when 
+.I pdmenu
+starts, but this can be overridden by the --menu= option.
+If menufile is "-", pdmenu will read standard input as a menu file.
 .SH NOTES
 To use the mouse to cut and paste as usual, hold down on the shift key when
 you use the mouse.
 .SH FILES
-.I /etc/pdmenurc
+.I /usr/local/etc/pdmenurc
 .RS
 Default config file. See
 .BR pdmenurc (5)
@@ -88,7 +123,7 @@ for details.
 .RE
 .I ~/.pdmenurc
 .RS
-If this exists, it overrides /etc/pdmenurc. See
+If this exists, it overrides /usr/local/etc/pdmenurc. See
 .BR pdmenurc (5)
 for details.
 .SH ENVIRONMENT
@@ -99,8 +134,10 @@ to use color by default.
 .SH DISTRIBUTION
 Redistribution is subject to the GNU public license.
 .SH BUGS
-No important bugs are known at this time.
+See the file BUGS that came with 
+.I pdmenu
+for the current buglist.
 .SH AUTHOR 
-Joey Hess, <joey@kite.ml.org>.
+Joey Hess, <joey@kitenet.net>.
 .SH "SEE ALSO"
 .BR pdmenurc (5)
