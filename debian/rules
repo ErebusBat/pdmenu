@@ -6,8 +6,7 @@ build: link-stamp build-stamp
 build-stamp:
 	dh_testdir
 	# Shadows are broken because debian uses a wide patched slang.
-	./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man \
-		--enable-broken-shadows
+	./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
 	$(MAKE)
 	touch build-stamp
 

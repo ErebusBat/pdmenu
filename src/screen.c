@@ -51,46 +51,36 @@ void DrawBase (char *base) {
   SLsmg_gotorc(SLtt_Screen_Rows-1,SLtt_Screen_Cols-1);
 }
 
+/* Convert the character at the given screen position to a shadow */
+void _shadow_char (int x, int y) {
+	SLsmg_Char_Type ch;
+
+	SLsmg_gotorc(y,x);
+	ch = SLsmg_char_at();
+	/*
+	 * Pull out the character, change its color.
+	 * 0x02 is the current color, and I think the 0x80 pulls out the
+	 * extended attributes of the character.
+	 */
+	ch = SLSMG_BUILD_CHAR(SLSMG_EXTRACT_CHAR(ch),
+			      (SLSMG_EXTRACT_COLOR(ch) & 0x80) | 0x02);
+	SLsmg_write_raw(&ch,1);
+}
+
 /*
  * Draw a shadow "under" a given rectangle.
  * Shadows are omitted in B&W mode.
  */
 void DrawShadow (int x,int y,int dx,int dy) {
   int c;
-  SLsmg_Char_Type ch;
   
   if (SLtt_Use_Ansi_Colors) {
     for (c=0;c<dy-1;c++) {
-      SLsmg_gotorc(c+1+y,x+dx);
-#ifndef BROKEN_SHADOWS
-      /*
-       * Note: 0x02 corresponds to the current color.  0x80FF gets the
-       * character plus alternate character set attribute. -- JED
-       */
-      ch = SLsmg_char_at();
-      ch = (ch & 0x80FF) | (0x02 << 8);
-#else
-      ch = 32;
-#endif
-      SLsmg_write_raw(&ch,1);
-      SLsmg_gotorc(c+1+y,x+dx+1);
-#ifndef BROKEN_SHADOWS
-      ch = SLsmg_char_at();
-      ch = (ch & 0x80FF) | (0x02 << 8);
-#else
-      ch = 32;
-#endif
-      SLsmg_write_raw(&ch,1);
+      _shadow_char(x+dx, c+1+y);
+      _shadow_char(x+dx+1, c+1+y);
     }
     for (c=0;c<dx;c++) {
-      SLsmg_gotorc(y+dy,x+2+c);
-#ifndef BROKEN_SHADOWS
-      ch = SLsmg_char_at();
-      ch = (ch & 0x80FF) | (0x02 << 8);
-#else
-      ch = 32;
-#endif
-      SLsmg_write_raw(&ch,1);
+      _shadow_char(x+2+c, y+dy);
     }
   }
 }

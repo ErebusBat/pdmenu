@@ -204,12 +204,6 @@ else
 fi
 AC_SUBST(PDMENU_LIBDIR)
 
-AC_ARG_ENABLE(broken-shadows,
-	[  --enable-broken-shadows[=no]     use if the shadows don't work right],
-	[BROKEN_SHADOWS=-DBROKEN_SHADOWS],
-	[BROKEN_SHADOWS=""])
-AC_SUBST(BROKEN_SHADOWS)
-
 dnl Since the next step will make a new lsm file, remove all old 
 dnl lsm files.
 rm -f doc/pdmenu-*.lsm

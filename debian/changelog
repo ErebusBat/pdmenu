@@ -1,3 +1,10 @@
+pdmenu (1.2.67) unstable; urgency=low
+
+  * Shadows are fixed, thanks to Edmund GRIMLEY EVANS <edmundo@rano.org>
+  * May only work with recent versions of slang now, though.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 14 May 2001 22:53:07 -0400
+
 pdmenu (1.2.66) unstable; urgency=low
 
   * Use printf in pdmenurc.debian, not echo -e, so it will work with ash.
