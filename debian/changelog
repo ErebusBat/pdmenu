@@ -1,3 +1,10 @@
+pdmenu (1.2.71) unstable; urgency=low
+
+  * Support DEB_BUILD_OPTIONS.
+  * Debhelper v4.
+
+ -- Joey Hess <joeyh@debian.org>  Sat,  1 Jun 2002 19:37:29 -0400
+
 pdmenu (1.2.70) unstable; urgency=low
 
   * De-escape "\:" in prompt titles. Closes: #146727

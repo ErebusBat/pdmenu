@@ -1,13 +1,13 @@
 Source: pdmenu
 Section: shells
 Priority: optional
-Build-Depends: debhelper (>= 4.0.8), slang1-dev (>= 1.4.4-3), libgpmg1-dev [!hurd-i386], gettext
+Build-Depends: debhelper (>= 4.0.8), slang1-dev (>= 1.4.4-3), libgpmg1-dev [!hurd-i386], gettext, dpkg-dev (>= 1.9.0)
 Maintainer: Joey Hess <joeyh@debian.org>
 Standards-Version: 3.5.6.1
 
 Package: pdmenu
 Architecture: any
-Depends: ${shlibs:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: menu (>= 2.0.0-5)
 Conflicts: menu (<< 2.0.0-5)
 Description: simple full screen menu program

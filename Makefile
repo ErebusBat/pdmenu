@@ -44,7 +44,7 @@ install: all
 		$(INSTALL_PREFIX)/$(MANDIR)/man5 \
 		$(INSTALL_PREFIX)/$(SYSCONFDIR) \
 		$(INSTALL_PREFIX)/$(LIBDIR)
-	$(INSTALL) -s pdmenu $(INSTALL_PREFIX)/$(BINDIR)
+	$(INSTALL_PROGRAM) pdmenu $(INSTALL_PREFIX)/$(BINDIR)
 	$(INSTALL) doc/pdmenu.man $(INSTALL_PREFIX)/$(MANDIR)/man1/pdmenu.1 -m 0644
 	$(INSTALL) doc/pdmenurc.man $(INSTALL_PREFIX)/$(MANDIR)/man5/pdmenurc.5 -m 0644
 	if [ -e $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc ]; then \
