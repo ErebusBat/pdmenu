@@ -1,513 +1,261 @@
 /*
- * Copyright (c) 1995, 1996, 1997 Joey Hess (joey@kite.ml.org)
+ * Copyright (c) 1995-1999 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
 #include "global.h"
+#include "rc.h"
+#include "screen.h"
+#include "menu.h"
+#include "window.h"
+#include "mouse.h"
+#include "actions.h"
+#include "error.h"
 #ifdef HAVE_GETOPT_H
 #include <getopt.h>
 #endif
-#include <unistd.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 #include <strings.h>
+#include <math.h>
 #include "slang.h"
 
-int Pdmenu_Action (Menu_Type *);
-
-/* Draw the whole screen, with menus on it. */
-void DrawAll () {
-	int c;
-
-	DrawTitle(DEFAULTTITLE);
-	DrawDesktop();
-
-	for (c=0;c<=NumOnScreen;c++) {
-		DrawMenu(OnScreen[c]);
-	}
-
-	if (strlen(OnScreen[NumOnScreen]->helptext)>0)
-		DrawBase(OnScreen[NumOnScreen]->helptext);
-	else 
-		DrawBase(DEFAULTBASE);
-
- 	SLsmg_refresh(); 
-}
-
-/* Force a redraw of the screen. Clear screen, then redraw everything. */
-void Force_Redraw () {
-	Screen_Reset();
-	Screen_Init(); 
-	DrawAll();
-}
-
-/*
- * Call this whenever the screen size changes. It repositions all the windows
- * on the screen to fit the new screen.
- * You will typically wany to call Force_Redraw() after this function.
- */
-void Resize_Screen () {
-	int c;
-	Menu_Type *m;
-
-	Want_Screen_Resize = 0;
-	SetScreensize();
-	for (c=0;c<=NumMenus;c++) {
-		m=menus+c;
-		m->recalc=1;
-		CalcMenu(m);
-	}
-}                       
-
-/* Add a window to the group onscreen. */
-void AddWindow (int n) {
-	if (NumOnScreen==MAX_WINDOWS) {
-		Screen_Reset();
-		fprintf(stderr,TOO_MANY_WINDOWS,MAX_WINDOWS);
-		exit(1);
-	}
-	OnScreen[++NumOnScreen]=menus+n;
-}
-
-/* Remove the topmost window. Returns the number of the menu in array. */
-int RemoveWindow () {
-	return --NumOnScreen;
-}
-
-/* Exit the current window. Returns pointer to new current menu. */
-Menu_Type *ExitWindow (Menu_Type* m) {
-	if (NumOnScreen>0) { /* Pop down current menu, back to parent */
-		m=menus+RemoveWindow();
-		DrawAll();
-		return m;
-	}
-	else
-		return m; /* Can;t exit menu if there are no others up. */
-}                                                                       
-
-/* Handle a menu action by just quitting it */
-int NullAction() {
-	return QUIT_EXIT;
-}
-  
-/* Display a message in a window.
- * Returns the selected item when the window is exited. 
- * (-1 is returned if they hit q or ESC)
- */
-signed int ShowMessage(char *title,char *helptext,char *message[],int arraysize) {
-	Menu_Type *m;
-	int c=0;
-
-	m=menus+(++NumMenus);
-	
-	/* load up the menu with the appropriate values */
-	strncpy(m->title,title,TITLELEN);
-	m->selected=0;
-	for (c=0;c<arraysize;c++) {
-		strncpy(m->items[c].text,message[c],MENU_ITEM_TEXTSIZE);
-		m->items[c].hotkey=-1;
-	}
-	m->num=arraysize;
-	m->recalc=1;
-
-	/* display the menu until they hit q or exit */
-	AddWindow(NumMenus);
-	DrawAll();
-	c=DoMenu(m,NullAction,Handle_Ctrl_C);
-	RemoveWindow();
-	NumMenus--;
-	DrawAll();
-
-	if (c==QUIT_EXIT)
-		return m->selected;
-	else
-		return -1;
-}
 
 /* Display usage info then quit */
 void usage() {
-	printf (USAGEHELP);
+  printf (USAGEHELP);
 #if defined (HAVE_GETOPT_LONG)
 #else
-	printf (NOLONGOPTS_MESSAGE);
+  printf (NOLONGOPTS_MESSAGE);
 #endif
-	exit(-1);
+  exit(-1);
+}
+
+/* Display version information then quit */
+void version() {
+  printf (VERSION);
+  exit(0);
 }
 
 /* 
- * Parse parameters 
- * Returns: 
- * 1 if rc files were processed
- * 0 if no rc files were processed
+ * Parse params, Figure out the correct rc file, read it.
+ * Returns a pointer to the menu we should display first.
  */
-int ParseParams(int argc, char **argv) {
-	int ret=0;
-	extern int optind;
-	
+Menu_Type *GetConfig (int argc, char **argv) {
+#ifdef HAVE_ASPRINTF
+  char **s=malloc(sizeof(char *));
+#else
+  /* Just long enough for 255 chars of $HOME plus filename. */
+  char *s=(char *) malloc(258+strlen(DEFAULTRC));
+#endif
+  char *startmenu=NULL;
+  Menu_Type *m;
+  int menu_opt_flag=0;
+  extern int optind;
+  extern char *optarg;
+  
 #ifdef HAVE_GETOPT_LONG
-	struct option long_options[] = {
-		{"help", 0, NULL, 'h'},
-		{"color", 0, NULL, 'c'},
-		{"quit", 0, NULL, 'q'},
-		{0, 0, 0, 0}
-	};
+  struct option long_options[] = {
+    {PARAM_LONG_HELP,0,NULL,PARAM_SHORT_HELP},
+    {PARAM_LONG_COLOR,0,NULL,PARAM_SHORT_COLOR},
+    {PARAM_LONG_QUIT,0,NULL,PARAM_SHORT_QUIT},
+    {PARAM_LONG_UNPARK,0,NULL,PARAM_SHORT_UNPARK},
+    {PARAM_LONG_VERSION,0,NULL,PARAM_SHORT_VERSION},
+    {PARAM_LONG_MENU,1,NULL,PARAM_SHORT_MENU},
+    {PARAM_LONG_RETRO,0,NULL,PARAM_SHORT_RETRO},
+    {PARAM_LONG_LOWBIT,0,NULL,PARAM_SHORT_LOWBIT},
+		{PARAM_LONG_NUMERIC,0,NULL,PARAM_SHORT_NUMERIC},
+    {0, 0, 0, 0}
+  };
 #endif
 
 #if defined (HAVE_GETOPT_LONG) || defined (HAVE_GETOPT)
-	int c=0;
-	while (c != -1) {
+  int c=0;
+
+  while (c != -1) {
 #ifdef HAVE_GETOPT_LONG
-		c=getopt_long(argc,argv,"hcq",long_options,NULL);
+    c=getopt_long(argc,argv,PARAM_SHORT_ALL,long_options,NULL);
 #elif HAVE_GETOPT
-		c=getopt(argc,argv,"hcq");
+    c=getopt(argc,argv,PARAM_SHORT_ALL);
 #endif
-		switch (c) {		
-		case 'q': /* 'q' does not exit pdmenu */
-			Q_Exits=0;
+    switch (c) {
+    case PARAM_SHORT_QUIT: /* 'q' does not exit pdmenu. */
+      Q_Exits=0;
+      break;
+    case PARAM_SHORT_COLOR: /* Use colors. */
+      Use_Color=1;
+      break;
+    case PARAM_SHORT_HELP:
+      usage(); /* exits program */
+    case PARAM_SHORT_UNPARK: /* Unpark cursor. */
+      Unpark_Cursor=1;
+      break;
+    case PARAM_SHORT_MENU: /* Display a particular menu on start. */
+      menu_opt_flag=1;
+      startmenu=malloc(strlen(optarg)+1);
+      strcpy(startmenu,optarg);
+      break;
+    case PARAM_SHORT_VERSION:
+      version(); /* exits program */
+    case PARAM_SHORT_RETRO:
+      Retro=1;
+      break;
+    case PARAM_SHORT_LOWBIT:
+      Lowbit=1;
+      break;
+		case PARAM_SHORT_NUMERIC:
+			/*
+			 * Override the default values for up and down, so 2 and 8 
+			 * can be used for hotkeys instead. 
+			 */
+			Numeric=1;
 			break;
-		case 'c': /* Use colors. */
-			Use_Color=1;
-			break;
-		case 'h':
-			usage();
-		}
-	}
+    }
+  }
 #else
-	optind=1;
+  optind=1;
 #endif /* have one of the getopts */
 
-	if (optind < argc) {
-		while (optind < argc)
-			ReadRc(argv[optind++],RC_FILE);
-		ret=1;
-	}
-	return(ret);
-}
-
-/* Figure out the correct rc file, read it, parse params. */
-void GetConfig (int argc, char **argv) {
-	char home[258+strlen(DEFAULTRC)]; /* Just long enough for 255 chars of $HOME plus filename. */
-	char *s;
-
-	if ((ParseParams(argc,argv)==0) || (NumMenus==0)) {
-		s=home;
-		strncpy(s,getenv("HOME"),255);
- 		strcat(s,"/.");
-		strcat(s,DEFAULTRC);
-		if ((ReadRc(s,RC_FILE)==0) || (NumMenus==0)) {
-			strcpy(s,ETCDIR);
-			strcat(s,DEFAULTRC);
-			if ((ReadRc(s,RC_FILE)==0) || (NumMenus==0)) {
-				fprintf(stderr,NO_RC_FILE);
-				exit(-1);
-			}
-		}
-	}
-}
-
-#ifdef PUTENV_FLAG_OK
-/* Run a command, and examine stdout for var=val lines, and set the environment
- * of this program appropriately.
- */
-void RunSetenv (char *command) {
-	FILE *pcommand;
-	static char str[MENU_ITEM_TEXTSIZE+1];
-	char *tmp=NULL;
-	
-	/* Get the command output */
-	pcommand=popen(command,"r");
-	while (fgets(str,MENU_ITEM_TEXTSIZE,pcommand)!=NULL) {}
-	pclose(pcommand);
-
-	/* kill trailing \n */	
-
-	tmp=str;			
-	while((*tmp != '\0') && (*tmp != '\n'))
-		tmp++;
-	*tmp='\0';
-
-	if (strncmp(str,"PWD=",3)==0) /* PWD is a special case */
-		chdir(str+4);
-	else {
-		putenv(str);
-	}
-}
+  if (optind < argc) { /* we are asked to process a rc file */
+    while (optind < argc)
+      ReadRc(argv[optind++],RC_FILE);
+  }
+  else { /* fallback rc files */
+#ifdef HAVE_ASPRINTF
+    asprintf(s,"%s/.%s",getenv("HOME"),DEFAULTRC);
+    if ((ReadRc(*s,RC_FILE)==0) || (!menus)) {
+      asprintf(s,"%s/%s",ETCDIR,DEFAULTRC);
+      ReadRc(*s,RC_FILE);
+#else
+    strncpy(s,getenv("HOME"),255);
+    strcat(s,"/.");
+    strcat(s,DEFAULTRC);
+    if ((ReadRc(s,RC_FILE)==0) || (!menus)) {
+      strcpy(s,ETCDIR);
+      strcat(s,DEFAULTRC);
+      ReadRc(s,RC_FILE);
 #endif
+    }
+  }
 
-/* Run a command, and display its output in a window */
-void RunShow (char *title, char *command) {
-	FILE *pcommand;
-	char *message[MAX_ITEMS_IN_MENU+1];
-	char str[MENU_ITEM_TEXTSIZE+2];
-	int i=0,j;
+  SanityCheckMenus();
+  if (!menus) {
+    free(s);
+    Error(NO_RC_FILE);
+  }
 
-	/* Display wait text. */
-	DrawBase(WAITTEXT);
-	SLsmg_refresh();
-	
-	/* Get the command output */
-	pcommand=popen(command,"r");
-	while (fgets(str,MENU_ITEM_TEXTSIZE+1,pcommand)!=NULL) {
-		message[i]=(char *) malloc(MENU_ITEM_TEXTSIZE+1);
-		if (i+1==MAX_ITEMS_IN_MENU)
-			strncpy(str,TRUNCATED_STRING,MENU_ITEM_TEXTSIZE);
-		strcpy(message[i++],str);
-		if (i==MAX_ITEMS_IN_MENU) 
-			break;
-	}
-	pclose(pcommand);
-	if (i==0) {
-		message[i]=(char *) malloc(MENU_ITEM_TEXTSIZE);
-		strcpy(message[i++],NULL_OUTPUT);
-	}
-
-	/* Display it in a window */
-	ShowMessage(title,DEFAULT_MESSAGE_HELP,message,i);
-
-	for (j=0;j<i;j++) /* free the array */
-		free(message[j]);
-}
-
-/* Handle a control c by either exiting pdmenu or doing nothing */
-void Handle_Ctrl_C() {
-	if (Q_Exits==1) {
-		Screen_Reset();
-#ifdef GPM_SUPPORT
-		EndMouse(); 
-#endif
-		exit(0);
-	}
-}
-
-/* Process the string, replacing ~title:text~ flags with input from the user */
-/* Returns NULL if the user hits escape */
-char *EditTags(char *s) {
-	char ret[MENU_ITEM_COMMANDSIZE+MENU_ITEM_COMMANDSIZE];
-	char tagtitle[MENU_ITEM_COMMANDSIZE],tagbuf[MENU_ITEM_COMMANDSIZE];
-	int tagtitlecount,tagbufcount,retcount=0;
-	char *s2,*s3,*s4;
-	int i,i2,ok;
-
-	for (i=0;i<strlen(s);i++) {
-		if ((s[i] == '~') && (((i>0) && (s[i-1]!='\\')) || (i==0))) { /* Here's a tag, probably. Need to find its end. */
-			tagtitlecount=0;
-			i2=i;
-			ok=0;
-			for (i++;i<strlen(s);i++) {
-				if ((s[i]==':') && (s[i-1]!='\\')) { /* End of tag title */
-					tagtitle[tagtitlecount]='\0';
-					tagbufcount=0;
-					for (i++;i<strlen(s);i++) {
-						if ((s[i]=='~') && (s[i-1]!='\\')) { /* End of tag */
-							tagbuf[tagbufcount]='\0';
-							ok=1;
-							s2=tagbuf;
-							s3=tagtitle;
-							s4=DoInputBox(s3,s2);
-							if (s4 == NULL)
-								return NULL; /* user hit escape */
-							ret[retcount]='\0';
-							strcat(ret,s4);
-							retcount=retcount+strlen(s4);
-							break;
-						}
-						else
-							tagbuf[tagbufcount++]=s[i];
-					}
-					break;
-				}
-				else
-					tagtitle[tagtitlecount++]=s[i];
-			}
-			if (ok==0) 
-				i=i2; /* wasn't a tag, after all */
-		}
-		else 
-			ret[retcount++]=s[i];
-	}
-	ret[retcount]='\0';
-	s2=ret;
-	return s2;
-}
-
-/* Run the command that is selected in the passed menu */
-void RunCommand (Menu_Type *m) {
-	char *command;
-
-	if (m->items[m->selected].command[0]!='\0') { /* don't try to run a null command */
-		command=m->items[m->selected].command;
-
-		if (strchr(m->items[m->selected].flags,EDIT_FLAG)!=NULL) /* edit command on fly */
-			command=EditTags(command);
-			if (command == NULL)
-				return; /* user hit escape */
-
-#ifdef PUTENV_FLAG_OK
-		if (strchr(m->items[m->selected].flags,PUTENV_FLAG)!=NULL) { /* a putenv command */
-			RunSetenv(command);
-		}
-		else
-#endif
-
-		if (strchr(m->items[m->selected].flags,DISPLAY_FLAG)==NULL) { /* normal display */
-			if (strchr(m->items[m->selected].flags,NO_CLEAR_FLAG)==NULL) { /* clear screen */
-				SLsmg_cls();
-				SLsmg_normal_video();
-				Screen_Reset();
-#ifdef GPM_SUPPORT
-				EndMouse(); /* return to normal GPM/selection mode */
-#endif
-			}
-
-			system(command);
-	
-			if (strchr(m->items[m->selected].flags,NO_CLEAR_FLAG)==NULL) { /* redraw screen */
-				Screen_Init();
-			
-				if (strchr(m->items[m->selected].flags,PAUSE_FLAG)!=NULL) {  /* pause 1st */
-					printf(PRESS_ENTER_STRING);
-					fflush(stdout); /* make sure above is displayed. */
-					SLang_getkey();
-					SLang_flush_input(); /* kill any buffered input */
-				}
-
-#ifdef GPM_SUPPORT
-				gpm_ok=InitMouse(); /* grab mouse pointer again. */
-#endif
-
-				/* Has the screen been resized lately? */
-				if (Want_Screen_Resize == 1)
-					Resize_Screen();
-				DrawAll();
-			}
-		}
-		else /* display in window */
-			RunShow(m->items[m->selected].text,command);
-	}
-}
-
-/* Display the submenu that is selected in the passed menu */
-void ShowSubMenu (Menu_Type *m) {
-	int c;
-
-	/* find matching menu, if any */
-	for (c=0;c<NumMenus;c++) {
-		if (strcasecmp(m->items[m->selected].command,menus[c].name)==0) {
-			/* got match -- show it and handle input for it. */
-			m=menus+c;
-			AddWindow(c);
-			DrawAll();
-			do {
-				c=DoMenu(m,Pdmenu_Action,Handle_Ctrl_C);
-				if ((c==QUIT_EXIT) || (c==Q_KEY_EXIT))
-					m=ExitWindow(m);
-			} while (c==0);
-			break;
-		}
-	}
-}
-
-/* Handle a pdmenu menu, runnnig commands on it, and exiting if neccessary */
-int Pdmenu_Action (Menu_Type *m) {
-
-	switch (m->items[m->selected].type) {
-		case MENU_EXEC:
-			RunCommand(m);
-			return 0;
-		case MENU_SHOW:
-			ShowSubMenu(m);
-			return 0;
-		case MENU_EXIT:
-			return QUIT_EXIT;
-		default:
-			return 0;
-	}
+  if (menu_opt_flag) { /* menu to display was specified on the command line. */
+    m=LookupMenu(startmenu);
+    if (m) {
+      free(s);
+      free(startmenu);
+      return m;
+    }
+    /* Couldn't find the menu if we get to here. */
+    Error(NO_SUCH_MENU,startmenu);
+    exit(1); /* just here to shut up gcc -wall */
+  }
+  else { /* display first menu we read that still exists */
+    free(s);
+    /*
+     * Sigh I wish we displayed the last menu to appear, then I wouln't 
+     * need this loop. Backwards-compatability sucks..
+     */
+    m=menus;
+    while (m->last)
+      m=m->last;
+    return m;
+  }
 }
 
 int main (int argc, char **argv) {
-	Menu_Type *m;
-	int ret;
+  Menu_Type *m;
+  int ret;
 
-	NumMenus=0;
-	NumOnScreen=-1;
-	Use_Color=!(getenv("COLORTERM")==NULL); /* If COLORTERM is set, use color by default */
-	Q_Exits=1;
+  menus=NULL;
+  CurrentWindow=NULL;
 
-	/* SLang screen objects and their default colors */
-	strcpy(ScreenObjNames[1],DESKTOP_NAME);	
-	strcpy(FG[0],DESKTOP_FG_DEFAULT);	
-	strcpy(BG[0],DESKTOP_BG_DEFAULT);
-	strcpy(ScreenObjNames[2],TITLE_NAME);	
-	strcpy(FG[1],TITLE_FG_DEFAULT);	
-	strcpy(BG[1],TITLE_BG_DEFAULT);
-	strcpy(ScreenObjNames[3],BASE_NAME);	
-	strcpy(FG[2],BASE_FG_DEFAULT);	
-	strcpy(BG[2],BASE_BG_DEFAULT);
-	strcpy(ScreenObjNames[4],MENU_NAME);	
-	strcpy(FG[3],MENU_FG_DEFAULT);	
-	strcpy(BG[3],MENU_BG_DEFAULT);
-	strcpy(ScreenObjNames[5],SELBAR_NAME);	
-	strcpy(FG[4],SELBAR_FG_DEFAULT);	 
-	strcpy(BG[4],SELBAR_BG_DEFAULT);
-	strcpy(ScreenObjNames[6],SHADOW_NAME);	
-	strcpy(FG[5],SHADOW_FG_DEFAULT);	
-	strcpy(BG[5],SHADOW_BG_DEFAULT);
-	strcpy(ScreenObjNames[7],MENU_HI_NAME);	
-	strcpy(FG[6],MENU_HI_FG_DEFAULT);	
-	strcpy(BG[6],MENU_HI_BG_DEFAULT);
-	strcpy(ScreenObjNames[8],SELBAR_HI_NAME);	
-	strcpy(FG[7],SELBAR_HI_FG_DEFAULT);	
-	strcpy(BG[7],SELBAR_HI_BG_DEFAULT);
+  /* If COLORTERM is set, use color by default */
+  Use_Color=!(getenv("COLORTERM")==NULL);
+  Q_Exits=1;
+  Unpark_Cursor=0;
 
-	/* Parse parameters and load pdmenurc file. */
-	GetConfig(argc,argv);
-	SanityCheckMenus();
+  /* SLang screen objects and their default colors */
+  strcpy(ScreenObjNames[1],DESKTOP_NAME);	
+  strcpy(FG[0],DESKTOP_FG_DEFAULT);	
+  strcpy(BG[0],DESKTOP_BG_DEFAULT);
+  strcpy(ScreenObjNames[6],TITLE_NAME);	
+  strcpy(FG[5],TITLE_FG_DEFAULT);	
+  strcpy(BG[5],TITLE_BG_DEFAULT);
+  strcpy(ScreenObjNames[3],BASE_NAME);	
+  strcpy(FG[2],BASE_FG_DEFAULT);	
+  strcpy(BG[2],BASE_BG_DEFAULT);
+  strcpy(ScreenObjNames[4],MENU_NAME);	
+  strcpy(FG[3],MENU_FG_DEFAULT);	
+  strcpy(BG[3],MENU_BG_DEFAULT);
+  strcpy(ScreenObjNames[5],SELBAR_NAME);	
+  strcpy(FG[4],SELBAR_FG_DEFAULT);	 
+  strcpy(BG[4],SELBAR_BG_DEFAULT);
+  strcpy(ScreenObjNames[2],SHADOW_NAME);	
+  strcpy(FG[1],SHADOW_FG_DEFAULT); /* note that shadows have to be color #1 */
+  strcpy(BG[1],SHADOW_BG_DEFAULT); /* Slsmg_write_raw is weird that way */
+  strcpy(ScreenObjNames[7],MENU_HI_NAME);	
+  strcpy(FG[6],MENU_HI_FG_DEFAULT);	
+  strcpy(BG[6],MENU_HI_BG_DEFAULT);
+  strcpy(ScreenObjNames[8],SELBAR_HI_NAME);	
+  strcpy(FG[7],SELBAR_HI_FG_DEFAULT);	
+  strcpy(BG[7],SELBAR_HI_BG_DEFAULT);
+  strcpy(ScreenObjNames[9],UNSEL_MENU_NAME);
+  strcpy(FG[8],UNSEL_MENU_FG_DEFAULT);
+  strcpy(BG[8],UNSEL_MENU_BG_DEFAULT);
+  
+  /* Parse parameters and load pdmenurc file. */
+  m=GetConfig(argc,argv);
 
-	/* color or b&w? Tell slang */
-	if (Use_Color==1) { /* color */
- 		DESKTOP=1;
-		TITLE=2;
-		BASE=3;
-		MENU=4;
-		SELBAR=5;
-		SHADOW=6;
-		MENU_HI=7;
-		SELBAR_HI=8;
-	}
-	else { /* b&w: those numbered greater than 1 are inverse. */
-		DESKTOP=0;
-		TITLE=2;
-		BASE=2;
-		MENU=0;
-		SELBAR=2;
-		SHADOW=0;
-		MENU_HI=2;
-		SELBAR_HI=0;
-	}
+  /* color or b&w? Tell slang */
+  if (Use_Color) { /* color */
+    DESKTOP=0;
+    TITLE=6;
+    BASE=3;
+    MENU=4;
+    SELBAR=5;
+    SHADOW=2;
+    MENU_HI=7;
+    SELBAR_HI=8;
+    UNSEL_MENU=9;
+  }
+  else { /* b&w: those numbered greater than 1 are inverse. */
+    DESKTOP=0;
+    TITLE=2;
+    BASE=2;
+    MENU=0;
+    SELBAR=2;
+    SHADOW=0;
+    MENU_HI=2;
+    SELBAR_HI=0;
+    UNSEL_MENU=0;
+  }
 
-	Screen_Init();
-
-	Screen_Setcolors();
+  Screen_Init();
+  Screen_Setcolors();
   SetScreensize();
 
 #ifdef GPM_SUPPORT
-	gpm_ok=InitMouse();
+  gpm_ok=InitMouse();
 #endif
 
-	m=menus+0; /* point m to our first menu */
+  AddWindow(m);
+  DrawAll();
 
-	AddWindow(0);
-	DrawAll();
-
-	do {
-		ret=DoMenu(m,Pdmenu_Action,Handle_Ctrl_C);
-	} while ((ret!=QUIT_EXIT) && !((ret==Q_KEY_EXIT) && (Q_Exits)));
+  do {
+    ret=DoMenu(m,Pdmenu_Action,Handle_Ctrl_C);
+  } while ((ret!=QUIT_EXIT) && !((ret==Q_KEY_EXIT) && (Q_Exits)));
 
 #ifdef GPM_SUPPORT
-	EndMouse(); 
+  EndMouse(); 
 #endif
-
-	Screen_Reset();
-	return 0;                  
+  Screen_Reset();
+  return 0;                  
 }
