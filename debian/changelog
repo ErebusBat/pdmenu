@@ -1,3 +1,11 @@
+pdmenu (1.2.49) unstable; urgency=low
+
+  * First actual code change since february. Fixed a problem with pdmenu not
+    closing the mouse when it runs programs. gpm_active was not being set.
+    Thanks to Kevin Ryde for pinpointing the problem. (Closes: #46627)
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon,  4 Oct 1999 15:03:28 -0700
+
 pdmenu (1.2.48) unstable; urgency=low
 
   * Fixed probable error in redhat spec file, uses FHS man pages now.
