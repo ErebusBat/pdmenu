@@ -29,15 +29,21 @@ Window_List_Type *FirstWindow;
 
 /* Draw the whole screen, with menus on it. */
 void DrawAll () {
+  static char *greeting = NULL;
   Window_List_Type *this_window=FirstWindow;
 
+  if (!greeting) {
+    greeting = malloc(256);
+    sprintf(greeting, _("Welcome to Pdmenu %s by Joey Hess <joey@kitenet.net>"), VER);
+  }
+   
   DrawTitle(ScreenTitle);
   DrawDesktop();
 
   if (strlen(CurrentWindow->menu->helptext)>0)
     DrawBase(CurrentWindow->menu->helptext);
   else
-    DrawBase(_("Welcome to Pdmenu " VER " by Joey Hess <joey@kitenet.net>"));
+    DrawBase(greeting);
   
   /* Follow the linked list, but do not process the last element. */
   while (this_window->next) {

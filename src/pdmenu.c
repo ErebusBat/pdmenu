@@ -29,7 +29,7 @@ void usage() {
   printf (_("\
 Usage: pdmenu [options] [menufiles ..]\n\
 \tmenufiles                 the rc files to read instead of\n\
-\t                          ~/.pdmenurc or " ETCDIR "pdmenurc\n\
+\t                          ~/.pdmenurc or %spdmenurc\n\
 \t-h        --help          display this help\n\
 \t-c        --color         enable color\n\
 \t-u        --unpark        cursor moves to current selection\n\
@@ -38,7 +38,7 @@ Usage: pdmenu [options] [menufiles ..]\n\
 \t-v        --version       show version information\n\
 \t-r        --retro         draw menus using old style\n\
 \t-l        --lowbit        do not use high bit line drawing characters\n\
-\t-n        --numeric       do not use 8 and 2 for moving up and down\n"));
+\t-n        --numeric       do not use 8 and 2 for moving up and down\n"),ETCDIR);
 #if defined (HAVE_GETOPT_LONG)
 #else
   printf ("%s\n", _("(Long options are disabled.)"));
@@ -48,7 +48,7 @@ Usage: pdmenu [options] [menufiles ..]\n\
 
 /* Display version information then quit */
 void version() {
-  printf ("%s\n", _("Pdmenu " VER " GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>"));
+  printf (_("Pdmenu %s GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>\n"),VER);
   exit(0);
 }
 

@@ -36,6 +36,7 @@ distclean: clean
 
 clean:
 	$(MAKE) -C po clean
+	$(MAKE) -C po pdmenu.pot # make sure translators' input is ready
 	rm -f src/*.o pdmenu
 
 install: all
