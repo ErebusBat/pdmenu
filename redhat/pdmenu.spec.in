@@ -16,7 +16,7 @@ login shell for inexperienced users.
 
 %prep
 %setup
-./configure --prefix=/usr --sysconfdir=/etc
+./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
 
 %build
 make
