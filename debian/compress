@@ -1,6 +1,0 @@
-# Don't compress examples.
-find usr/share/info usr/info usr/share/man usr/man usr/X11*/man -type f
-find usr/share/doc usr/doc -type f \
-	\( -size +4k -or -name "changelog*" \) \
-	! -name "*.htm*" ! -name "*.gif" \
-	! -name "copyright" | grep -v examples/

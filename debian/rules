@@ -32,14 +32,15 @@ binary-arch: build
 	dh_installmenu
 	dh_installmanpages
 	dh_installdocs doc/BUGS README doc/TODO doc/ANNOUNCE
-	dh_installexamples
+	dh_installexamples examples/pdmenurc.monitor examples/pdmenurc \
+		examples/pdmenurc.complex examples/README examples/ba.lpd
 	# Examples dh_installexamples cannot handle installing.
 	install -d debian/tmp/usr/share/doc/pdmenu/examples/newbie
 	install examples/newbie/{pdmenurc.newbie,rpm-info-on-command,modem-check} \
 		debian/tmp/usr/share/doc/pdmenu/examples/newbie
 	dh_installchangelogs
 	dh_link var/lib/pdmenu/.pdmenurc_auto var/lib/pdmenu/pdmenurc_auto
-	dh_compress
+	dh_compress -X examples/
 	dh_installdeb
 	dh_shlibdeps
 	dh_gencontrol

@@ -1,3 +1,9 @@
+pdmenu (1.2.64) unstable; urgency=low
+
+  * Killed the debian/compress file, using -X to dh_compress instead.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 20 Aug 2000 18:28:38 -0700
+
 pdmenu (1.2.63) unstable; urgency=low
 
   * Applied a patch from Kees Schoenmakers <KeesS@milltronics.com>
