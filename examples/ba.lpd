@@ -67,7 +67,7 @@ menu:main:Bear Access for Unix
 	  show:::kerb
 	  remove:::kerb
 	endgroup
-	exec:Mail::pine -i
+	exec:Mail::mutt
         exec:Traveler's Mail::$telnet tmail.mail.cornell.edu
 	exec:CUInfo via web::$browser http://www.cornell.edu/
 	exec:CUInfo/WWW via Telnet::$telnet www.cornell.edu

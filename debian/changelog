@@ -1,3 +1,10 @@
+pdmenu (1.2.79) unstable; urgency=low
+
+  * Detect 2 queued escapes and assume the first one is a literal escape.
+  * s/pine/mutt/ on example menus
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 18 Mar 2003 17:24:57 -0800
+
 pdmenu (1.2.78) unstable; urgency=low
 
   * Fixed some problems with sample menus in pdmenurc(5). Closes: #183978

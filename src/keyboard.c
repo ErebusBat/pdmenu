@@ -15,14 +15,24 @@ int getch (void) {
 
   if (tcgetpgrp(0) == -1) return 033; /* Detect if the terminal went away. */
   
-  while (0 == SLang_input_pending(1000))
+  while (SLang_input_pending(1000) == 0)
     continue;
 
   ch = SLang_getkey();
 
   if (ch == 033) {	/* escape */
-    if (0 == SLang_input_pending(TIMEOUT))
+    if (SLang_input_pending(TIMEOUT) == 0) {
       return 033;
+    }
+    else {
+      /* If two or more escapes are queued up, assume the first is a
+       * "real" escape, and not part of some escape sequance. */
+      int ch2 = SLang_getkey();
+      SLang_ungetkey(ch2);
+      if (ch2 == 033) {
+	return 033;
+      }
+    }
   }
 
   SLang_ungetkey(ch);

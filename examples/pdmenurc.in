@@ -17,7 +17,7 @@ menu:main:Main Menu
 
 # This is a submenu.
 menu:internet:Internet:Internet programs
-	exec:_Mail::pine -i
+	exec:_Mail::putt
 	exec:_News::slrn -C -n
 	exec:_WWW::lynx http://www.yahoo.com/
         exec:_Talk:edit,pause:ytalk -x ~Talk to who?:joey~
