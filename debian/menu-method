@@ -20,6 +20,7 @@ genmenu=".pdmenurc_auto.new"
 
 # Where the system wide generated file is placed.
 rootprefix="/var/lib/pdmenu/"
+onlyrunasroot=true
 
 # Title of the top level menu that is made.
 mainmenutitle="Debian Menus"
