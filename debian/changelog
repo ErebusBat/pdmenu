@@ -1,3 +1,9 @@
+pdmenu (1.2.62) unstable; urgency=low
+
+  * Fixed a dead email address.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 31 Jul 2000 14:45:03 -0700
+
 pdmenu (1.2.61) unstable; urgency=low
 
   * Conflicts with older versions of menu that don't support onlyrunasroot.

@@ -2,7 +2,7 @@
 
 # Bear Access Launchpad based on pdmenu
 # This file by Randolph Chung <rc42@cornell.edu> 9/25/97
-# Pdmenu is written by Joey Hess <joey@kite.ml.org>
+# Pdmenu is written by Joey Hess <joey@kitenet.net>
 #   requires pdmenu version >= 1.2
 #   also uses several basic GNU utilities: date, grep, mkfifo and tail
 
