@@ -1,10 +1,10 @@
 Summary: A simple text-based menu program
 Name: pdmenu
 Packager: jeff.covey@pobox.com
-Version: 1.2.71
+Version: 1.2.72
 Release: 1
 Url: http://kitenet.net/programs/pdmenu/
-Source: ftp://kitenet.net/pub/code/pdmenu/pdmenu_1.2.71.tar.gz
+Source: ftp://kitenet.net/pub/code/pdmenu/pdmenu_1.2.72.tar.gz
 Copyright: GPL
 Group: Shells/Menus
 Buildroot: /tmp

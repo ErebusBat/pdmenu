@@ -82,7 +82,7 @@ void CalcMenu (Menu_Type *m) {
   char *s;
 
   /*
-   * NOTE: if we are in B&W mode (SLtt_Use_Ansi_Colors==0), then we don't
+   * If we are in B&W mode (SLtt_Use_Ansi_Colors==0), then we don't
    * need to allocate space for shadows. 
    */
 	
@@ -453,8 +453,8 @@ void RemoveMenu(Menu_Type *m) {
   Menu_Item_Type *next_item, *this_item;
 
   /* Check to see if this menu is currently visible onscreen */
-//  if (IsVisible(m))
-//    Error(_("Attempt to remove menu \"%s\" failed: menu is on screen."),m->name);
+  if (IsVisible(m))
+    Error(_("Attempt to remove menu \"%s\" failed: menu is on screen."),m->name);
 
   /* Check to see if this is the menu new rc lines add to. */
   /*  if (current_rc_menu == m)
@@ -476,29 +476,29 @@ void RemoveMenu(Menu_Type *m) {
   }
 
   /* Free other parts of the menu structure. */
-//  free(m->name);
-//  free(m->title);
-//  free(m->helptext);
+  free(m->name);
+  free(m->title);
+  free(m->helptext);
 
   /* Remove the menu from the linked list. */
-//  if (m->last)
-//    m->last->next=m->next;
-// if (m->next)
-//    m->next->last=m->last;
-//  else {
+  if (m->last)
+    m->last->next=m->next;
+ if (m->next)
+    m->next->last=m->last;
+  else {
     /* 
      * No next menu means this is the last menu. So we need to change menus to
      * point to the menu before this one. Of course, if that menu is 
      * nonexistant, there are no menus at all left.
      */
-//    if (m->last)
-//      menus=m->last;
-//    else
-//      menus=NULL;
-//  }
+    if (m->last)
+      menus=m->last;
+    else
+      menus=NULL;
+  }
 
   /* Finally, free the menu */
-//  free(m);
+  free(m);
 }
 
 /* 
