@@ -1,3 +1,15 @@
+pdmenu (1.2.68) unstable; urgency=low
+
+  * Need to rebuild pdmenu now that slang has gone back to non-multibyte
+    because the shadow code uses macros that determine if it is multibyte
+    or not at compile time. A versioned build dep makes sure all the ports
+    will build with the right version. This fixes shadows yet again.
+  * Gpm is not used for the hurd. 
+  * BTW, pdmenu's gpm support at the linux console on devfs systems is
+    broken; this is a bug in gpm.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 25 Jun 2001 21:45:09 -0400
+
 pdmenu (1.2.67) unstable; urgency=low
 
   * Shadows are fixed, thanks to Edmund GRIMLEY EVANS <edmundo@rano.org>
