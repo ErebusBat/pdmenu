@@ -1,11 +1,8 @@
 #!/usr/bin/make -f
 
-PATH += :debian
-
 build: link-stamp build-stamp
 build-stamp:
 	dh_testdir
-	# Shadows are broken because debian uses a wide patched slang.
 	./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
 	$(MAKE)
 	touch build-stamp
@@ -15,32 +12,22 @@ clean:
 	dh_testroot
 	dh_clean
 	-$(MAKE) distclean
-	rm -f build-stamp
+	rm -f build-stamp link-stamp
 
-# Build architecture-independent files here.
 binary-indep: build
-	# We have nothing to do by default.
 
-# Build architecture-dependent files here.
 binary-arch: build
 	dh_testdir
 	dh_testroot
 	dh_clean
-	$(MAKE) INSTALL_PREFIX=debian/tmp install
-	install -m 0644 debian/pdmenurc.debian debian/tmp/etc/pdmenurc
-	install -d debian/tmp/var/lib/pdmenu debian/tmp/usr/lib/pdmenu
-	install debian/cpp.pl debian/tmp/usr/lib/pdmenu/
+	$(MAKE) INSTALL_PREFIX=debian/pdmenu install
+	dh_install debian/pdmenurc etc
+	dh_install debian/cpp.pl usr/lib/pdmenu
+	dh_installdirs var/lib/pdmenu
 	dh_installmenu
 	dh_installmanpages
 	dh_installdocs doc/BUGS README doc/TODO doc/ANNOUNCE
-	dh_installexamples examples/pdmenurc.monitor examples/pdmenurc \
-		examples/pdmenurc.complex examples/README examples/ba.lpd
-	# Examples dh_installexamples cannot handle installing.
-	install -d debian/tmp/usr/share/doc/pdmenu/examples/newbie
-	install examples/newbie/pdmenurc.newbie \
-		examples/newbie/rpm-info-on-command \
-		examples/newbie/modem-check \
-		debian/tmp/usr/share/doc/pdmenu/examples/newbie
+	dh_installexamples -X.in examples/*
 	dh_installchangelogs
 	dh_link var/lib/pdmenu/.pdmenurc_auto var/lib/pdmenu/pdmenurc_auto
 	dh_compress -X examples/

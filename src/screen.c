@@ -20,6 +20,8 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <libintl.h>
+#define _(String) gettext (String)
 
 /* equals 1 if the screen is set up in slang mode */
 int screen_is_setup=0;
@@ -156,7 +158,7 @@ void Screen_Init () {
     if (SLkp_init_ran != 1) {
       if (SLkp_init() == -1) {
 	SLsig_unblock_signals();
-	Error(KP_INIT_ERROR);
+	Error(_("Unable to initialize key mappings."));
       }
       SLkp_init_ran=1;
     }
@@ -202,5 +204,5 @@ void SetScreensize () {
   SLtt_get_screen_size();
 
   if ((SLtt_Screen_Rows < MIN_ROWS) || (SLtt_Screen_Cols < MIN_COLS))
-    Error(SCREEN_TOOSMALL);
+    Error(_("Error: The screen is too small."));
 }

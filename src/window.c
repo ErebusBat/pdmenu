@@ -1,7 +1,7 @@
 /* Handles a set of windows on screen. */
 
 /*
- * Copyright (c) 1995-1999 Joey Hess (joey@kitenet.net)
+ * Copyright (c) 1995-2002 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
@@ -14,8 +14,9 @@
 #include "rc.h"
 #include "error.h"
 #include <stdlib.h>
-#include <strings.h>
 #include <string.h>
+#include <libintl.h>
+#define _(String) gettext (String)
 
 /*
  * This is a pointer to the first window that pdmenu pops up.
@@ -36,7 +37,7 @@ void DrawAll () {
   if (strlen(CurrentWindow->menu->helptext)>0)
     DrawBase(CurrentWindow->menu->helptext);
   else
-    DrawBase(DEFAULTBASE);
+    DrawBase(_("Welcome to Pdmenu " VER " by Joey Hess <joey@kitenet.net>"));
   
   /* Follow the linked list, but do not process the last element. */
   while (this_window->next) {

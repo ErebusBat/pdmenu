@@ -4,7 +4,7 @@
 # only understands #define, #endif, and #ifdef. It cannot handle nested 
 # #ifdef statements. And it doesn't mess with any lines not starting with "#".
 #
-# GNU copyright 1997, Joey Hess.
+# GPL copyright 1997, Joey Hess.
 
 chomp;
 if (/^#/) {

@@ -1,0 +1,134 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2002-05-22 18:52-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Display wait text.
+#: src/actions.c:95
+msgid "Please wait..."
+msgstr ""
+
+#: src/actions.c:108
+msgid "Press Esc to close window."
+msgstr ""
+
+#: src/actions.c:200
+msgid "Command returned no output"
+msgstr ""
+
+#. pause 1st
+#: src/actions.c:296
+msgid "Press Enter to return to Pdmenu."
+msgstr ""
+
+#: src/error.c:31
+msgid "pdmenu error: "
+msgstr ""
+
+#: src/inputbox.c:52 src/inputbox.c:76
+msgid "Press Enter when done, or Esc to cancel"
+msgstr ""
+
+#. They hit a bad key. Display help.
+#: src/menu.c:426
+msgid "Arrow keys move, Esc exits current menu, Enter runs program"
+msgstr ""
+
+#: src/pdmenu.c:28
+msgid ""
+"Usage: pdmenu [options] [menufiles ..]\n"
+"\tmenufiles                 the rc files to read instead of\n"
+"\t                          ~/.pdmenurc or "
+msgstr ""
+
+#: src/pdmenu.c:31
+msgid ""
+"pdmenurc\n"
+"\t-h        --help          display this help\n"
+"\t-c        --color         enable color\n"
+"\t-u        --unpark        cursor moves to current selection\n"
+"\t-q        --quit          'q' key does not exit program\n"
+"\t-mmenuid  --menu=menuid   display menu with this menuid on startup\n"
+"\t-v        --version       show version information\n"
+"\t-r        --retro         draw menus using old style\n"
+"\t-l        --lowbit        do not use high bit line drawing characters\n"
+"\t-n        --numeric       do not use 8 and 2 for moving up and down\n"
+msgstr ""
+
+#: src/pdmenu.c:43
+msgid "(Long options are disabled.)"
+msgstr ""
+
+#: src/pdmenu.c:50
+msgid "Pdmenu "
+msgstr ""
+
+#: src/pdmenu.c:50
+msgid " GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>"
+msgstr ""
+
+#: src/pdmenu.c:158
+msgid "Unable to find any pdmenurc files, or all pdmenurc files are empty."
+msgstr ""
+
+#. Couldn't find the menu if we get to here.
+#: src/pdmenu.c:169
+#, c-format
+msgid "Menu \"%s\" is not defined."
+msgstr ""
+
+#: src/pdmenu.c:196
+msgid "Pdmenu"
+msgstr ""
+
+#: src/rc.c:180
+#, c-format
+msgid "%s:%i Invalid screen part name, \"%s\"."
+msgstr ""
+
+#: src/rc.c:191
+#, c-format
+msgid "%s:%i \"endgroup\" found outside of group block."
+msgstr ""
+
+#: src/rc.c:195
+#, c-format
+msgid "%s:%i Invalid or misplaced keyword, \"%s\"."
+msgstr ""
+
+#: src/rc.c:232
+#, c-format
+msgid "%s:%i Nested \"group\" commands."
+msgstr ""
+
+#: src/rc.c:311
+#, c-format
+msgid "%s: \"group\" command used without \"endgroup\"."
+msgstr ""
+
+#: src/screen.c:161
+msgid "Unable to initialize key mappings."
+msgstr ""
+
+#: src/screen.c:207
+msgid "Error: The screen is too small."
+msgstr ""
+
+#: src/window.c:40
+msgid "Welcome to Pdmenu "
+msgstr ""
+
+#: src/window.c:40
+msgid " by Joey Hess <joey@kitenet.net>"
+msgstr ""

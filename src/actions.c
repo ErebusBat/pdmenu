@@ -14,7 +14,6 @@
 #include "inputbox.h"
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <math.h>
 #include <unistd.h>
 #include "slang.h"
@@ -28,6 +27,8 @@
 #include "../contrib/setenv.c"
 #endif
 #endif
+#include <libintl.h>
+#define _(String) gettext (String)
 
 /* Handle a control c by either exiting pdmenu or doing nothing. */
 void Handle_Ctrl_C() {
@@ -91,7 +92,7 @@ void RunShow (char *title, char *command, int truncate) {
   int i=0,j,k;
 
   /* Display wait text. */
-  DrawBase(WAITTEXT);
+  DrawBase(_("Please wait..."));
   SLsmg_refresh();
 
   /* allocate memory for the window */
@@ -103,8 +104,8 @@ void RunShow (char *title, char *command, int truncate) {
   /* load up the menu with the appropriate values */
   menus->title=malloc(strlen(title)+1);
   strcpy(menus->title,title);
-  menus->helptext=malloc(DEFAULT_MESSAGE_HELP_LEN);
-  strcpy(menus->helptext,DEFAULT_MESSAGE_HELP);
+  menus->helptext=malloc(128);
+  strcpy(menus->helptext,_("Press Esc to close window."));
   menus->name=malloc(1);
   strcpy(menus->name,"");
   menus->selected=0;
@@ -196,7 +197,7 @@ void RunShow (char *title, char *command, int truncate) {
 
   menus->num=i;
   if (i==0) {
-    DrawBase(NULL_OUTPUT);
+    DrawBase(_("Command returned no output"));
     SLsmg_refresh();
     RemoveMenu(menus);
   }
@@ -292,7 +293,7 @@ void RunCommand (Menu_Item_Type *i) {
 	  Screen_Init();
 			
 	  if (i->pause_flag) { /* pause 1st */
-	    printf(PRESS_ENTER_STRING);
+	    printf("\n%s",_("Press Enter to return to Pdmenu."));
 	    fflush(stdout); /* make sure above is displayed. */
 	    /* Now wait for the keypress. */
 	    SLang_getkey();

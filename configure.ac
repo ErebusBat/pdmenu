@@ -1,8 +1,17 @@
 dnl Written by Joey Hess <joey@kitenet.net> with some help from autoscan.
 dnl Process this file with autoconf to generate the configure script.
 
-AC_INIT(src/pdmenu.c)
+AC_INIT(pdmenu)
+AC_CONFIG_SRCDIR([src/pdmenu.c])
 AC_CONFIG_AUX_DIR(autoconf)
+
+PACKAGE=pdmenu
+AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE")
+AC_SUBST(PACKAGE)
+
+dnl List of all translations.
+ALL_LINGUAS=""
+AM_GNU_GETTEXT
 
 dnl Checks for programs.
 AC_PROG_CC
@@ -208,7 +217,7 @@ dnl Since the next step will make a new lsm file, remove all old
 dnl lsm files.
 rm -f doc/pdmenu-*.lsm
 
-AC_OUTPUT(makeinfo:autoconf/makeinfo.in
+AC_CONFIG_FILES([makeinfo:autoconf/makeinfo.in
 	doc/pdmenu.man
 	doc/pdmenurc.man
 	examples/pdmenurc
@@ -218,4 +227,6 @@ AC_OUTPUT(makeinfo:autoconf/makeinfo.in
 	src/slang.h
 	redhat/pdmenu.spec 
 	doc/pdmenu-$VER.lsm:doc/pdmenu.lsm.in
-)
+	po/Makefile:po/Makefile.in.in
+])
+AC_OUTPUT

@@ -1,9 +1,3 @@
-# Uncomment the following line to debug with Electric Fence.
-#EFENCE = -lefence
-
-# Uncomment the following to allow profiling.
-#PROFILE = -pg
-
 prefix		= @prefix@
 exec_prefix	= @exec_prefix@
 BINDIR		= @bindir@
@@ -15,72 +9,7 @@ INSTALL		= @INSTALL@
 LN_S		= @LN_S@
 VER		= @VER@
 DEFINES		= -DETCDIR=\"${SYSCONFDIR}/\" -DVER=\"${VER}\" @DEFS@ \
-		  $(PROFILE) -D__USE_FIXED_PROTOTYPES__ -D_GNU_SOURCE
-CFLAGS_FOR_GCC	= -Wall
+		  $(PROFILE) -D__USE_FIXED_PROTOTYPES__ -D_GNU_SOURCE \
+		  -DLOCALEDIR=\"@datadir@/locale\"
 CFLAGS		= $(DEFINES) @gcc_cflags@ @CFLAGS@
 LIBS		= @LIBS@ $(EFENCE)
-SRCDIR		= src
-
-#------------------- end user configurable section ------------------------#
-
-OBJFILES=$(SRCDIR)/pdmenu.o $(SRCDIR)/screen.o $(SRCDIR)/rc.o \
-	$(SRCDIR)/menu.o $(SRCDIR)/inputbox.o $(SRCDIR)/mouse.o \
-	$(SRCDIR)/keyboard.o $(SRCDIR)/pdstring.o $(SRCDIR)/actions.o \
-	$(SRCDIR)/window.o $(SRCDIR)/error.o $(SRCDIR)/pdgetline.o
-
-.c.o:
-	cd $(SRCDIR) && $(CC) -c ../$< $(CFLAGS)
-
-all: pdmenu
-pdmenu: .dep $(OBJFILES)
-	${CC} -o pdmenu $(OBJFILES) $(CFLAGS) $(LIBS)
-
-
-depend: .dep
-dep: .dep
-.dep: src/*.h src/*.c
-	mv makeinfo makeinfo.bak
-	awk '$$0 ~ /^# DO NOT REMOVE THIS LINE/ { exit } { print }'  \
-		< makeinfo.bak > makeinfo
-	-rm -f makeinfo.bak
-	echo "# DO NOT REMOVE THIS LINE" >> makeinfo
-	$(CC) -MM $(SRCDIR)/*.c | sed 's!^\(.*\)\.o[ :]!$(SRCDIR)/\1.o:!' \
-		>> makeinfo
-	touch .dep
-
-distclean: clean
-	find . -name '\#*\#' -o -name '*.bak' -o -name '.??*' -o \
-		-name '*~' -o -name '.gdb_history' -exec rm {} \;
-	rm -f examples/pdmenurc examples/pdmenurc.monitor \
-		examples/pdmenurc.complex examples/newbie/pdmenurc.newbie \
-		src/slang.h config.cache config.log config.status makeinfo \
-		.dep gmon.out
-
-clean:
-	rm -f src/*.o pdmenu
-
-install: all
-	$(INSTALL) -d $(INSTALL_PREFIX)/$(BINDIR) \
-		$(INSTALL_PREFIX)/$(MANDIR)/man1 \
-		$(INSTALL_PREFIX)/$(MANDIR)/man5 \
-		$(INSTALL_PREFIX)/$(SYSCONFDIR) \
-		$(INSTALL_PREFIX)/$(LIBDIR)
-	$(INSTALL) -s pdmenu $(INSTALL_PREFIX)/$(BINDIR)
-	$(INSTALL) doc/pdmenu.man $(INSTALL_PREFIX)/$(MANDIR)/man1/pdmenu.1 -m 0644
-	$(INSTALL) doc/pdmenurc.man $(INSTALL_PREFIX)/$(MANDIR)/man5/pdmenurc.5 -m 0644
-	if [ -e $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc ]; then \
-		echo "Backing up $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc to $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc.old .." ; \
-		cp $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc.old ; \
-	fi
-	$(INSTALL) examples/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc -m 0644
-	$(INSTALL) examples/showdir.pl $(INSTALL_PREFIX)/$(LIBDIR)
-	cd $(INSTALL_PREFIX)/$(LIBDIR) && $(LN_S) -f showdir.pl editdir.pl
-
-test: pdmenu
-	./pdmenu examples/pdmenurc
-
-debian:
-	dpkg-buildpackage -tc -rfakeroot
-
-.PHONY: debian test install clean distclean
-

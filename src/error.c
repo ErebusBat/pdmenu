@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <libintl.h>
+#define _(String) gettext (String)
 
 /* Display an error. The parameters work like printf() */
 void Error(const char *fmt, ...) {
@@ -26,7 +28,7 @@ void Error(const char *fmt, ...) {
   Screen_Reset();
 
   va_start(arglist, fmt);
-  fprintf(stderr, ERROR_HEADER);
+  fprintf(stderr, _("pdmenu error: "));
   vfprintf(stderr, fmt, arglist);
   fprintf(stderr, "\n");
   va_end(arglist);

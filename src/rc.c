@@ -14,9 +14,10 @@
 #include <stdio.h>
 #include "pdgetline.h"
 #include <string.h>
-#include <strings.h>
 #include <ctype.h>
 #include <stdlib.h>
+#include <libintl.h>
+#define _(String) gettext (String)
 
 /*
  * Passed a menu item and a character, set the flag on the menu item that
@@ -176,7 +177,7 @@ char ReadRc (char *fname,int type) {
 	}
       }
       if (i == NUMSCREENPARTS)
-      	Error(INVALID_SCREEN_PART,fname,line,tmp);
+      	Error(_("%s:%i Invalid screen part name, \"%s\"."),fname,line,tmp);
     }
     else if (strcasecmp(tmp,READ_KEYWORD)==0) { /* read in another file */
       ReadRc(pdstrtok(NULL,FIELD_DELIM),RC_FILE);
@@ -187,11 +188,11 @@ char ReadRc (char *fname,int type) {
 	current_rc_menu->num++;
       }
       else
-	Error(ENDGROUP_WITHOUT_GROUP,fname,line);
+	Error(_("%s:%i \"endgroup\" found outside of group block."),fname,line);
     }
     /* Everything from here on out requires a menu be set up first. */
     else if (!menus || current_rc_menu == NULL)
-      Error(INVALID_KEYWORD,fname,line,tmp);
+      Error(_("%s:%i Invalid or misplaced keyword, \"%s\"."),fname,line,tmp);
     else if ((strcasecmp(tmp,EXEC_KEYWORD)==0) ||
 	     (strcasecmp(tmp,SHOW_MENU_KEYWORD)==0) ||
 	     (strcasecmp(tmp,EXIT_KEYWORD)==0) ||
@@ -228,7 +229,7 @@ char ReadRc (char *fname,int type) {
 	  currentitem->type=MENU_GROUP;
 	}
 	else
-	  Error(NESTED_GROUP,fname,line);
+	  Error(_("%s:%i Nested \"group\" commands."),fname,line);
       }
       else if (strcasecmp(tmp,REMOVE_KEYWORD)==0)
 	currentitem->type=MENU_REMOVE;
@@ -296,7 +297,7 @@ char ReadRc (char *fname,int type) {
 	current_rc_menu->num++;
     }
     else
-      Error(INVALID_KEYWORD,fname,line,tmp);
+      Error("%s:%i Invalid or misplaced keyword, \"%s\".",fname,line,tmp);
 
     free(str);
   }
@@ -307,7 +308,7 @@ char ReadRc (char *fname,int type) {
     pclose(fp);
 
   if (ingroup != NULL)
-    Error(GROUP_WITHOUT_ENDGROUP,fname);
+    Error(_("%s: \"group\" command used without \"endgroup\"."),fname);
 
   return 1;
 }

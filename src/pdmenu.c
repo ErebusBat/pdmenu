@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1995-1999 Joey Hess (joey@kitenet.net)
+ * Copyright (c) 1995-2002 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
@@ -18,24 +18,36 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>
 #include <math.h>
 #include "slang.h"
-
+#include <libintl.h>
+#define _(String) gettext (String)
 
 /* Display usage info then quit */
 void usage() {
-  printf (USAGEHELP);
+  printf (_("\
+Usage: pdmenu [options] [menufiles ..]\n\
+\tmenufiles                 the rc files to read instead of\n\
+\t                          ~/.pdmenurc or " ETCDIR "pdmenurc\n\
+\t-h        --help          display this help\n\
+\t-c        --color         enable color\n\
+\t-u        --unpark        cursor moves to current selection\n\
+\t-q        --quit          'q' key does not exit program\n\
+\t-mmenuid  --menu=menuid   display menu with this menuid on startup\n\
+\t-v        --version       show version information\n\
+\t-r        --retro         draw menus using old style\n\
+\t-l        --lowbit        do not use high bit line drawing characters\n\
+\t-n        --numeric       do not use 8 and 2 for moving up and down\n"));
 #if defined (HAVE_GETOPT_LONG)
 #else
-  printf (NOLONGOPTS_MESSAGE);
+  printf ("%s\n", _("(Long options are disabled.)"));
 #endif
   exit(-1);
 }
 
 /* Display version information then quit */
 void version() {
-  printf (VERSION);
+  printf ("%s\n", _("Pdmenu " VER " GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>"));
   exit(0);
 }
 
@@ -48,7 +60,7 @@ Menu_Type *GetConfig (int argc, char **argv) {
   char **s=malloc(sizeof(char *));
 #else
   /* Just long enough for 255 chars of $HOME plus filename. */
-  char *s=(char *) malloc(258+strlen(DEFAULTRC));
+  char *s=(char *) malloc(258+strlen("pdmenurc"));
 #endif
   char *startmenu=NULL;
   Menu_Type *m;
@@ -58,15 +70,15 @@ Menu_Type *GetConfig (int argc, char **argv) {
   
 #ifdef HAVE_GETOPT_LONG
   struct option long_options[] = {
-    {PARAM_LONG_HELP,0,NULL,PARAM_SHORT_HELP},
-    {PARAM_LONG_COLOR,0,NULL,PARAM_SHORT_COLOR},
-    {PARAM_LONG_QUIT,0,NULL,PARAM_SHORT_QUIT},
-    {PARAM_LONG_UNPARK,0,NULL,PARAM_SHORT_UNPARK},
-    {PARAM_LONG_VERSION,0,NULL,PARAM_SHORT_VERSION},
-    {PARAM_LONG_MENU,1,NULL,PARAM_SHORT_MENU},
-    {PARAM_LONG_RETRO,0,NULL,PARAM_SHORT_RETRO},
-    {PARAM_LONG_LOWBIT,0,NULL,PARAM_SHORT_LOWBIT},
-		{PARAM_LONG_NUMERIC,0,NULL,PARAM_SHORT_NUMERIC},
+    {"help",0,NULL,'h'},
+    {"color",0,NULL,'c'},
+    {"quit",0,NULL,'q'},
+    {"unpark",0,NULL,'u'},
+    {"version",0,NULL,'v'},
+    {"menu",1,NULL,'m'},
+    {"retro",0,NULL,'r'},
+    {"lowbit",0,NULL,'l'},
+    {"numeric",0,NULL,'n'},
     {0, 0, 0, 0}
   };
 #endif
@@ -76,42 +88,42 @@ Menu_Type *GetConfig (int argc, char **argv) {
 
   while (c != -1) {
 #ifdef HAVE_GETOPT_LONG
-    c=getopt_long(argc,argv,PARAM_SHORT_ALL,long_options,NULL);
+    c=getopt_long(argc,argv,"hcquvm:rln",long_options,NULL);
 #elif HAVE_GETOPT
-    c=getopt(argc,argv,PARAM_SHORT_ALL);
+    c=getopt(argc,argv,"hcquvm:rln");
 #endif
     switch (c) {
-    case PARAM_SHORT_QUIT: /* 'q' does not exit pdmenu. */
+    case 'q': /* 'q' does not exit pdmenu. */
       Q_Exits=0;
       break;
-    case PARAM_SHORT_COLOR: /* Use colors. */
+    case 'c': /* Use colors. */
       Use_Color=1;
       break;
-    case PARAM_SHORT_HELP:
+    case 'h':
       usage(); /* exits program */
-    case PARAM_SHORT_UNPARK: /* Unpark cursor. */
+    case 'u': /* Unpark cursor. */
       Unpark_Cursor=1;
       break;
-    case PARAM_SHORT_MENU: /* Display a particular menu on start. */
+    case 'm': /* Display a particular menu on start. */
       menu_opt_flag=1;
       startmenu=malloc(strlen(optarg)+1);
       strcpy(startmenu,optarg);
       break;
-    case PARAM_SHORT_VERSION:
+    case 'v':
       version(); /* exits program */
-    case PARAM_SHORT_RETRO:
+    case 'r':
       Retro=1;
       break;
-    case PARAM_SHORT_LOWBIT:
+    case 'l':
       Lowbit=1;
       break;
-		case PARAM_SHORT_NUMERIC:
-			/*
-			 * Override the default values for up and down, so 2 and 8 
-			 * can be used for hotkeys instead. 
-			 */
-			Numeric=1;
-			break;
+    case 'n':
+	/*
+	 * Override the default values for up and down, so 2 and 8 
+	 * can be used for hotkeys instead. 
+	 */
+	Numeric=1;
+	break;
     }
   }
 #else
@@ -124,17 +136,17 @@ Menu_Type *GetConfig (int argc, char **argv) {
   }
   else { /* fallback rc files */
 #ifdef HAVE_ASPRINTF
-    asprintf(s,"%s/.%s",getenv("HOME"),DEFAULTRC);
+    asprintf(s,"%s/.%s",getenv("HOME"),"pdmenurc");
     if ((ReadRc(*s,RC_FILE)==0) || (!menus)) {
-      asprintf(s,"%s/%s",ETCDIR,DEFAULTRC);
+      asprintf(s,"%s/%s",ETCDIR,"pdmenurc");
       ReadRc(*s,RC_FILE);
 #else
     strncpy(s,getenv("HOME"),255);
     strcat(s,"/.");
-    strcat(s,DEFAULTRC);
+    strcat(s,"pdmenurc");
     if ((ReadRc(s,RC_FILE)==0) || (!menus)) {
       strcpy(s,ETCDIR);
-      strcat(s,DEFAULTRC);
+      strcat(s,"pdmenurc");
       ReadRc(s,RC_FILE);
 #endif
     }
@@ -143,7 +155,7 @@ Menu_Type *GetConfig (int argc, char **argv) {
   SanityCheckMenus();
   if (!menus) {
     free(s);
-    Error(NO_RC_FILE);
+    Error(_("Unable to find any pdmenurc files, or all pdmenurc files are empty."));
   }
 
   if (menu_opt_flag) { /* menu to display was specified on the command line. */
@@ -154,7 +166,7 @@ Menu_Type *GetConfig (int argc, char **argv) {
       return m;
     }
     /* Couldn't find the menu if we get to here. */
-    Error(NO_SUCH_MENU,startmenu);
+    Error(_("Menu \"%s\" is not defined."),startmenu);
     exit(1); /* just here to shut up gcc -wall */
   }
   else { /* display first menu we read that still exists */
@@ -174,10 +186,14 @@ int main (int argc, char **argv) {
   Menu_Type *m;
   int ret;
 
+  setlocale(LC_ALL, "");
+  bindtextdomain(PACKAGE,LOCALEDIR);
+  textdomain(PACKAGE);
+  
   menus=NULL;
   CurrentWindow=NULL;
 
-  ScreenTitle=strdup(DEFAULTTITLE);
+  ScreenTitle=strdup(_("Pdmenu"));
   
   /* If COLORTERM is set, use color by default */
   Use_Color=!(getenv("COLORTERM")==NULL);

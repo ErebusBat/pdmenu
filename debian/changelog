@@ -1,3 +1,13 @@
+pdmenu (1.2.70) unstable; urgency=low
+
+  * Updated to use debhelper v4.
+  * Updated to new autoconf.
+  * Moved non-substituted stuff from makeinfo to Makefile.
+  * Properly gettextized, rather than the wierd strings.h I made up way back
+    when. Translations, anyone?
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 22 May 2002 14:01:09 -0400
+
 pdmenu (1.2.69) unstable; urgency=low
 
   * Removed -fstrict-protoypes since gcc 3.0 does not understand it (why?)

@@ -11,11 +11,12 @@
 #include "window.h"
 #include <math.h>
 #include <string.h>
-#include <strings.h>
 #include <ctype.h>
 #include "slang.h"
 #include <stdlib.h>
 #include "error.h"
+#include <libintl.h>
+#define _(String) gettext (String)
 
 /* Highlight the hotkey of a given menu item, if there is a hotkey. */
 void HighlightHotkey (Menu_Type *m,int item,int highlight_color) {
@@ -422,7 +423,7 @@ int DoMenu (Menu_Type *m,int (*MenuAction)(), void (*Ctrl_C_Action)()) {
       if ((key=='q') || (key=='Q') || (key==27))
 	return Q_KEY_EXIT;
       /* They hit a bad key. Display help. */
-      DrawBase(HELPBASE);
+      DrawBase(_("Arrow keys move, Esc exits current menu, Enter runs program"));
       SLsmg_refresh();
     }
   }
@@ -453,7 +454,7 @@ void RemoveMenu(Menu_Type *m) {
 
   /* Check to see if this menu is currently visible onscreen */
 //  if (IsVisible(m))
-//    Error(REMOVE_ONSCREEN_MENU,m->name);
+//    Error(_("Attempt to remove menu \"%s\" failed: menu is on screen."),m->name);
 
   /* Check to see if this is the menu new rc lines add to. */
   /*  if (current_rc_menu == m)
