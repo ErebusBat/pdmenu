@@ -1,3 +1,9 @@
+pdmenu (1.2.75) unstable; urgency=low
+
+  * Don't use dh_installmanpages.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 13 Jun 2002 18:31:25 -0400
+
 pdmenu (1.2.74) unstable; urgency=low
 
   * Moved DEB_BUILD_OPTIONS cruft out of makeinfo.
