@@ -1,0 +1,18 @@
+#!/bin/sh
+set -e
+
+inst=/etc/menu-methods/pdmenu
+case "$1" in
+  remove)
+	chmod a-x $inst
+  ;;
+  purge)
+  ;;
+  upgrade);;
+  *)
+	echo "postrm called with unknown argument \`$1'" >&2
+	exit 0
+  ;;
+esac
+
+if [ -x /usr/bin/update-menus ] ; then update-menus; fi

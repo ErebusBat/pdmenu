@@ -1,0 +1,14 @@
+This is the first, yes, the first C program I ever wrote. if you're a 
+seasoned C programmer, and you're ROTFL over my code, please write me
+<joey@kite.ml.org>, and give me a hand!
+
+If you want to report a bug, please include the version of pdmenu, slang,
+and what operating system you are using.
+
+Current bugs:
+	I'm sure there are spelling errors throughout. Too bad.
+
+	Home/End don't work in my xterm. This is probably a problem with my 
+	terminfo file for xterm.
+
+	Backspace doesn't work in my xterms in edit boxes. Ctrl-h does. Hm.

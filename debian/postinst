@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+inst=/etc/menu-methods/pdmenu
+if [ -x /usr/bin/update-menus -a -f $inst ] ; then 
+	chmod a+x $inst
+	update-menus -f;
+fi

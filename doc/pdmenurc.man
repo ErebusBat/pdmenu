@@ -1,0 +1,304 @@
+.\" -*- nroff -*-
+.TH PDMENURC 5 "February 28 1997" "pdmenu" "File formats"
+.SH NAME
+pdmenurc \- menu definitions file for pdmenu
+.SH SYNOPSIS
+.B /etc/pdmenurc
+.PP
+.B ~/.pdmenurc
+.SH DESCRIPTION
+The pdmenurc file defines menus for
+.BR pdmenu (1)
+to display. Each menu consists of one or more menu entries. 
+The first menu to appear in the file is displayed by
+.BR pdmenu (1)
+when it starts up, and can have menu entries that call up submenus.
+.SH EXAMPLES
+Here is a sample pdmenurc file:
+.PP
+ #Set a pleasing color scheme.
+ color:desktop:blue:blue
+ color:title:blue:white
+ color:base:blue:white
+
+ #this is a comment
+ menu:main:Main Menu:Things to do at foobar
+      show:_Games..::games
+      exec:_Mail::pine
+      exec:_News::slrn -C
+      exec:_WWW::lynx
+      exec:_Irc::irc
+      exec:_Directory _Listing:dn:ls -l
+      exec:_Who's online?:d:w
+      exec:_Finger:ed:finger ~finger who?:~
+      exit:E_xit
+        
+ menu:games:Games:Some text-based games
+     exec:_Tetris for Terminals::/usr/games/tt
+     exec:_Adventure::/usr/games/adventure
+     exec:_Zork::/usr/games/zork
+     nop
+     exit:_Back to main menu..
+
+This will display a menu, with a submenu for games.
+.SH FORMAT
+.BR pdmenu (1)
+doesn't care how the pdmenurc is indented; all whitespace is ignored.
+However, each command must be on its own line.
+.TP 
+nop
+This does nothing but place a blank line in the menu. Nop commands may not
+appear as the first command in a menu.
+Syntax:
+.RS
+.PP
+\fInop[:text]\fR
+.TP
+text
+If this is present, it will appear in the menu where the nop is. Otherwise,
+the nop in the menu will be a blank line.
+.RE
+.TP
+menu
+This starts a menu. All items between this menu command and the next will
+comprise one menu. If a menu by the same name has already been defined
+earlier, then all items between this menu command and the next will be added
+to the menu. It is illegal to have a menu without any commands in it.
+The syntax is:
+.RS
+.PP
+\fImenu:menuname:title[:helptext]\fR
+.TP
+menuname
+The name of the menu (each menu must have a unique name).
+.TP
+title
+The title of the menu.
+.TP
+helptext
+Text to be displayed at the bottom of the screen when the menu is active.
+.RE
+.TP
+show
+This displays a submenu. The syntax is:
+.RS
+.PP
+\fIshow:desc:flags:menuname\fR
+.TP
+menuname
+The name of the menu to show, corresponding to the menuname given in the 
+menu's definition.
+.TP
+desc
+The description of the submenu to appear in the parent window. 
+.RS
+.PP
+To place a hotkey in the description, put a '_' before the character you 
+want to become the hotkey. It is a good idea to differentiate submenus 
+from commands in a menu by, for example, appending ".." to their 
+descriptions.
+.RE
+.IP flags 
+Currently ignored.
+.IP
+.RE
+.TP
+exit
+If only one menu is on the screen when this is selected, then 
+.BR pdmenu (1)
+will quit. Otherwise, this will take the user back to the parent menu of the 
+menu they are currently in. Selecting an exit command in a menu is equivalent 
+to pressing 'q', unless you have ran 
+.BR pdmenu (1) 
+with the \-q switch. The syntax is:
+.RS
+.PP
+\fIexit:desc\fR
+.TP
+desc
+The description of the menu item.
+.RS
+.PP
+To place a hotkey in the description, put 
+a '_' before the character you want to become the hotkey.
+.RE
+.RE
+.TP
+exec
+This runs a command. The syntax is:
+.RS
+.PP
+\fIexec:desc:flags:command\fR
+.TP
+command
+The actual command to run when this item is selected.
+.TP
+desc
+The description of the command that appears in the menu.
+.RS
+.PP
+To place a hotkey in the description, put a '_' before the character 
+you want to become the hotkey.
+.RE
+.TP
+flags 
+How to run this command, and what to do with its output. Any number of
+the following flags can be specified, in any order.
+.RS
+.TP
+n
+By default the screen is cleared and the terminal is reset to normal before
+.BR pdmenu (1)
+runs a command from the menu, and after the command exits, the screen is 
+redrawn. If this 'n' flag is set, the screen is not cleared or
+redrawn. Use it if you have a command on the menu that does not produce any
+output to the screen.
+.TP
+p
+Pause after the command exits. Use this if you need to see the output of the
+command.
+.TP
+d
+Display the output of the command in a window. If this flag is set, the 'p'
+flag is disabled, and the 'n' flag is automatically set.
+.TP
+e
+Edit the command interactively.
+.RS
+.PP
+When this flag is set, the command to be run is scanned for any tags of the
+format \fI~title:default~\fR. For each that is found, a text entry window is
+displayed, with the title equal to the contents of the title field, and the
+default text equal to the contents of the default field. 
+.PP
+To use the '~' or ':' characters in the command without having them 
+interpreted as tag delimiters, escape them with a '\e' character. 
+(Ie, '\e~' and '\e:')
+.PP
+\fISecurity warning!\fR Any exec command that uses the 'e' flag will be
+a security hole. The user need only to enter text with a ';' in it, and
+they can run an arbitrary command after the semicolon!
+.PP
+There is no fix for this security problem at this time. If the user running
+.BR pdmenu (1)
+is not a trusted user (if they are a guest user, say), do not allow 
+them access to any exec commands that have the 'e' flag set. 
+.RE
+.TP
+s
+Set an environment variable.
+.RS
+.PP
+This flag causes 
+.BR pdmenu (1)
+to set a variable in its own environment. 
+.BR pdmenu (1)
+runs the exec command, and looks at the command's output. The first line 
+should be in the format 
+.RS
+VAR=value
+.RE
+Where VAR is the environment variable to set, and value is the new value
+for the variable. 
+.PP
+For example, use "echo PWD=/tmp" to set the current working
+directory to /tmp.
+.PP
+\fISecurity warning!\fR This flag could be a serious security hole. Use with 
+caution.
+.RE
+.RE
+.RE
+.TP
+color
+This changes the color of a part of the display. Color commands are read in
+and executed when the menu file is loaded. Later color commands override earlier
+color commands that would affect the same part of the display. The syntax is:
+.RS
+.PP
+\fIcolor:screenpart:foreground[:background]\fR
+.TP
+screenpart
+The area of the screen which takes on the selected color scheme.
+Areas of the screen that can be set are:
+.RS
+.TP
+desktop
+The space over which the menus appear.
+.TP
+title
+The line at the top of the screen.
+.TP
+base
+The line at the bottom of the screen.
+.TP
+menu
+The normal color of text in a menu.
+.TP
+selbar
+The selection bar in the menu, when over normal text.
+.TP
+shadow
+The shadow of a window
+.TP
+menuhot
+The color of text in a menu that is a hotkey.
+.TP
+selbarhot
+The color of a hotkey when the selection bar is over it.
+.RE
+.TP
+foreground
+The color to use in the foreground. Valid colors are:
+.RS
+ black           gray
+ red             brightred
+ green           brightgreen
+ brown           yellow
+ blue            brightblue
+ magenta         brightmagenta
+ cyan            brightcyan
+ lightgray       white
+.RE
+.PP
+.TP
+background
+The color to use in the background.  On most terminals, the
+background color can only be one of the colors listed in the first 
+column above.
+.RE
+.TP
+read
+This causes another menu definitions file to be read in and replace the
+read command.
+This is quite similar to #include in a c program. The syntax is:
+.RS
+.PP
+\fIread:rcfile\fR
+.PP
+Note that no checking is done to prevent recursive read commands, and that
+such a recursive command can crash pdmenu.
+.RE
+.TP
+preproc
+This runs a command, and uses it's output as a rc file, which is read in and
+replaces the preproc command. Typically a preprocessor such as m4 or cpp
+will be used. The syntax is:
+.RS
+.PP
+\fIpreproc:command [args]\fR
+.PP
+Note that no checking is done to prevent recursive preproc commands, and that
+such a recursive command can crash pdmenu.
+.SH FILES
+.I /etc/pdmenurc
+.RS
+Default config file.
+.RE
+.I ~/.pdmenurc
+.RS
+If this exists, it overrides /etc/pdmenurc.
+.SH AUTHOR
+Joey Hess, <joey@kite.ml.org>.
+.SH "SEE ALSO"
+.BR pdmenu (1)

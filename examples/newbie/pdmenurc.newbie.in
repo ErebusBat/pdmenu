@@ -1,0 +1,137 @@
+#!@PDMENU_BINDIR@/pdmenu
+
+# Note that the above bang-path isn't required, but it lets you run this
+# file directly as a sort of pdmenu script.
+
+# this pdmenurc file is adapted from the default /etc/pdmenurc and
+# other example files, and is put together with the newbie linux user
+# in mind; i'm trying to provide him/her with as many tools as
+# possible.  please read the comments for suggestions of ways you may
+# make it useful to your new unix user.
+
+# Set a pleasing color scheme.
+color:desktop:white:blue
+color:title:yellow:red
+color:base:yellow:red
+
+# Define the main menu.
+# Note the use of the preproc command to put the hostname in the menu title.
+preproc:echo menu:main:`whoami`@`hostname`\'s menu
+	show:_Internet menu...::internet
+	show:_Edit files...::file-editing
+	show:System _Tools...::system-tools
+	exec:_Who's online?:display:echo "These users are online:";w
+# if you want your user(s) to have access to the command line,
+# uncomment the next line.
+#	exec:Drop to a _shell::echo "When you're done, type 'exit' to return to the menu.";/bin/sh -login
+# Autodetect if rpm is available, and if so, enable the redhat menu.
+preproc:\
+	if rpm >/dev/null 2>/dev/null ; then \
+		echo "show:_Redhat menu...::redhat" ; \
+	fi
+	show:_Help!::help
+	nop
+	exec:Give a random quote:display:fortune
+	exit:E_xit
+
+# This is a submenu.
+menu:internet:Internet Programs
+# uncomment the next line to let your user(s) check the status of the
+# modem.  this assumes your modem is on /dev/modem.
+#	exec:Am I connected?:display:/usr/lib/pdmenu/modem-check
+# if this is a system that dials in to a server to retrieve mail, you
+# may want to set your user(s) up with fetchmail and uncomment the
+# next line.
+#	exec:_Download Mail:pause:echo "fetching mail...";fetchmail
+	exec:Read/write _Mail::pine
+	exec:Read _Newsgroups::tin
+# you may want to make a local start file for your user(s), and make
+# the next command "lynx /path/to/my/start_page.html".
+	exec:Surf the _Web::lynx
+	exec:_Internet Relay Chat::irc
+ 	group:_Talk to other users online
+		exec::makemenu: \
+			echo "menu:talk:Select the user you want to talk to"; \
+			for u in `users`; do \
+				echo "exec:$u::talk $u"; \
+			done
+		show:::talk
+		remove:::talk
+ 	endgroup
+	exec:_Telnet:edit,pause:telnet ~Telnet to where?:~
+	exec:_Finger:edit,display:finger ~Enter address to finger:~
+	exec:_Ping:edit,pause:echo "Press Ctrl-c to stop pinging"\
+		;ping ~Ping what server?:~
+	nop
+	exit:_Main menu...
+
+#system tools
+menu:system-tools:System Tools
+# i highly recommend installing the gnu midnight commander for your
+# user(s) and uncommenting the next line.  alternately, it shouldn't
+# be too hard to make pdmenu menu items that are front-ends for "rm",
+# "cp", "mkdir", and friends, if anyone feels like doing it.
+#	exec:_Manage your files::mc
+	exec:_See how much disk space is free:display:echo \
+		"Free space on filesystems:"; df
+	exec:_Display system messages:display:echo "Recent system messages:";\
+		tail /var/log/messages
+	exec:_Change your password:pause:passwd
+	nop
+	exit:_Main menu...
+
+#file editing
+menu:file-editing:Edit Files
+	exec:Edit a _new file::pico
+	# Note that this checks in several places for editdir.pl, 
+	# so this will work before and after pdmenu is actually installed
+	# on the system.
+	group:Edit an _existing file
+		exec::makemenu: ( \
+			../editdir.pl `pwd` "" edit-existing || \
+			examples/editdir.pl `pwd` "" edit-existing || \
+			@PDMENU_LIBDIR@/pdmenu/editdir.pl `pwd` "" edit-existing \
+			) 2>/dev/null
+		show:::edit-existing
+		remove:::edit-existing
+	endgroup
+	nop
+	exit:_Main menu...
+
+#help menu
+menu:help:Help:Help
+# if you want to make yourself available to your user(s) if he/she
+# gets stuck, uncomment the next line and add your email address to
+# it.
+#	exec:_Send a message to your system administrator::pine foo@bar
+	exec:Help on _using this menu system::man pdmenu
+	exec:Read a _Man Page:edit:man ~What command?:~
+# if you have the howtos installed, uncomment the next line.	
+#	exec:Read the _Howtos::lynx /usr/doc/HTML/ldp/HOWTO-INDEX.html
+	nop
+	exit:_Main menu...
+
+#redhat menu
+menu:redhat:Redhat:Redhat
+	group:Get _info about an installed package
+		exec::makemenu: \
+			echo "menu:rpm-info:Select the package you want info about"; \
+			for p in `rpm -qa`; do \
+				echo "exec:$p:display:rpm -qi $p"; \
+			done
+		show:::rpm-info
+		remove:::rpm-info
+	endgroup
+	group:_List the files that belong to an installed package
+	exec::makemenu: \
+			echo "menu:rpm-file-list:Select the package you want to list the files for"; \
+			for p in `rpm -qa`; do \
+				echo "exec:$p:display:rpm -ql $p"; \
+			done
+		show:::rpm-file-list
+		remove:::rpm-file-list
+	endgroup
+	exec:List which package a _command belongs to:edit,display:/usr/lib/pdmenu/rpm-info-on-command ~What command?:~
+	exec:List which package a _file belongs to:edit,display:rpm -qif ~What file?:~ 2> /dev/null
+	nop
+	exit:_Main menu...

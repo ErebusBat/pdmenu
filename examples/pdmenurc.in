@@ -1,0 +1,30 @@
+#!@PDMENU_BINDIR@/pdmenu
+# Note that the above bang-path isn't required, but it lets you run this
+# file directly as a sort of pdmenu script.
+
+# Sample menus for Pdmenu.
+# Set a pleasing color scheme.
+color:desktop:white:blue
+color:title:yellow:red
+color:base:yellow:red
+
+# Define the main menu.
+menu:main:Main Menu
+	show:_Internet menu..::internet
+	exec:_Change your password:p:passwd
+	exec:_Directory listing:t:ls -l
+	exec:_Change directory:se:echo PWD=~set to?:~
+	exec:_Who's online?:t:echo "These users are online:";w
+	nop
+	exit:E_xit
+
+# This is a submenu.
+menu:internet:Internet:Internet programs
+	exec:_Mail::pine -i
+	exec:_News::slrn -C -n
+	exec:_WWW::lynx http://www.yahoo.com/
+        exec:_Talk:e:ytalk -x ~Talk to who?:joey~
+	exec:_Finger:ed:finger ~Enter address to finger:~
+	exec:_Telnet:ep:telnet ~Telnet to where?:~
+	nop
+	exit:_Main menu..

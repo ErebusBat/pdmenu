@@ -1,0 +1,35 @@
+Subject: pdmenu 1.0.0 - simple text mode menu system
+Followup-to: comp.os.linux.misc
+
+Pdmenu is a menu system for Unix. It is designed to be easy to use,
+and is suitable for a login shell for inexperienced users, or it can
+just be run at the command line as a handy menu program.
+
+Pdmenu features color support and, GPM mouse support at the linux
+console. It compiles on Linux and Sun and maybe other Unixes.
+
+I was prompted to write Pdmenu when I took a look at a shell script 
+that used dialog to generate similar menus. The shell script was 
+huge, complicated, and ugly, and had to be modified manually to add 
+anything to the menu. I hope that Pdmenu is better. :-)
+
+For more info, including source code and packages for Debian and 
+Red Hat visit Pdmenu's home page at:
+		http://kite.ml.org/programs/pdmenu/
+
+Begin3
+Title:		pdmenu
+Version:	1.0.0
+Entered-date:	12Mar97
+Description:	Simple full screen menu program. Can be used
+		as a login shell for inexperienced users.
+		Features color, mouse support, and powerful 
+		(but simple!) menu definition files.
+Keywords:	menu shell
+Author:		joey@kite.ml.org
+Primary-site:	sunsite.unc.edu /pub/Linux/utils/shell
+		59	pdmenu-1.0.0.tar.gz
+Alternate-site:	kite.ml.org /pub/code/
+Copying-policy:	GPL
+End
+

@@ -1,0 +1,80 @@
+Pdmenu, a simple menu program:
+
+	By Joey Hess <joey@kite.ml.org>
+
+	This program is Copyright 1995 by Joey Hess, and may be distributed 
+	under the terms of the GPL.
+
+What is Pdmenu?
+
+	Pdmenu is a menuing system for Linux. It is designed to be easy to 
+	use, and is suitable as a login shell for inexperienced users, or 
+	it can just be ran at the command line as a handy menu.
+
+	See Pdmenu's man pages for information about the format of the 
+	pdmenurc file, and how to use the program.
+
+	I was prompted to write Pdmenu when I took a look at a shell script 
+	that used dialog to generate similar menus. The shell script was 
+	huge, complicated, and ugly, and had to be modified manually to add 
+	anything to the menu. I hope that Pdmenu is better :-)
+
+Please see INSTALL for building and installation instructions.
+
+Precompiled binaries:
+
+	RPM:
+        	If you use RedHat Linux, a pdmenu RPM is available.
+	        You'll find it on RedHat's ftp site, or at
+        	http://kite.ml.org/programs/RPMS.cgi#pdmenu
+	        These may be a little out of date, I don't update them with 
+		each version. You can also build your own RPM using the 
+		redhat/pdmenu.spec spec file.
+
+	deb:
+		If you use Debian Linux, a .deb of pdmenu is available from
+		ftp.debian.org or a mirror in the usual location. The pdmenu 
+		source tree will also build a .deb on its own on a debian 
+		system, just run "dpkg-buildpackage". Or you can download 
+		the latest .deb from 
+		http://kite.ml.org/programs/debs.cgi#pdmenu
+
+A few sample uses of Pdmenu:
+
+	Here are a few ways I've used Pdmenu:
+
+	* Just a menu which users can get by typing pdmenu at the prompt. 
+		(Suprise..)
+	* As a login shell. (Just change their shell, it works fine.)
+	* A neat trick is to put something like #!/usr/bin/pdmenu on the top 
+		line of a pdmenu config file, and make the file executable.
+	* As a menu displayed when the system boots, or as a system monitor
+		menu.
+
+	Note that you try these at your own risk. If you put in a command 
+	that lets a user get root, it's your own fault, not mine.
+
+Thanks go out to:
+
+	Rob Lesan, who builds RPMs of pdmenu for me, since I don't have a 
+		redhat machine.
+	Randolph Chung, who helped me learn C and Linux, and who has put up 
+		with all my questions to this day. And he threw together mouse 
+		support for Pdmenu in no time flat one night, too.
+	Christiaan Keet, who asked for a menu program, and got it, and who 
+		helped me with beta testing.
+	John E. Davis, creator of the S-Lang library.
+	Lassen Software, Inc, whose dos-based Program Manager Plus software 
+		was the inspiration for this program.
+
+Please, send me feedback.
+
+	I welcome any comments, feature requests, or bug reports. Send them 
+	to joey@kite.ml.org.
+
+	If you are interested in becoming a Pdmenu beta tester, and/or being 
+	notified of new releases, please mail me about it, and I'll add you 
+	to the announce list.
+
+
+Joey Hess, <joey@kite.ml.org>

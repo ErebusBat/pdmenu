@@ -1,0 +1,30 @@
+.\" -*- nroff -*-
+.TH PDMENU-GENMENU 8 "December 29 1996" "0.5.5" "Commands"
+.SH NAME
+pdmenu-genmenu \- automatically generate pdmenurc file for debian
+.SH SYNOPSIS
+.B pdmenu-genmenu conffile -f
+.SH DESCRIPTION
+.B pdmenu-genmenu
+automatically creates a pdmenurc file with entries for debian programs. 
+It is a menu-method and is run automatically by 
+.BR update-menus (1)
+and so you should not need to run it by hand. See the menu package's
+documentation for information about menu-methods.
+.SH FILES
+.I /var/lib/pdmenu/pdmenurc_auto
+.TP
+.I ~/.pdmenurc_auto
+.RS
+Automatically generated pdmenurc files.
+.SH DISTRIBUTION
+Redistribution is subject to the GNU public license.
+.SH BUGS
+No bugs are known of at this time.
+.SH AUTHOR 
+Joey Hess, <joeyh@master.debian.org>.
+.SH "SEE ALSO"
+.BR pdmenu (5)
+,
+.BR update-menus (1)
+

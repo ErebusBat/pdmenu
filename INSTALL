@@ -1,0 +1,46 @@
+                        Compilation and Installation
+
+Libraries:	
+	To compile Pdmenu, you need the S-Lang library. This can be 
+	found at ftp://space.mit.edu/pub/davis/slang/
+
+	Optionally, if you wish to compile pdmenu with mouse support, you
+	need to install the GPM library. Find it on a linux ftp site near 
+	you.
+
+Configuration:
+	Pdmenu uses an autoconf configure script. Typically, if you want
+	the pdmenu binary installed in /usr/bin, and the pdmenurc file
+	installed in /etc, you should type:
+
+		./configure --prefix=/usr --sysconfdir=/etc
+
+	To get a list of all the possible arguments the configure script can
+	use, type:
+
+		./configure --help
+
+Compilation:
+	I've only compiled Pdmenu on Linux systems. I don't anticipate any
+	compilation problems under Linux, but for other *nix's, you're on 
+	your own. If you get it to work on something else, please let me 
+	know.
+
+	To build Pdmenu, type:
+
+		make
+
+Testing:
+	To try out the program before installing it, type:
+	
+		make test
+
+Installation:
+	To install Pdmenu, become root and type:
+
+		make install
+
+
+Report any problems to me, <joey@kite.ml.org>.
+
+Please see the README and man page for more information about Pdmenu.

@@ -1,0 +1,15 @@
+Begin3
+Title:		pdmenu
+Version:	@VER@
+Entered-date:	@LSM_BUILD_DATE@
+Description:	Simple full screen menu program. Can be used
+		as a login shell for inexperienced users.
+		Features color, mouse support, and powerful 
+		(but simple!) menu definition files.
+Keywords:	menu shell
+Author:		joey@kite.ml.org
+Primary-site:	sunsite.unc.edu /pub/Linux/utils/shell
+		@TAR_FILE_SIZE_GUESS@	pdmenu-@VER@.tar.gz
+Alternate-site:	kite.ml.org /pub/code/
+Copying-policy:	GPL
+End

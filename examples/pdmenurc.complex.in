@@ -1,0 +1,27 @@
+#!@PDMENU_BINDIR@/pdmenu
+#
+# This pdmenurc shows off the more complicated things that can be done with
+# Pdmenu. If you get lost, see the pdmenurc(5) man page, or the simpler
+# pdmenurc files.
+
+# Define the main menu.
+# Note the use of the preproc command to put the hostname in the menu title.
+preproc:echo menu:main:`hostname` menu
+	# Let's display a list of files in the current directory. Let the
+	# user navigate around by hitting enter on subdirectories. Let them
+	# display a file simply by hitting enter on it.
+	# The showdir.pl script is assummed to be in the examples/
+	# directory, so if you install this file as your default pdmenurc
+	# you will need to install it elsewhere and edit this to point to
+	# it.
+	exec:_File viewer:m:examples/showdir.pl `pwd`
+	# Display a list of users who are logged in, and talk to the one that
+	# is selected.
+	exec:_Talk to someone:m:\
+	  echo "remove:talk" ; \
+	  echo "menu:talk:Talk to someone:Select who to talk to" ; \
+	  for user in `users`; do \
+	     echo "exec:Talk to _$user:p:talk $user" ; \
+	  done
+	nop
+	exit:E_xit

@@ -1,0 +1,17 @@
+Yet to be done:
+	* A menu file editor, to make it easy for you to set up your own 
+		menus.
+	* Break out a general widget library.
+	* Better shadows on menus.
+	* Scrollbars on menus.
+	* Autodetect if terminal supports color
+	* Make windows in the background grey or some other color to be less
+	        confusing.
+	* Handle BS characters properly, so man pages can be displayed in 
+		windows. This would be nasty to do, and the benefit is 
+		small...
+	* There are some ugly loops in DoMenu_Up and DoMenu_Down that could 
+		be eliminated by careful programming.
+	* Support arrow keys, etc in inputbox.
+	* Make the menu array be a dynamic array so there can be unlimited 
+		numbers of menus.

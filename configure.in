@@ -1,0 +1,102 @@
+dnl Written by Joey Hess <joey@kite.ml.org> with some help from autoscan.
+dnl Process this file with autoconf to generate the configure script.
+
+AC_INIT(pdmenu.c)
+
+dnl Checks for programs.
+AC_PROG_CC
+AC_PROG_INSTALL
+AC_PROG_LN_S
+
+dnl Checks for libraries.
+AC_CHECK_LIB(m, rint)
+dnl The function we check for in libslang is important, because
+dnl weneed to make sure we have the right version of slang.
+AC_CHECK_LIB(slang, SLsig_block_signals,,
+	AC_MSG_ERROR(can't find required slang library or library is obsolete.))
+
+dnl Checks for header files.
+dnl AC_HEADER_STDC
+dnl The slang headers can be in several places.
+AC_CHECK_HEADERS(slang.h slang/slang.h, break)
+if test "$ac_cv_header_slang_h" = yes ; then
+ 	SLANG_H=slang.h
+elif test "$ac_cv_header_slang_slang_h" = yes ; then
+	SLANG_H=slang/slang.h
+else
+	AC_MSG_ERROR(can't find required slang header file.)
+fi
+AC_SUBST(SLANG_H)
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+AC_C_CONST
+dnl AC_HEADER_TIME
+
+dnl Checks for library functions.
+AC_TYPE_SIGNAL
+dnl AC_CHECK_FUNCS(strspn)
+
+dnl Checks for gpm, first the headers, then functions needed, then the library.
+AC_CHECK_HEADERS(gpm.h)
+dnl Mouse support requires the select function.
+AC_CHECK_FUNCS(select)
+if test "$ac_cv_header_gpm_h" = yes && test "$ac_cv_func_select" = yes ; then
+	AC_CHECK_LIB(gpm, Gpm_Close)
+	if test "$ac_cv_lib_gpm_Gpm_Close" != yes ; then 
+		AC_MSG_WARN(pdmenu will be built without GPM mouse support.)
+	else
+		AC_DEFINE(GPM_SUPPORT)
+	fi
+else
+	AC_MSG_WARN(pdmenu will be built without GPM mouse support.)
+fi
+
+AC_MSG_CHECKING(the date)
+BUILD_DATE=`date +"%B %d %Y"`
+AC_SUBST(BUILD_DATE)
+AC_MSG_RESULT($BUILD_DATE)
+
+AC_MSG_CHECKING(the date for lsm files)
+LSM_BUILD_DATE=`date +%d%b%y`
+AC_SUBST(LSM_BUILD_DATE)
+AC_MSG_RESULT($LSM_BUILD_DATE)
+
+AC_MSG_CHECKING(pdmenu's version)
+VER=`perl -e '$_=<>;print m/\((.*?)\)/'<CHANGES`
+AC_SUBST(VER)
+AC_MSG_RESULT($VER)
+
+AC_MSG_CHECKING(the size of the tar file)
+TAR_FILE_SIZE_GUESS=$[[`tar czf - . | wc -c`/1024]]
+AC_SUBST(TAR_FILE_SIZE_GUESS)
+AC_MSG_RESULT(about $TAR_FILE_SIZE_GUESS kb)
+
+dnl Have to calculate the bindir without any ${..} expansions in it for use
+dnl in pdmenurc.in.
+if test "$bindir" != '${exec_prefix}/bin' ; then
+	PDMENU_BINDIR=$bindir
+elif test "$exec_prefix" != NONE ; then
+	PDMENU_BINDIR=$exec_prefix/bin
+elif test "$prefix" != NONE ; then
+	PDMENU_BINDIR=$prefix/bin
+else
+	PDMENU_BINDIR=$ac_default_prefix/bin
+fi
+AC_SUBST(PDMENU_BINDIR)
+
+dnl Have to calculate the sysconfdir without any ${..} expansions in it for
+dnl use in man pages.
+if test "$sysconfdir" != '${prefix}/etc' ; then
+	PDMENU_SYSCONFDIR=$sysconfdir
+elif test "$prefix" != NONE ; then
+	PDMENU_SYSCONFDIR=$prefix/etc
+else
+	PDMENU_SYSCONFDIR=$ac_default_prefix/etc
+fi
+AC_SUBST(PDMENU_SYSCONFDIR)
+
+dnl Since the next step will make a new lsm file, remove all old lsm files.
+rm -f pdmenu-*.lsm
+
+AC_OUTPUT(Makefile pdmenu.man pdmenurc.man pdmenurc pdmenurc.monitor
+	slang.h redhat/pdmenu.spec pdmenu-$VER.lsm:pdmenu.lsm.in)

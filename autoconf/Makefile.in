@@ -1,0 +1,86 @@
+# Uncomment the following line to debug with Electric Fence.
+#EFENCE = -lefence
+
+# Uncomment the following to allow profiling.
+#PROFILE = -pg
+
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+BINDIR		= @bindir@
+MANDIR		= @mandir@
+SYSCONFDIR	= @sysconfdir@
+CC		= @CC@
+INSTALL		= @INSTALL@
+LN_S		= @LN_S@
+VER		= @VER@
+DEFINES		= -DETCDIR=\"${SYSCONFDIR}/\" -DVER=\"${VER}\" @DEFS@ $(EFENCE) $(PROFILE) -D__USE_FIXED_PROTOTYPES__
+CFLAGS		= $(DEFINES) -pipe -Wall -fstrict-prototypes
+LIBS		= @LIBS@
+SRCDIR		= src
+
+#------------------- end user configurable section ------------------------
+
+OBJFILES=$(SRCDIR)/pdmenu.o $(SRCDIR)/screen.o $(SRCDIR)/rc.o \
+	$(SRCDIR)/menu.o $(SRCDIR)/inputbox.o $(SRCDIR)/mouse.o \
+	$(SRCDIR)/keyboard.o
+
+.c.o:
+	cd src && $(CC) -c ../$< $(CFLAGS)
+
+all: pdmenu
+pdmenu: $(OBJFILES)
+	${CC} -o pdmenu $(OBJFILES) $(CFLAGS) $(LIBS)
+
+distclean: clean
+	find . -name '\#*\#' -o -name '*.bak' -o -name '.??*' -o \
+		-name '*~' -exec rm {} \;
+	rm -f pdmenurc pdmenurc.monitor src/slang.h \
+		config.cache config.log config.status Makefile
+
+clean:
+	rm -f src/*.o pdmenu
+
+install: all
+	$(INSTALL) -d $(INSTALL_PREFIX)/$(BINDIR) \
+		$(INSTALL_PREFIX)/$(MANDIR)/man1 \
+		$(INSTALL_PREFIX)/$(MANDIR)/man5 \
+		$(INSTALL_PREFIX)/$(SYSCONFDIR)
+	$(INSTALL) -s pdmenu $(INSTALL_PREFIX)/$(BINDIR) -m 0755
+	$(INSTALL) doc/pdmenu.man $(INSTALL_PREFIX)/$(MANDIR)/man1/pdmenu.1 -m 0644
+	$(INSTALL) doc/pdmenurc.man $(INSTALL_PREFIX)/$(MANDIR)/man5/pdmenurc.5 -m 0644
+	if [ -e $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc ]; then \
+		echo "Backing up $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc to $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc.old .." ; \
+		cp $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc.old ; \
+	fi
+	$(INSTALL) pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc -m 0644
+
+test: pdmenu
+	./pdmenu pdmenurc
+
+debian:
+	dpkg-buildpackage -tc
+
+localdist:
+# Install in the proper location on my ftp server. Not intended
+# for use by anyone except the author.
+	if [ `hostname` = 'kite' ] ; then \
+		rm /home/ftp/pub/code/pdmenu*; \
+		cp doc/*.lsm /home/ftp/pub/code/; \
+		cd /home/ftp/pub/code/; \
+		$(LN_S) -f debian/pdmenu_@VER@.tar.gz pdmenu_@VER@.tar.gz; \
+		$(LN_S) -f debian/pdmenu_@VER@.tar.gz pdmenu.tar.gz ; \
+		$(LN_S) pdmenu-@VER@.lsm pdmenu.lsm ; \
+	fi
+
+configure: configure.in
+	autoconf
+
+Makefile: autoconf/Makefile.in config.status
+	./config.status
+
+config.status: configure
+	./config.status --recheck
+
+dist: debian localdist
+
+.PHONY: dist localdist debian test install clean distclean

@@ -1,0 +1,106 @@
+# Uncomment the following line to debug with Electric Fence.
+#EFENCE = -lefence
+
+# Uncomment the following to allow profiling.
+#PROFILE = -pg
+
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+BINDIR		= @bindir@
+MANDIR		= @mandir@
+SYSCONFDIR	= @sysconfdir@
+CC		= @CC@
+INSTALL		= @INSTALL@
+LN_S		= @LN_S@
+VER		= @VER@
+DEFINES		= -DETCDIR=\"${SYSCONFDIR}/\" -DVER=\"${VER}\" @DEFS@ $(PROFILE) -D__USE_FIXED_PROTOTYPES__
+CFLAGS_FOR_GCC	= -pipe -Wall -fstrict-prototypes
+CFLAGS		= $(DEFINES) @gcc_cflags@ @CFLAGS@
+LIBS		= @LIBS@ $(EFENCE)
+SRCDIR		= src
+
+#------------------- end user configurable section ------------------------#
+
+OBJFILES=$(SRCDIR)/pdmenu.o $(SRCDIR)/screen.o $(SRCDIR)/rc.o \
+	$(SRCDIR)/menu.o $(SRCDIR)/inputbox.o $(SRCDIR)/mouse.o \
+	$(SRCDIR)/keyboard.o $(SRCDIR)/pdstring.o $(SRCDIR)/actions.o \
+	$(SRCDIR)/window.o $(SRCDIR)/error.o $(SRCDIR)/pdgetline.o
+
+.c.o:
+	cd $(SRCDIR) && $(CC) -c ../$< $(CFLAGS)
+
+all: pdmenu
+pdmenu: .dep $(OBJFILES)
+	${CC} -o pdmenu $(OBJFILES) $(CFLAGS) $(LIBS)
+
+
+depend: .dep
+dep: .dep
+.dep: src/*.h src/*.c
+	mv makeinfo makeinfo.bak
+	awk '$$0 ~ /^# DO NOT REMOVE THIS LINE/ { exit } { print }'  \
+		< makeinfo.bak > makeinfo
+	-rm -f makeinfo.bak
+	echo "# DO NOT REMOVE THIS LINE" >> makeinfo
+	$(CC) -MM $(SRCDIR)/*.c | sed 's!^\(.*\)\.o[ :]!$(SRCDIR)/\1.o:!' \
+		>> makeinfo
+	touch .dep
+
+distclean: clean
+	find . -name '\#*\#' -o -name '*.bak' -o -name '.??*' -o \
+		-name '*~' -o -name '.gdb_history' -exec rm {} \;
+	rm -f examples/pdmenurc examples/pdmenurc.monitor \
+		examples/pdmenurc.complex src/slang.h \
+		config.cache config.log config.status makeinfo .dep gmon.out
+
+clean:
+	rm -f src/*.o pdmenu
+
+install: all
+	$(INSTALL) -d $(INSTALL_PREFIX)/$(BINDIR) \
+		$(INSTALL_PREFIX)/$(MANDIR)/man1 \
+		$(INSTALL_PREFIX)/$(MANDIR)/man5 \
+		$(INSTALL_PREFIX)/$(SYSCONFDIR)
+	$(INSTALL) -s pdmenu $(INSTALL_PREFIX)/$(BINDIR) -m 0755
+	$(INSTALL) doc/pdmenu.man $(INSTALL_PREFIX)/$(MANDIR)/man1/pdmenu.1 -m 0644
+	$(INSTALL) doc/pdmenurc.man $(INSTALL_PREFIX)/$(MANDIR)/man5/pdmenurc.5 -m 0644
+	if [ -e $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc ]; then \
+		echo "Backing up $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc to $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc.old .." ; \
+		cp $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc.old ; \
+	fi
+	$(INSTALL) examples/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc -m 0644
+
+test: pdmenu
+	./pdmenu examples/pdmenurc
+
+debian:
+	dpkg-buildpackage -tc -rfakeroot
+
+localdist:
+# Install in the proper location on my ftp server and web server. Not intended
+# for use by anyone except the author.
+	if [ `hostname` = 'kite' ] ; then \
+		cp ../pdmenu_@VER@.tar.gz ../../public; \
+		rm /home/ftp/pub/code/pdmenu/* || true; \
+		cp doc/*.lsm /home/ftp/pub/code/pdmenu; \
+		cp debian/changelog /home/pub/programs/pdmenu/CHANGES; \
+		echo @VER@ > /home/pub/programs/pdmenu/LATEST-VERSION-IS; \
+		cd ..; rm -rf pdmenu-@OLD_VER@; \
+		[ -f ../public/pdmenu_@OLD_VER@.tar.gz ] && \
+		tar zxf ../public/pdmenu_@OLD_VER@.tar.gz || \
+		tar zxf ../outdated/pdmenu_@OLD_VER@.tar.gz; \
+		diff -r -u --new-file --exclude pdmenu.spec \
+			--exclude \*.lsm \
+			--exclude \*.man pdmenu-@OLD_VER@ pdmenu-@VER@ > \
+			/home/ftp/pub/code/pdmenu/diffs/pdmenu-@VER@.diff; \
+		gzip -9f /home/ftp/pub/code/pdmenu/diffs/pdmenu-@VER@.diff; \
+		cd /home/ftp/pub/code/pdmenu; \
+		$(LN_S) -f ../debian/pdmenu_@VER@.tar.gz pdmenu_@VER@.tar.gz; \
+		$(LN_S) -f ../debian/pdmenu_@VER@.tar.gz pdmenu.tar.gz ; \
+		$(LN_S) pdmenu-@VER@.lsm pdmenu.lsm ; \
+	fi
+
+dist: debian localdist
+
+.PHONY: dist localdist debian test install clean distclean
+

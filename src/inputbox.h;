@@ -1,0 +1,14 @@
+/* 
+ * Copyright (c) 1995, 1996, 1997 Joey Hess (joey@kite.ml.org)
+ * All rights reserved. See COPYING for full copyright information (GPL).
+ */
+
+/* This type is a string linked to a tru/false value.
+typedef struct Conditional_String {
+	char *value;
+	int ignore
+} Conditional_String;
+                        
+
+extern int DoInputBox (char *,char *,int);
+extern Conditional_String *EditTags (char *);

@@ -1,0 +1,2 @@
+/* This just points to the right location of slang.h */
+#include <@SLANG_H@>
