@@ -296,7 +296,13 @@ void RunCommand (Menu_Item_Type *i) {
 	    printf("\n%s",_("Press Enter to return to Pdmenu."));
 	    fflush(stdout); /* make sure above is displayed. */
 	    /* Now wait for the keypress. */
-	    SLang_getkey();
+	    while (1) {
+		    int k;
+		    k = SLang_getkey();
+		    if (k == '\n' || k == '\r') {
+			    break;
+		    }
+	    }
 	    SLang_flush_input(); /* kill any buffered input */
 	    printf("\n");
 	  }

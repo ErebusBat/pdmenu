@@ -26,17 +26,17 @@ dep: .dep
 	touch .dep
 
 distclean: clean
+	-$(MAKE) -C po distclean
 	find . -name '\#*\#' -o -name '*.bak' -o -name '.??*' -o \
 		-name '*~' -o -name '.gdb_history' -exec rm {} \;
 	rm -f examples/pdmenurc examples/pdmenurc.monitor \
 		examples/pdmenurc.complex examples/newbie/pdmenurc.newbie \
 		src/slang.h config.cache config.log config.status makeinfo \
-		.dep gmon.out
-	$(MAKE) -C po distclean
+		.dep gmon.out doc/pdmenu.man doc/pdmenurc.man
 
 clean:
-	rm -f src/*.o pdmenu
 	$(MAKE) -C po clean
+	rm -f src/*.o pdmenu
 
 install: all
 	$(INSTALL) -d $(INSTALL_PREFIX)/$(BINDIR) \

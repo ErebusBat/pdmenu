@@ -11,6 +11,7 @@
 #include "keyboard.h"
 #include "pdmenu.h"
 #include "inputbox.h"
+#include "pdstring.h"
 #include <string.h>
 #include <stdlib.h>
 #include "slang.h"
@@ -138,6 +139,7 @@ Conditional_String *EditTags(char *s) {
 	  tagtitle=malloc(i - tagtitlestart + 1);
 	  strncpy(tagtitle,(char *) s + tagtitlestart,i - tagtitlestart);
 	  tagtitle[i - tagtitlestart] ='\0';
+	  tagtitle = unescape(tagtitle, ':');
 	  tagvaluestart=i+1;
 	  for (i++;i<strlen(s);i++) {
 	    if ((s[i]=='~') && (s[i-1]!='\\')) { /* End of tag */

@@ -1,7 +1,7 @@
 Source: pdmenu
 Section: shells
 Priority: optional
-Build-Depends: debhelper (>= 4), slang1-dev (>= 1.4.4-3), libgpmg1-dev [!hurd-i386], gettext
+Build-Depends: debhelper (>= 4.0.8), slang1-dev (>= 1.4.4-3), libgpmg1-dev [!hurd-i386], gettext
 Maintainer: Joey Hess <joeyh@debian.org>
 Standards-Version: 3.5.6.1
 

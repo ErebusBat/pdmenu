@@ -1,5 +1,9 @@
 pdmenu (1.2.70) unstable; urgency=low
 
+  * De-escape "\:" in prompt titles. Closes: #146727
+  * Only accept Enter when pausing after a program run, to prevent
+    input typed ahead at the program (eg, down key in less) from accidentually
+    triggering it. Closes: #145616
   * Updated to use debhelper v4.
   * Updated to new autoconf.
   * Moved non-substituted stuff from makeinfo to Makefile.
