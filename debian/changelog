@@ -1,3 +1,12 @@
+pdmenu (1.2.61) unstable; urgency=low
+
+  * Conflicts with older versions of menu that don't support onlyrunasroot.
+    Closes: #56744
+  * This version will depend on recent versions of libgpm1g, fixing a
+    reported segfault with older versions. Closes: #56748
+
+ -- Joey Hess <joeyh@debian.org>  Wed,  5 Apr 2000 17:02:00 -0700
+
 pdmenu (1.2.60) frozen unstable; urgency=low
 
   * Modified spec file so it will work with .tar.gz files that do not
