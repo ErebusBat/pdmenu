@@ -410,6 +410,7 @@ int DoMenu (Menu_Type *m,int (*MenuAction)(), void (*Ctrl_C_Action)()) {
       break;
     case '\n':
     case '\r':
+    case SL_KEY_RIGHT:
       c=MenuAction(m);
       if (c!=0)
 	return c;
@@ -420,7 +421,7 @@ int DoMenu (Menu_Type *m,int (*MenuAction)(), void (*Ctrl_C_Action)()) {
       if (c!=0)
 	break;
       /* No hotkeys match, so use q or ESC to close the menu. */
-      if ((key=='q') || (key=='Q') || (key==27))
+      if ((key=='q') || (key=='Q') || (key==27) || (key ==SL_KEY_LEFT))
 	return Q_KEY_EXIT;
       /* They hit a bad key. Display help. */
       DrawBase(_("Arrow keys move, Esc exits current menu, Enter runs program"));

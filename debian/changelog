@@ -1,3 +1,10 @@
+pdmenu (1.2.82) unstable; urgency=low
+
+  * Added "lynx style" menu navigation, using left and right arrow keys.
+    Closes: #197274
+
+ -- Joey Hess <joeyh@debian.org>  Fri, 22 Aug 2003 16:42:14 -0400
+
 pdmenu (1.2.81) unstable; urgency=low
 
   * At suggestion of Bill Allombert, redo debian menu support, so there are
