@@ -30,6 +30,7 @@
 #define REMOVE_KEYWORD "remove"
 #define GROUP_KEYWORD "group"
 #define ENDGROUP_KEYWORD "endgroup"
+#define HELP_TEXT_KEYWORD "helptext"
 
 /* The flags that can be used are.. */
 #define NOCLEAR_FLAG 'n'
@@ -39,6 +40,7 @@
 #define SETENV_FLAG 's'
 #define TRUNCATE_FLAG 't'
 #define MAKEMENU_FLAG 'm'
+#define COMMAND_FLAG 'c'
 
 /* The names of the parts of the screen, for color setting, are */
 #define DESKTOP_NAME "desktop"

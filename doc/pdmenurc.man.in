@@ -207,6 +207,22 @@ If this is present, it will appear in the menu where the nop is. Otherwise,
 the nop in the menu will be a blank line.
 .RE
 .TP
+helptext
+This changes the helptext of the currently displayed menu. The syntax is:
+.RS
+.PP
+\fIhelptext:desc:flags:help text\fR
+.TP
+desc
+The text to appear on the menu.
+.TP
+flags
+Currently the only available flag is "command", which makes the help text
+be read in from a command in the help text field, instead of using the
+literal value of the field. The first line the command outputs becomes the
+new help text.
+.RE
+.TP
 exit
 If only one menu is on the screen when this is selected, then 
 .BR pdmenu (1)

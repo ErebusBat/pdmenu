@@ -17,6 +17,10 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <libintl.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #define _(String) gettext (String)
 
 /*
@@ -40,6 +44,8 @@ int SetFlags(Menu_Item_Type *i,char c) {
     return i->truncate_flag=1;
   case MAKEMENU_FLAG:
     return i->makemenu_flag=1;
+  case COMMAND_FLAG:
+    return i->command_flag=1;
   }
   return 0;
 }
@@ -195,6 +201,7 @@ char ReadRc (char *fname,int type) {
       Error(_("%s:%i Invalid or misplaced keyword, \"%s\"."),fname,line,tmp);
     else if ((strcasecmp(tmp,EXEC_KEYWORD)==0) ||
 	     (strcasecmp(tmp,SHOW_MENU_KEYWORD)==0) ||
+	     (strcasecmp(tmp,HELP_TEXT_KEYWORD)==0) ||
 	     (strcasecmp(tmp,EXIT_KEYWORD)==0) ||
 	     (strcasecmp(tmp,NOP_KEYWORD)==0) ||
 	     (strcasecmp(tmp,GROUP_KEYWORD)==0) ||
@@ -223,6 +230,8 @@ char ReadRc (char *fname,int type) {
 	currentitem->type=MENU_SHOW;
       else if (strcasecmp(tmp,NOP_KEYWORD)==0)
 	currentitem->type=MENU_NOP;
+      else if (strcasecmp(tmp,HELP_TEXT_KEYWORD)==0)
+	currentitem->type=MENU_HELP_TEXT;
       else if (strcasecmp(tmp,GROUP_KEYWORD)==0) {
 	if (ingroup == NULL) {
 	  ingroup=currentitem;
@@ -304,7 +313,18 @@ char ReadRc (char *fname,int type) {
     free(str);
   }
 
-  if (type == RC_FILE)
+  if (fp == stdin) {
+    /*
+     * Make sure that we have the real tty open as stdin.
+     * You see, if a rc file is passed to pdmenu on stdin, then
+     * after the rc file is read, there is no longer stdin available
+     * for programs pdmenu launches to use.
+     */
+    int fd = open("/dev/tty", O_RDWR);
+    dup2(fd, 0);
+    close(fd);
+  }
+  else if (type == RC_FILE)
     fclose(fp);
   else if (type == RC_PREPROC)
     pclose(fp);

@@ -19,6 +19,7 @@ typedef struct Menu_Item_Type {
   int edit_flag;
   int makemenu_flag;
   int setenv_flag;
+  int command_flag;
   char type;
 #define MENU_EXEC   1
 #define MENU_SHOW   2
@@ -26,6 +27,7 @@ typedef struct Menu_Item_Type {
 #define MENU_NOP    4
 #define MENU_GROUP  5
 #define MENU_REMOVE 6
+#define MENU_HELP_TEXT 7
   struct Menu_Item_Type *next;
 } Menu_Item_Type;
 

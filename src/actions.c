@@ -214,6 +214,26 @@ void RunShow (char *title, char *command, int truncate) {
 }
 
 /* 
+ * Change the help text
+ */
+void ChangeHelpText (Menu_Type *m, Menu_Item_Type *i) {
+  FILE *pcommand;
+  char *str;
+
+  if (i->command_flag) {
+    pcommand=popen(i->command,"r");
+    str=pdgetline(pcommand,0);
+    pclose(pcommand);
+    m->helptext = str;
+  } else {
+    m->helptext = i->command;
+  }
+
+  DrawAll();
+
+}
+
+/* 
  * Run a command from the menus.
  */
 void RunCommand (Menu_Item_Type *i) {
@@ -355,7 +375,7 @@ void RemoveMenuByName (char *menuname) {
  * Run a menu item, return QUIT_EXIT if it is an exit item, or is a group
  * containing such an item.
  */
-int RunItem (Menu_Item_Type *i) {
+int RunItem (Menu_Type *m, Menu_Item_Type *i) {
   switch (i->type) {
   case MENU_EXEC:
     RunCommand(i);
@@ -368,15 +388,18 @@ int RunItem (Menu_Item_Type *i) {
   case MENU_REMOVE:
     RemoveMenuByName(i->command);
     break;
+  case MENU_HELP_TEXT:
+    ChangeHelpText(m, i);
+    break;
   }
 
   if (i->next == NULL)
     return 0;
   else
-    return RunItem(i->next); /* follow the linked list */		
+    return RunItem(m, i->next); /* follow the linked list */		
 }
 
 /* This is called when an item is picked from a menu. */
 int Pdmenu_Action (Menu_Type *m) {
-  return RunItem(m->items[m->selected]);
+  return RunItem(m, m->items[m->selected]);
 }

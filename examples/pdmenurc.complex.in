@@ -50,3 +50,4 @@ menu:torture:Torture Test Menu:Don't try this at home..
 			echo menu:main:`hostname` menu ; \
 			echo "exec:~Menu Item Title:~:pause:~Menu Item Command:~"
 	endgroup
+	helptext:_Date in help text:command: echo -n "at the tone the time is "; date
