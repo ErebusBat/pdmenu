@@ -283,12 +283,10 @@ void RunCommand (Menu_Item_Type *i) {
 	}
 
 	/* 
-	 * This is what the whole pdmenu program comes down to. 
+	 * This is what the whole pdmenu program comes down to.
 	 * The rest is fluff. ;-) 
 	 */
-	SLsig_block_signals();  /* hands off while running commands */
 	system(command);
-	SLsig_unblock_signals();
 
 	if (! i->noclear_flag) { /* redraw screen */
 	  Screen_Init();

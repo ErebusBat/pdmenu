@@ -1,3 +1,21 @@
+pdmenu (1.2.59) frozen unstable; urgency=low
+
+  * Modified spec file so it will work with .tar.gz files that do not
+    include the version number. I am currently generating that type of
+    tarball.
+
+ -- Joey Hess <joeyh@debian.org>  Mon,  3 Apr 2000 14:30:44 -0700
+
+pdmenu (1.2.58) frozen unstable; urgency=low
+
+  * Ok, the signal blocking added in the last version just breaks other
+    things, so I have reverted it entirely. This version is identical
+    to 1.2.56 except for the changelog. Closes: #55651
+  * This should go in frozen, since 1.2.57 is broken pretty bad, and this is
+    just a reversion to an earlier version.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 19 Jan 2000 16:13:19 -0800
+
 pdmenu (1.2.57) unstable; urgency=low
 
   * Block signals before running command, so if it receives a signal while

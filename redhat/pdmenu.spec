@@ -1,10 +1,10 @@
 Summary: A simple text-based menu program
 Name: pdmenu
 Packager: jeff.covey@pobox.com
-Version: 1.2.53
+Version: 1.2.58
 Release: 1
 Url: http://kitenet.net/programs/pdmenu/
-Source: ftp://kitenet.net/pub/code/pdmenu/pdmenu_1.2.53.tar.gz
+Source: ftp://kitenet.net/pub/code/pdmenu/pdmenu_1.2.58.tar.gz
 Copyright: GPL
 Group: Shells/Menus
 Buildroot: /tmp
@@ -15,7 +15,7 @@ A simple full screen menu program, intended to be a comfortable
 login shell for inexperienced users.
 
 %prep
-%setup
+%setup -n pdmenu
 ./configure --prefix=/usr --sysconfdir=/etc --mandir=/usr/share/man
 
 %build
