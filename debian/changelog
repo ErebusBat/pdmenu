@@ -1,3 +1,10 @@
+pdmenu (1.2.80) unstable; urgency=low
+
+  * Fix from Lou Sortman for bug if an _ was escaped, and then a hotkey placed
+    later on the line. Sorry I took so long Lou!
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 12 May 2003 14:15:09 -0400
+
 pdmenu (1.2.79) unstable; urgency=low
 
   * Detect 2 queued escapes and assume the first one is a literal escape.

@@ -56,7 +56,7 @@ int SetFlags(Menu_Item_Type *i,char c) {
  */
 char ReadRc (char *fname,int type) {
   char *str, *str_p, *tmp;
-  int escaped,i,line,newflag;
+  int i,j,line,newflag;
   Menu_Item_Type *ingroup=NULL; /* points to last item we added to group */
   Menu_Item_Type *currentitem=NULL; /* the item we are adding to the menus */
   FILE *fp=NULL;
@@ -238,17 +238,19 @@ char ReadRc (char *fname,int type) {
 
       currentitem->hotkey=-1; 
       if ((tmp=unescape(pdstrtok(NULL,FIELD_DELIM),FIELD_DELIM)) != NULL) {
-	escaped=0;
 	for (i=0;i<strlen(tmp)-1;i++) { /* set hotkey */
-	  if (tmp[i]==HOTKEY_SEL_CHAR && !escaped) {
+          if(tmp[i] == '\\') {
+	    for (j=i; j<strlen(tmp);j++) {
+	      tmp[j]=tmp[j+1];
+	    }
+	    i++;    /* skip past the escaped character */
+	    continue;
+	  }
+	  if (tmp[i]==HOTKEY_SEL_CHAR) {
 	    currentitem->hotkey=i;
 	    for (;i<strlen(tmp);i++) {
 	      tmp[i]=tmp[i+1];
 	    }
-	    break;
-	  }
-	  else {
-	    escaped = ((tmp[i] == '\\') && !escaped);
 	  }
 	}
 	tmp=unescape(tmp,HOTKEY_SEL_CHAR);
