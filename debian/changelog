@@ -1,3 +1,13 @@
+pdmenu (1.2.65) unstable; urgency=low
+
+  * Patch from Jan Rafaj <Jan.Rafaj@cedric.vabo.cz> to make it
+    open the actual tty, not /dev/tty, if a pdmenurc file is read on stdin.
+    The issue is that if /dev/tty is used, child processes use it for
+    stdin/out, which, while it should work ok, can yeild confusing behavior
+    if you're playing around with ttyname().
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 26 Sep 2000 10:14:01 -0700
+
 pdmenu (1.2.64) unstable; urgency=low
 
   * Killed the debian/compress file, using -X to dh_compress instead.

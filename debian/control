@@ -3,7 +3,7 @@ Section: shells
 Priority: optional
 Build-Depends: debhelper, slang1-dev, libgpmg1-dev
 Maintainer: Joey Hess <joeyh@debian.org>
-Standards-Version: 3.2.0.0
+Standards-Version: 3.2.1.0
 
 Package: pdmenu
 Architecture: any

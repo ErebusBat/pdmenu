@@ -1,5 +1,5 @@
 .\" -*- nroff -*-
-.TH PDMENURC 5 "May 08 2000" "pdmenu" "File formats"
+.TH PDMENURC 5 "September 26 2000" "pdmenu" "File formats"
 .SH NAME
 pdmenurc \- menu definitions file for pdmenu
 .SH SYNOPSIS
@@ -432,13 +432,13 @@ If you want the ':' character to appear in a field, you may escape out
 the ':' character by placing '\\' before it. You don't need to do this if
 the field is the last field in a line.
 .SH FILES
-.I /usr/local/etc/pdmenurc
+.I /etc/pdmenurc
 .RS
 Default config file.
 .RE
 .I ~/.pdmenurc
 .RS
-If this exists, it overrides /usr/local/etc/pdmenurc.
+If this exists, it overrides /etc/pdmenurc.
 .SH AUTHOR
 Joey Hess, <joey@kitenet.net>.
 .SH "SEE ALSO"

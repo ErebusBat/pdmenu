@@ -128,15 +128,17 @@ RETSIGTYPE Sigwinch_Handler (int sig) {
 void Screen_Init () {
   static int SLkp_init_ran;
   int fd;
-
+  char *tty_ptr;
+  
   if (screen_is_setup == 0) {
     /*
-     * Make sure that we have /dev/tty open as stdin. 
+     * Make sure that we have the real tty open as stdin.
      * You see, if a rc file is passed to pdmenu on stdin, then
      * after the rc file is read, there is no longer stdin available
      * for programs pdmenu launches to use.
      */
-    fd = open("/dev/tty", O_RDWR);
+    tty_ptr = ttyname(0);
+    fd = open(tty_ptr, O_RDWR);
     dup2(fd, 0);
     close(fd);
 
