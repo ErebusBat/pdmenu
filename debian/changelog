@@ -1,3 +1,14 @@
+pdmenu (1.2.83) unstable; urgency=low
+
+  * Patch to add a new helptext command. Thanks, John Daley.
+  * Move the stdin reopening hack to rc.c, so it is done only if a rc file
+    was read from stdin. Reverted the earlier change, so it opens /dev/tty
+    again. This will break on non-unix98 pty systems (linux without /dev/pts),
+    but at least it will work better than the old thing, which did not work at
+    all.
+
+ -- Joey Hess <joeyh@debian.org>  Wed, 10 Dec 2003 19:41:10 -0500
+
 pdmenu (1.2.82) unstable; urgency=low
 
   * Added "lynx style" menu navigation, using left and right arrow keys.
