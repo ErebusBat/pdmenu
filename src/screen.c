@@ -4,7 +4,7 @@
  */
 
 /*
- * Copyright (c) 1995-1999 Joey Hess (joey@kitenet.net)
+ * Copyright (c) 1995-2003 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
@@ -168,7 +168,7 @@ void Screen_Init () {
     SLtt_Use_Ansi_Colors=Use_Color;
 
     SLsignal(SIGWINCH,Sigwinch_Handler);
-
+    
     SLsig_unblock_signals();
 
     screen_is_setup=1;

@@ -1,3 +1,16 @@
+pdmenu (1.2.78) unstable; urgency=low
+
+  * Fixed some problems with sample menus in pdmenurc(5). Closes: #183978
+  * Don't call Screen_Init on startup until after initting gpm. I think that
+    gpm_init was overriding the resize signal or something. Anyway, this fixes
+    resizes in xterm, as mentioned in #116599.
+  * Fix doubled conffiles.
+  * Hacked ba.lpd example script in truely evil way to make dash -n prse it
+    ok.
+  * Update config.guess and config.sub.
+
+ -- Joey Hess <joeyh@debian.org>  Sat,  8 Mar 2003 17:33:47 -0500
+
 pdmenu (1.2.77) unstable; urgency=low
 
   * Added --with-gpm/--without-gpm to configure script.

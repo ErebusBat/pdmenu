@@ -32,6 +32,8 @@ fi
 tail --lines=+$LINE "$0" | pdmenu -
 export TERM=$OLDTERM
 exit 0
+# make dash -n happy gross eh
+cat <<EOF
 
 # Do not delete or modify the next line
 # ba4unix #

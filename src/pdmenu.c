@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 1995-2002 Joey Hess (joey@kitenet.net)
+ * Copyright (c) 1995-2003 Joey Hess (joey@kitenet.net)
  * All rights reserved. See COPYING for full copyright information (GPL).
  */
 
@@ -257,7 +257,6 @@ int main (int argc, char **argv) {
     UNSEL_MENU=0;
   }
 
-  Screen_Init();
   Screen_Setcolors();
   SetScreensize();
 
@@ -266,6 +265,7 @@ int main (int argc, char **argv) {
 #endif
 
   AddWindow(m);
+  Screen_Init();
   DrawAll();
 
   do {

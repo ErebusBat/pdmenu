@@ -411,8 +411,8 @@ For example, if you have the followng pdmenurc:
  menu:main:Main Menu
    group:_Test
      exec::makemenu: \\
-       echo menu:sample:Dir \\
-       echo exec:_Directory:pause:ls \\
+       echo menu:sample:Dir; \\
+       echo exec:_Directory:pause:ls
      show:::sample
    endgroup
 
@@ -421,11 +421,11 @@ appears has another Directory command on it. If you don't want this
 to happen, and you want only one Directory command to be on the menu,
 add a command to remove the menu after it is used, like this:
 
- menu:main:Main Menu                                      
+ menu:main:Main Menu
    group:_Test
-     exec::makemenu: \\                           
-       echo menu:sample:Dir \\                         
-       echo exec:_Directory:pause:ls \\                
+     exec::makemenu: \\
+       echo menu:sample:Dir; \\
+       echo exec:_Directory:pause:ls
      show:::sample
      remove:::sample
    endgroup
