@@ -1,3 +1,11 @@
+pdmenu (1.2.84) unstable; urgency=low
+
+  * Patch from Martin Quinson to avoid use of string concatenation and make
+    life easier for translators. Closes: #252322
+  * Fix segfault introduced by above patch.
+
+ -- Joey Hess <joeyh@debian.org>  Fri,  4 Jun 2004 14:59:34 -0300
+
 pdmenu (1.2.83) unstable; urgency=low
 
   * Patch to add a new helptext command. Thanks, John Daley.
