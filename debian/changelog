@@ -1,0 +1,571 @@
+pdmenu (1.2.14) unstable; urgency=low
+
+  * /usr/doc/pdmnu/changelog was bad symlink. Fixed.
+  * Routine update of debian/rules:
+    Fakeroot and sudo fixes.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 18 Jul 1997 17:23:42 -0400
+
+pdmenu (1.2.13) unstable; urgency=low
+
+  * showdir.pl: sort directory listing.
+  * RunShow: handle tabs in input.
+  * I thought I'd already done this, but turn off mouse support immediatly if 
+    it doesn't initalize, so if pdmenu crashes or is killed, cut and paste 
+    isn't messed up.
+  * I thought I'd done this too (did I lose a version somewhere?), but fixed
+    a problem in ShowMessage that was leading to frequent crashes.
+  * Code reorganization.
+  * Routine update of debian/rules:
+    Only run sudo when really necessary - makes fakeroot work.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 14 Jul 1997 13:49:45 -0400
+
+pdmenu (1.2.12) unstable; urgency=low
+
+  * Fixed a crash if the menu file was a single "nop".
+  * Built with new gpm library, so it is now entirely libc6, not libc5 and
+    libc6 mixed.
+  * Fixed a bug in ShowMessage()
+
+ -- Joey Hess <joeyh@master.debian.org>  Tue,  1 Jul 1997 11:50:23 -0400
+
+pdmenu (1.2.11) unstable; urgency=low
+
+  * Merged changes from menu package pdmenu example menu method. Now it
+    includes menu.h, so you can toggle between long and short titles easily.
+  * So that can work, updated to recommend menu >= 1.4
+  * Fixed problem with debian menus that was preventing urls from being used
+    in menu items, becuase cpp thought everything after "//" was a comment.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 26 Jun 1997 14:16:43 -0400
+
+pdmenu (1.2.10) unstable; urgency=low
+
+  * Changed debian menu method to not allow +, -, 2, or 8 to be used as 
+    hotkeys, since they can be used for navigation.
+
+ -- Joey Hess <joeyh@master.debian.org>  Wed, 25 Jun 1997 14:32:20 -0400
+
+pdmenu (1.2.9) unstable; urgency=low
+
+  * Rebuilt to use libc6.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 23 Jun 1997 22:31:41 -0400
+
+pdmenu (1.2.8) unstable; urgency=low
+
+  * configure script no longer uses perl to figure out the version number.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 13 Jun 1997 14:56:04 -0400
+
+pdmenu (1.2.7) unstable; urgency=low
+
+  * Added --retro command line option that makes pdmenu use the pre-1.2.4 
+    look.
+
+ -- Joey Hess <joeyh@master.debian.org>  Wed, 11 Jun 1997 12:44:22 -0400
+
+pdmenu (1.2.6) unstable; urgency=low
+
+  * Fixed some buffer overflows.
+  * Fixed overoptimization that had weird results with empty menus.
+  * NOP's are now allowed as the first item in a menu.
+  * Fixed a bug with menu items with an empty text field.
+  * Fixed longstanding bug that there was no \n after the "Press enter to
+    return to pdmenu." prompt.
+  * Made flags case-insensitive.
+  * Fixed resizing if an item is added to a menu on the fly.
+  * Integrated in several changes that were almost lost in a disk crash last
+    week.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu,  5 Jun 1997 16:25:28 -0400
+
+pdmenu (1.2.5) unstable; urgency=low
+
+  * Added group commands. These are menu items that execute more than one
+    pdmenu command when selected.
+  * The makemenu flag no longer displays the menu it makes. If you used this
+    feature, you must change your pdmenurc file to run a group command
+    that runs the makemenu command and then runs a show command to display
+    the menu.
+  * This fixes a bug in the makemenu flag if the generated menu is empty.
+  * Changed remove to be a command that can appear only in menus and groups.
+    Also, remove command has a (currently unused) flags field now, and a
+    description field.
+  * Fixed a memory leak in the remove command.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 26 May 1997 15:35:24 -0400
+
+pdmenu (1.2.4) unstable; urgency=low
+
+  * Menus that are not active can now change to a different color and 
+    lose some decorations.
+  * Introduced a new easy to understand long form for the flags to the exec
+    command.
+  * Worked around a bug in makemenu flag if generated menu is empty (not
+    yet really fixed).
+  * Added a make dep target.
+  * Routine update of debian/rules:
+    Run dpkg-gencontrol after debstd, and delete substvars during clean.
+  * Fixed column mis-align in --help text.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 22 May 1997 13:23:04 -0400
+
+pdmenu (1.2.3) unstable; urgency=low
+
+  * Fixed a bug in the postinst, that would cause a failure if a version of
+    menu older than 1.0 was installed when pdmenu installs.
+  * move compat= in menu method to first non-comment line, at request from
+    Joost.
+
+ -- Joey Hess <joeyh@master.debian.org>  Tue, 6 May 1997 13:20:50 -0400
+
+pdmenu (1.2.2) unstable; urgency=low
+
+  * No longer depends on perl.
+  * Updated menu file to version 1.0 format.
+  * Does not depend on menu, only recommends it.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 21 Apr 1997 21:08:28 -0400
+
+pdmenu (1.2.1) unstable; urgency=low
+
+  * Got rid of pdmenu-genmenu. Replaced with a menu-method file that depends
+    on menu 1.0 or greater.
+  * Previously, if a menu was defined twice, the second definition could add
+    items to the menu, but would not change the title or help text of the 
+    menu. Now, it does change the title and help text.
+  * It is no longer a fatal error for a menu to be completly empty. (Such
+    menus are now ignored.)
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 19 Apr 1997 22:40:23 -0400
+
+pdmenu (1.2.0) unstable; urgency=low
+
+  * Added 'm' flag to exec, which allows you to generate and display 
+    submenus on the fly while pdmenu is running.
+  * Added remove keyword, to remove a menu.
+  * '\' can now be used to escape out ':' characters in pdmenurc files.
+  * Patch from Peter Tobias <tobias@et-inf.fho-emden.de> to fix bug in 's'
+    flag.
+  * Increaded size of MENU_ITEM_COMMANDSIZE to 512 characters.
+  * Reorganized the sample pdmenurc files.
+  * Added a pdmenurc.complex that shows off the more advanced features.
+  * Reorganized pdmenurc(5).
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 10 Apr 1997 14:40:51 -0400
+
+pdmenu (1.1.8) unstable; urgency=low
+
+  * Added --menu= option to jump to a submenu on startup.
+  * Man page and --help fixups.
+  * Cleaned up version string.
+
+ -- Joey Hess <joeyh@master.debian.org>  Wed, 9 Apr 1997 12:55:27 -0400
+
+pdmenu (1.1.7) unstable; urgency=low
+
+  * Fixed another problem with install -d
+  * Fixed two buffer overruns.
+  * Comments can end with \ to continue over to the next line now.
+  * Fixed problem with whitespace not being allowed before comments.
+  * Routine update of debian/rules:
+    Run dpkg-gencontrol after debstd, and delete substvars during clean.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 7 Apr 1997 13:27:52 -0400
+
+pdmenu (1.1.6) unstable; urgency=low
+
+  * Added --unpark option, which lets the cursor move to the selected line
+    on a menu, to make pdmenu more friendly to speech generation software.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sun, 30 Mar 1997 23:36:13 -0500
+
+pdmenu (1.1.5) unstable; urgency=low
+
+  * Fixed a bug in input box, that could cause random crashes and other
+    problems.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 27 Mar 1997 22:41:45 -0500
+
+pdmenu (1.1.4) unstable; urgency=low
+
+  * Fixed a stupid typo in the pdmenurc file.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sun, 23 Mar 1997 14:38:02 -0500
+
+pdmenu (1.1.3) unstable; urgency=low
+
+  * Fixed problem with debian menu generation: if a command had
+    "text","x11", or "vc" in its name, there were problems.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 22 Mar 1997 21:56:03 -0500
+
+pdmenu (1.1.2) unstable; urgency=low
+
+  * Run dpkg-gencontrol after debstd.
+  * Oops, fixed problem in pdmenurc file from last version.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 20 Mar 1997 01:44:07 -0500
+
+pdmenu (1.1.1) unstable; urgency=low
+
+  * SYSV3 portability changes:
+  	* Fall back on floor() if rint() is not available.
+  	* Fix CFLAGS in Makefile.
+  * Got rid of use of perl in pdmenurc.debian file.
+  * Increased maximum length of menu name up to 80 characters from 32,
+    because deeply nested debian menus can have quite long names.
+  * Fall back on autoconf/install-sh if install -d doesn't work.
+  * Improved line wrapping when displaying command output in a window.
+  * Added 't' flag, which is the same as 'd', but truncates command output.
+    Makes some things look much better when displayed in windows.
+    (At request of Steve Frampton.)
+  * Malloc only as many menus and as much space in the menus as we actually 
+    need.
+  * Fixed bug in hotkey processing.
+  * Improved make localdist.
+  * Recognize '\' continuation lines.
+  * Added --version switch.
+
+ -- Joey Hess <joeyh@master.debian.org>  Tue, 18 Mar 1997 12:31:56 -0500
+
+pdmenu (1.0.2) unstable; urgency=low
+
+  * Fall back on mkdir if install -d fails, for compatability with bsdinstall.
+  * Depends on slang0.99.34 (> 0.99.38)
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 17 Mar 1997 12:46:29 -0500
+
+pdmenu (1.0.1) unstable; urgency=low
+
+  * Fix date in LSM.
+  * Routine update of debian/rules:
+    Clean up junk files in subdirs.
+  * Portability modifications for AIX:
+    	* Test if compiler is gcc. If not, don't set some CFLAGS values.
+    	* malloc() some strings, instead of using fixed-length arrays that xlc
+    	  chokes on. Only had to do this in two places that used a
+  	  calculated expression as the size of the string.
+  * Fixed input box so backspace will work in my xterm (it sends 127 for
+    some reason).
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 15 Mar 1997 00:25:23 -0500
+
+pdmenu (1.0.0) unstable; urgency=low
+
+  * Small documentation changes.
+  * Added doc/ANNOUNCE file.
+  * Removed outdated copy of lsm file.
+  * Fixed spec file.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 6 Mar 1997 22:17:05 -0500
+
+pdmenu (0.6.4) unstable; urgency=low
+
+  * Cleaned up base directory -- moved sources into src/, docs into doc/, 
+    autoconf stuff into autoconf/
+  * Fixed a few minor bugs in Makefile.
+  * Minor doc fixes.
+  * Added copyright header to all source files, etc.
+  * Fixed very long standing problem with make test -- now it's a little
+    quicker.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 1 Mar 1997 18:49:19 -0500
+
+pdmenu (0.6.3) unstable; urgency=low
+
+  * Now builds on SunOS.
+  * Fixed a bug that would cause pdmenu to crash after the screen was
+    refreshed 30 times, or after 30 interactive programs were run.
+  * make distclean removes autoconf generated slang.h.
+  * Several small portability changes:
+  	* Work if getopt_long and/or getopt are unavailable.
+  	* Work with versions of tar that don't have the 'x' option.
+  	* Allow user to specify location of slang header file and of slang
+	  libraries when running configure.
+  	* Make sure a GNU compatable date is used to generate LSM file date.
+  	* Guess the size of the tar file more portably, using perl.
+  	* Use putenv, not setenv.
+  	* Include both string.h and strings.h.
+  	* Add -D__USE_FIXED_PROTOTYPES__ to gcc command line.
+  * Moved man pages to subdirectory.
+  * Routine update of debian/rules:
+    Modifications for multiple binary package support.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 27 Feb 1997 20:06:34 -0500
+
+pdmenu (0.6.2) unstable; urgency=low
+
+  * Fixed a bug in the automatically generated menus.
+    if the id of a menu entry was the same as part of the command to run, 
+    there were problems.
+  * Routine update of debian/rules:
+    Call debstd after fixing file perms.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 1 Feb 1997 22:28:56 -0500
+
+pdmenu (0.6.1) unstable; urgency=low
+
+  * ^L will redraw screen, as well as ^R.
+  * More mods to configure script (redhat compatability).
+  * Fixed pdmenu-genmenu problem with menu items that could run in either
+    text or x11 mode showing up twice on the menus.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 18 Jan 1997 21:34:42 -0500
+
+pdmenu (0.6.0) unstable; urgency=low
+
+  * Converted to use autoconf.
+  * Lots of code reorganization and other changes; no changes to actual
+    functionality of the program.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 16 Jan 1997 20:18:18 -0500
+
+pdmenu (0.5.10) unstable; urgency=low
+
+  * Rewrote pdmenu-genmenu so it will only work with menu >= 0.10, but is
+    simpler and faster. Updated man page, changed package dependancies
+    accordingly.
+
+ -- Joey Hess <joeyh@master.debian.org>  Tue, 7 Jan 1997 18:48:27 -0500
+
+pdmenu (0.5.9) unstable; urgency=low
+
+  * More fixes to postinst, postrm scripts, thanks to Joost.
+
+ -- Joey Hess <joeyh@master.debian.org>  Tue, 7 Jan 1997 18:26:28 -0500
+
+pdmenu (0.5.8) unstable; urgency=low
+
+  * Rewrote and cleaned up rc file processing.
+  * Fixed bug in postinst, postrm, that was making the pdmenurc_auto file
+    0 bytes long on upgrades.
+  * postrm purge will remove conffile /etc/menu-methods/pdmenu
+  * debstd no longer handles the menu file. (Because I need to handle things
+    differently than the standard case.)
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 6 Jan 1997 21:43:17 -0500
+
+pdmenu (0.5.7) unstable; urgency=low
+
+  * Added redhat spec file, and built RPMs of pdmenu for the first time in
+    a long while, thanks to Rob Lesan.
+
+ -- Joey Hess <joeyh@master.debian.org>  Wed, 1 Jan 1997 20:44:57 -0500
+
+pdmenu (0.5.6) unstable; urgency=low
+
+  * Added a man page for pdmenu-genmenu (#6285)
+  * Routine update of debian/rules:
+    Use build-stamp instead of build.
+
+ -- Joey Hess <joeyh@master.debian.org>  Tue, 31 Dec 1996 20:55:59 -0500
+
+pdmenu (0.5.5) unstable; urgency=low
+
+  * Fixed another bad bug in pdmenu-genmenu that made the menus unusable.
+  * Fixed a minor hotkey bug in pdmenu-genmenu.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 27 Dec 1996 21:24:09 -0500
+
+pdmenu (0.5.4) unstable; urgency=low
+
+  * Large cleanup of pdmenu-genmenu; fixed several serious bugs in it.
+  * Moved pdmenu-genmenu into /usr/sbin.
+  * Made /etc/menu-methods/pdmenu be a conffile, similar to those installed
+    in the same directory by the menu package.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 26 Dec 1996 21:41:43 -0500
+
+pdmenu (0.5.3) unstable; urgency=low
+
+  * Fixed a bug with hotkey selection on debian auto-generated menus.
+  * Cursor doesn't jump around the screen anymore.
+  * Now handles screen resizing properly.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 26 Dec 1996 11:26:38 -0500
+
+pdmenu (0.5.2) unstable; urgency=low
+
+  * Added rc file preprocessing via the preproc command.
+  * Pdmenu will now detect if X or the linux console is available, and
+    automatically add/remove menu items that depend on X or the console.
+  * Added Reccommends: cpp to control file.
+  * Upped the maximum number of menus from 20 to 50.
+  * Handle upper and lowercase "needs" fields in pdmenu-genmenu.
+  * Fixed a bug that occurred when a rc file containing just a menu keyword
+    was read.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 20 Dec 1996 13:38:53 -0500
+
+pdmenu (0.5.1) unstable; urgency=low
+
+  * Fixed a bug if escape was hit in an edit window at the linux console.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 19 Dec 1996 19:38:05 -0500
+
+pdmenu (0.5.0) unstable; urgency=low
+
+  * Built with new version of slang library.
+  * Key handling fixed to work properly, thanks to new features of slang.
+  * Escape key will close the current window.
+  * A line of help is displayed if an invalid key is pressed.
+  * The TERMCAP problem is solved! Slang will now work even if TERMCAP is
+    set to something like "co#80:li#24:". Removed advice in README.debian
+    about how to deal with this problem.
+  * Fixed a bug that would mess up cut and paste in an xterm after pdmenu
+    ran.
+  * Added long options.
+  * Added ctrl-u (pageup) and ctrl-v (pagedown)
+
+ -- Joey Hess <joeyh@master.debian.org>  Wed, 18 Dec 1996 23:33:00 -0500
+
+pdmenu (0.4.2) unstable; urgency=low
+
+  * Changed author and maintainer email address, and updated name of ftp site.
+  * Reset gpm to normal while shelled out to run a program or in a text box
+  * Can now hold down on shift to use gpm to cut and paste normally.
+  * Improved rc file parsing and sanity checking.
+  * Fixed compilation without gpm support.
+  * Skip over "nops" when moving in the menu.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 16 Dec 1996 15:50:57 -0500
+
+pdmenu (0.4.1) unstable; urgency=low
+
+  * libgpm1 is required.
+  * Cleanups to mouse support, and right mouse button exits a menu now.
+  * Fixed compiled-in version number.
+  * Added a debian menu entry for pdmenu (in Apps/Shells).
+  * Supports -f option to the menu generator.
+  * Added check for screen too small.
+  * Ctrl-g will not exit program if -q option is passed on the command line.
+
+ -- Joey Hess <jeh22@cornell.edu>  Sun, 15 Dec 1996 01:54:01 -0500
+
+pdmenu (0.4.0) unstable; urgency=low
+
+  * Experimental GPM mouse support added, thanks to Randolph Chung.
+  * Makefile autodetects version number from this changelog.
+  * Threw in a warning about how xterm and slang conflict over
+    how TERMCAP should be set.
+
+ -- Joey Hess <jeh22@cornell.edu>  Sat, 14 Dec 1996 21:10:16 -0500
+
+pdmenu (0.3.4) unstable; urgency=low
+
+  * Pdmenu now works in rxvt with TERM=rxvt, and in some windows telnet
+    clients.
+
+ -- Joey Hess <jeh22@cornell.edu>  Sat, 14 Dec 1996 14:15:12 -0500
+
+pdmenu (0.3.3) unstable; urgency=low
+
+  * Modified "menu" command in rc file so existing menus can be added to
+    later in the rc file.
+  * Added support for debian's "menu" package.
+    Menus created by the "menu" package can now be used in pdmenu.
+  * Added README.debian with instructions for using update-menu menus
+    with pdmenu.
+  * Added "read" command to rc file, to let above change work.
+  * Added dependencies on perl and menu.
+
+ -- Joey Hess <jeh22@cornell.edu>  Mon, 25 Nov 1996 23:30:21 -0500
+
+pdmenu (0.3.2) unstable; urgency=low
+
+  * Routine update of debian/rules.
+  * Split man page in two: pdmenu and pdmenurc
+  * Lots of cleanups and additions to the man pages.
+
+ -- Joey Hess <jeh22@cornell.edu>  Sun, 10 Nov 1996 20:30:24 -0500
+
+pdmenu (0.3.1) unstable; urgency=low
+
+  * Debianized.
+  * Autogenerate .lsm file.
+  * Added code to detect the correct screen size when used with 
+    broken termcap/terminfo files.
+
+ -- Joey Hess <jeh22@cornell.edu>  Sun, 3 Nov 1996 19:31:59 -0500
+
+0.3	3rd public release				21JUN96
+		Removed "-n" flag. Now, color is off by default. To turn it
+			on, either use the "-c" flag, or set the COLORTERM 
+			environment variable. (Setting COLORTERM has the side 
+			effect of making color work properly in jed, slrn, and 
+			maybe other programs that use the slang library.)
+		"make config" now works even if you only have perl 4.x, not
+			just 5.x
+		Ctrl-r forces a screen redraw.
+		Split config.h up into lots of little .h files, should make
+			it easier to configure different things.
+
+0.3pre6 Final bugfix					15JUN96
+		'p' flag works again (oops...)
+		Revamped rc file processing.
+		Control and high-bit characters in menus are changed to spaces.
+		Tab characters in menus/windows are ok now.
+		Avoided making color combos that blink on the linux console 
+			be the default colors.
+		Allowed default colors to be configured in config.h
+		Commands that return null output can be run with the 'w'
+			flag without problems.	
+		Added "nop" command for a blank line in the menu.
+
+0.3pre5 More bugfixing					11MAR96
+		Kept it from stomping on $HOME. (oops..)
+		Fixed key handling, although it's still far from perfect.
+		Added home and end key handling.
+		Other minor fixes.
+
+0.3pre4	Bugfix and minor improvements			27JAN96
+		No shadows in B&W mode, faster scrolling on slow terminals, 
+			and other cosmetic fixes.
+		Fixed nasty problem with menus greater than 127 lines long.
+		Fixed ShowMessage to work with broken gcc.
+		's' flag to exec command to set environment variables.
+		More robust parsing of rc file.
+		Sped up screen redraws, thanks to John E. Davis, author of
+			S-LANG.
+		Fixed make config.
+
+0.3pre3	Creeping featureitus				18JAN96
+		Fixed 'd' without 'n' flag so it'll not segfault.
+		'e' flag to exec command to let you enter text.
+		'd' flag to exec command to display output of command in a
+			window.
+		Configurable colors via the "color" command.
+		Menus can now contain more items than will fit on the
+			screen; they scroll.
+
+0.3pre2	Bugfix						11JAN96
+		Created autoconfig script ("make config").
+		Lots and lots of bugs fixed.
+		Added -n and -q switches.
+
+0.3pre1	The need for speed				10JAN96
+		**IMPORTANT** This version is a total rewrite in C. It is
+		like the earlier versions in spirit only. There are sure to
+		be lots of bugs, and there is no support for configurable
+		menu colors in this version. However, it's now MUCH faster,
+		and easier to use, with loads of new options.
+
+0.2	The enevitable bugfix				02DEC95
+		Added support for multiple menu files being used at once.
+			Just specify them all as parameters.
+		Got rid of the width item in the menu definitions.
+		Because of conflicts with multiple other programs named
+			"menu", the Makefile now installs it as pdmenu
+			instead. See INSTALL for details.
+		Added support for different colored menus.
+		Added a background title to the menus.
+		Fixed bug in detection of menus.
+
+0.1     First public release                            26NOV95
+
+Local variables:
+mode: debian-changelog
+End:

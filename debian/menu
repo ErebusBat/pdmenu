@@ -1,0 +1,2 @@
+?package(pdmenu):needs="text" section="Apps/Shells" icon="none" \
+	title="Pdmenu" command="/usr/bin/pdmenu"
