@@ -1,5 +1,5 @@
 .\" -*- nroff -*-
-.TH PDMENU 1 "October 07 1999" "1.2.50" "Commands"
+.TH PDMENU 1 "October 25 1999" "1.2.50" "Commands"
 .SH NAME
 pdmenu \- simple full screen menu program
 .SH SYNOPSIS

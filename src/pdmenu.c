@@ -216,7 +216,7 @@ int main (int argc, char **argv) {
 
   /* color or b&w? Tell slang */
   if (Use_Color) { /* color */
-    DESKTOP=0;
+    DESKTOP=1;
     TITLE=6;
     BASE=3;
     MENU=4;
