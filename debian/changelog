@@ -1,3 +1,301 @@
+pdmenu (1.2.43) unstable; urgency=low
+
+  * Rebuilt with new slang1-dev to fix slang dependancy.
+  * Checked into CVS. Set up a debian/fixlinks script to correct
+    symlinks.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 27 Aug 1999 19:59:12 -0700
+
+pdmenu (1.2.42) unstable; urgency=low
+
+  * Removed redundant part of regexp in debian pdmenurc.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon,  2 Aug 1999 13:28:57 -0700
+
+pdmenu (1.2.41) unstable; urgency=low
+
+  * Updates to console and display detection in debian pdmenurc 
+    (Closes: #42300)
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon,  2 Aug 1999 10:34:17 -0700
+
+pdmenu (1.2.40) unstable; urgency=low
+
+  * Renamed /var/lib/pdmenu/pdmenurc_auto to .pdmenurc_auto. Had to do this
+    so if we have a per-user .pdmenurc_auto, it actually has that name, not
+    pdmenurc_auto.
+  * Added a compatability symlink it /var/lib/pdmenu/ so pdmenurc files that
+    use the old pdmenurc_auto name will keep working.
+  * Modified /etc/pdmenurc to use the new name.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 25 Feb 1999 23:40:02 -0800
+
+pdmenu (1.2.39) unstable; urgency=low
+
+  * Copyright updates.
+  * Removed duplicate GPL.
+  * Now complains about invalid screen part names.
+  * Fixed "color:selbarhot".
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 19 Feb 1999 12:33:47 -0800
+
+pdmenu (1.2.38) unstable; urgency=low
+
+  * Rebuilt with ncurses 4.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 30 Oct 1998 19:27:29 -0800
+
+pdmenu (1.2.37) unstable; urgency=low
+
+  * Removed icon=none from debian menu file.
+
+ -- Joey Hess <joeyh@master.debian.org>  Wed,  5 Aug 1998 14:25:23 -0700
+
+pdmenu (1.2.36) unstable; urgency=low
+
+  * Added --numeric flag, which disables use of '2' and '8' for cursor
+    movement. (Useful if you want numbered hotkeys.)
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon,  4 May 1998 13:12:30 -0700
+
+pdmenu (1.2.35) unstable; urgency=low
+
+  * Now linked with slang 1.2.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 25 Apr 1998 16:36:11 -0700
+
+pdmenu (1.2.34) unstable; urgency=low
+
+  * Fixed minor lintian errors. (No du file, control file permissions.)
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 14 Mar 1998 20:01:12 -0800
+
+pdmenu (1.2.33) unstable; urgency=low
+
+  * Updated COPYING file to new version of GPL, and updated
+    debian/copyright to new fsf address.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon,  9 Feb 1998 12:51:17 -0800
+
+pdmenu (1.2.32) unstable; urgency=low
+
+  * No longer depend on perl for cpp.pl, perl-base is sufficient.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat,  7 Feb 1998 19:27:48 -0800
+
+pdmenu (1.2.31) unstable; urgency=low
+
+  * Added a check to configure to see if cc understands -pipe.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sun,  1 Feb 1998 17:02:06 -0800
+
+pdmenu (1.2.30) unstable; urgency=low
+
+  * Updated pdmenurc.newbie.
+  * Updated doc/ANNOUNCE.
+  * Added doc/ANNOUCE into /usr/doc/pdmenu in debian package.
+
+ -- Joey Hess <joeyh@master.debian.org>  Tue, 23 Dec 1997 11:07:44 -0500
+
+pdmenu (1.2.29.5) unstable; urgency=low
+
+  * Don't force --lowbit mode on when --retro is used.
+
+ -- Joey Hess <joeyh@master.debian.org>  Wed, 10 Dec 1997 14:04:28 -0500
+
+pdmenu (1.2.29.4) unstable; urgency=low
+
+  * Fixed a problem exhibited if you exec some programs (including telnet)
+    from pdmenu when it has read its pdmenurc file from stdin.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon,  8 Dec 1997 16:36:19 -0500
+
+pdmenu (1.2.29.3) unstable; urgency=low
+
+  * Beautiful shadows, thanks to JED.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat,  6 Dec 1997 01:17:28 -0500
+
+pdmenu (1.2.29.2) unstable; urgency=low
+
+  * Added --lowbit switch, which makes pdmenu not use high bit ascii line
+    drawing characters. This fixes the #1 FAQ about pdmenu.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri,  5 Dec 1997 00:58:17 -0500
+
+pdmenu (1.2.29.1) unstable; urgency=low
+
+  * Added better spec file by Jeff Covey.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 28 Nov 1997 21:02:32 -0500
+
+pdmenu (1.2.29) unstable; urgency=low
+
+  * Added pdmenurc.newbie file and some helper scripts by Jeff Covey 
+    <jeff.covey@pobox.com>
+  * Added ba.lpd file by Randolph Chung <rc42@cornell.edu>
+  * Modified showdir.pl so if it is called as editdir.pl, it edits files
+    instead of displaying them.
+
+ -- Joey Hess <joeyh@master.debian.org>  Thu, 27 Nov 1997 23:38:10 -0500
+
+pdmenu (1.2.28) unstable; urgency=low
+
+  * Fixed tab expansion problem.
+  * Fixed problem with continutation lines being used where they shouldn't
+    be.
+  * Install showdir.pl into /usr/lib/pdmenu/.
+  * Fixed (for the second time) segfault if exec::show command returns no
+    output.
+
+ -- Joey Hess <joeyh@master.debian.org>  Wed, 26 Nov 1997 14:28:18 -0500
+
+pdmenu (1.2.27) unstable; urgency=low
+
+  * Changed all occurrences of kite.ml.org to kitenet.net.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 17 Nov 1997 15:39:10 -0500
+
+pdmenu (1.2.26) unstable; urgency=low
+
+  * Wrote a small, simplistic cpp like program in perl, and now use this
+    program instead of cpp for parsing /var/lib/pdmenu/pdmenurc_auto.
+    Using plain cpp had undesirable side effects.
+  * Suggests perl again. no longer suggests cpp.
+  * Added md5sums file back in.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sun,  2 Nov 1997 20:54:47 -0500
+
+pdmenu (1.2.25) unstable; urgency=low
+
+  * Conflicts: menu (<< 1.4), becuase of things it does in the menu-methods
+    file that old versions of menu do not understand.
+
+ -- Joey Hess <joeyh@master.debian.org>  Fri, 17 Oct 1997 16:12:36 -0400
+
+pdmenu (1.2.24) unstable; urgency=low
+
+  * Modified configure to check for asprintf, and if not found, use more
+    standard functions.
+  * Got rid of sinclude in Makefile (changed to include), for portability.
+  * For portability, make sure the -L comes before the -lslang.
+  * Added setenv() code, to be used if setenv is not otherwise available. The
+    code is from: ftp://ftp.uu.net/systems/unix/bsd-sources/lib/libc/stdlib/
+  * Cleaned up setenv() code so gcc doesn't complain about it.
+  * No longer use rint() or floor() at all.
+
+ -- Joey Hess <joeyh@master.debian.org>  Tue,  7 Oct 1997 20:22:33 -0400
+
+pdmenu (1.2.23) unstable; urgency=low
+
+  * Removed the limit on the number of items that can be in a menu.
+  * Removed limits.h (hurrah!)
+  * Merged ShowMessage() and RunShow() for a speedup.
+  * Added helptext back in when viewing a file (removed by accident).
+  * Doesn't crash on very long home directories now.
+  
+ -- Joey Hess <joeyh@master.debian.org>  Sun,  5 Oct 1997 22:08:29 -0400
+
+pdmenu (1.2.22) unstable; urgency=low
+
+  * Got rid of the limit on the number of windows that can appear on the 
+    screen at one time.
+  * Got rid of the limit on the number of menus that can be defined in the
+    rc file.
+  * Made rc file syntax errors easier to understand.
+  * Simplified the build process.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat,  4 Oct 1997 21:41:23 -0400
+
+pdmenu (1.2.21) unstable; urgency=low
+
+  * Emacs-indented the source.
+	
+ -- Joey Hess <joeyh@master.debian.org>  Sat,  4 Oct 1997 19:29:06 -0400
+
+pdmenu (1.2.20) unstable; urgency=low
+
+  * Let debhelper automatically generate calls to update-menus in postinst,
+    postrm.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 27 Sep 1997 13:30:31 -0400
+
+pdmenu (1.2.19) unstable; urgency=low
+
+  * Uses debhelper to build.
+  * Fix a bug in how putenv is used. Unfortunatly, this introduces a memory
+    leak. Modified configure script to detect if setenv is present and use
+    it instead if possible, eliminating the problem for linux systems.
+  * Rename getline to pdgetline.
+  * Allow use of RunSetEnv even if we don't have putenv or setenv, so you
+    can still do chdir.
+  * Fixed bug if you try to set an environment variable using a non-existant
+    command.
+  * Fixed exec flag initialization bug. (Again? I think I lost this fix.)
+  * Read stdin if asked to open file named "-".
+  * Removed unused /usr/sbin directory from package.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 20 Sep 1997 21:29:08 -0400
+
+pdmenu (1.2.18) unstable; urgency=low
+
+  * Minor optimzations to CalcMenu, pdstrtok.
+  * getline: remove trailing \n always.
+  * Routine update of debian/rules:
+    Fixed binary-indep target.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 13 Sep 1997 16:22:24 -0400
+
+pdmenu (1.2.17) unstable; urgency=low
+
+  * Fixed a memory leak.
+  * Modified menu methods file so debian menus are always available, even
+    during pdmenu install.
+  * /var/lib/pdmenu/pdmenurc_auto is no longer part of the package.
+  * /etc/pdmenurc modified so it does not display an error if
+    /var/lib/pdmenu/pdmenurc_auto is not present.
+  * Remove /var/lib/pdmenu/pdmenurc_auto on purge.
+  * Removing the package works ok now if you have already deleted
+    /etc/menu-methods/pdmenu.
+
+ -- Joey Hess <joeyh@master.debian.org>  Wed, 30 Jul 1997 22:51:25 -0400
+
+pdmenu (1.2.16) unstable; urgency=low
+
+  * Removed more arbitrary limits: no more limit on size of menu item text,
+    menu item command, or rc file line length, or on the length of strings
+    pdmenu uses for any other purpose.
+  * Fixed bug when there was no \n at eof of a pdmenurc file.
+  * Use SLsmg_Tab_Width when appropriate.
+  * Made pdmenu resize immediately. (Something of a hack..)
+  * Fixed rare crash on resize.
+  * Unified error handling.
+  * Fixed makefile problem (listed .c files by accident, not .o files)
+  * Only suggests, not recommends, menu and cpp.
+  * Rebuilt with fixed gpm library, to fix dependancies. (#11593)
+  * Fixed some other problems using checker. What a godsend..
+    - SelHotKey was not skipping items with no hotkey.
+    - Menu flags were not always initialized properly, with odd results.
+    - ShowMessage was not setting item->type on all menu items.
+    - RunShow was overflowing a string.
+  * Checker seems happy with pdmenu now.
+  * If a exec:{display,truncate} command returns no output, display the error
+    message on the status bar, not in a window.
+  * Changed behavior of exec:setenv command - now it parses the first line of
+    output, not the last.
+
+ -- Joey Hess <joeyh@master.debian.org>  Mon, 21 Jul 1997 20:37:03 -0400
+
+pdmenu (1.2.15) unstable; urgency=low
+
+  * Added #include <stdio.h> to actions.c
+  * Added a test for terminfo, if not found, link with -ltermcap
+  * Fixed bug introduced in 1.2.13 in the truncate flag.
+  * Removed some (but not all) arbitrary limits: no more limit on size of
+    menu name, menu title, or menu helptext.
+
+ -- Joey Hess <joeyh@master.debian.org>  Sat, 19 Jul 1997 14:30:47 -0400
+
 pdmenu (1.2.14) unstable; urgency=low
 
   * /usr/doc/pdmnu/changelog was bad symlink. Fixed.
