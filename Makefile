@@ -43,7 +43,7 @@ install: all
 		$(INSTALL_PREFIX)/$(MANDIR)/man1 \
 		$(INSTALL_PREFIX)/$(MANDIR)/man5 \
 		$(INSTALL_PREFIX)/$(SYSCONFDIR) \
-		$(INSTALL_PREFIX)/$(LIBDIR)
+		$(INSTALL_PREFIX)/$(DATADIR)/pdmenu
 	$(INSTALL_PROGRAM) pdmenu $(INSTALL_PREFIX)/$(BINDIR)
 	$(INSTALL) doc/pdmenu.man $(INSTALL_PREFIX)/$(MANDIR)/man1/pdmenu.1 -m 0644
 	$(INSTALL) doc/pdmenurc.man $(INSTALL_PREFIX)/$(MANDIR)/man5/pdmenurc.5 -m 0644
@@ -52,8 +52,8 @@ install: all
 		cp $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc.old ; \
 	fi
 	$(INSTALL) examples/pdmenurc $(INSTALL_PREFIX)/$(SYSCONFDIR)/pdmenurc -m 0644
-	$(INSTALL) examples/showdir.pl $(INSTALL_PREFIX)/$(LIBDIR)
-	cd $(INSTALL_PREFIX)/$(LIBDIR) && $(LN_S) -f showdir.pl editdir.pl
+	$(INSTALL) examples/showdir.pl $(INSTALL_PREFIX)/$(DATADIR)/pdmenu
+	cd $(INSTALL_PREFIX)/$(DATADIR)/pdmenu && $(LN_S) -f showdir.pl editdir.pl
 	$(MAKE) -C po install
 
 test: pdmenu

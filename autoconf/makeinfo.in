@@ -4,6 +4,7 @@ BINDIR		= @bindir@
 MANDIR		= @mandir@
 LIBDIR		= @libdir@/pdmenu
 SYSCONFDIR	= @sysconfdir@
+DATADIR		= @datadir@
 CC		= @CC@
 INSTALL		= @INSTALL@
 LN_S		= @LN_S@

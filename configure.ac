@@ -200,16 +200,12 @@ else
 fi
 AC_SUBST(PDMENU_SYSCONFDIR)
 
-dnl Have to calculate the libdir without any ${..} expansions in it for
-dnl use in pdmenurc.complex.
-if test "$libdir" != '${exec_prefix}/lib' ; then
-        PDMENU_LIBDIR=$libdir
-elif test "$exec_prefix" != NONE ; then
-        PDMENU_LIBDIR=$exec_prefix/lib
-elif test "$prefix" != NONE ; then
-        PDMENU_LIBDIR=$prefix/lib
+if test "$datadir" != '${prefix}/share' ; then
+        PDMENU_LIBDIR=$datadir
+elif test "$datadir" != NONE ; then
+        PDMENU_LIBDIR=$prefix/share
 else
-        PDMENU_LIBDIR=$ac_default_prefix/lib
+        PDMENU_LIBDIR=$ac_default_prefix/share
 fi
 AC_SUBST(PDMENU_LIBDIR)
 

@@ -1,3 +1,9 @@
+pdmenu (1.2.73) unstable; urgency=low
+
+  * Moved stuff to /usr/share/
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 10 Jun 2002 11:56:46 -0400
+
 pdmenu (1.2.72) unstable; urgency=low
 
   * Fixed remove bug. Closes: #149152

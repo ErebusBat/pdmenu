@@ -34,6 +34,6 @@ preproc: \
 	fi; 							\
 	if [ -f /var/lib/pdmenu/pdmenurc_auto ] ; then		\
 		printf  "#define text\n$args" |			\
-			/usr/lib/pdmenu/cpp.pl -		\
+			/usr/share/pdmenu/cpp.pl -		\
 				/var/lib/pdmenu/.pdmenurc_auto;	\
 	fi
