@@ -58,7 +58,6 @@ void _shadow_char (int x, int y) {
 	SLsmg_Char_Type ch;
 
 	SLsmg_gotorc(y,x);
-	SLsmg_char_at(&ch);
 	SLsmg_set_color(SLSMG_COLOR_BLACK);
 	SLsmg_write_char(' ');
 }
