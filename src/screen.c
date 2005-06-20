@@ -58,15 +58,9 @@ void _shadow_char (int x, int y) {
 	SLsmg_Char_Type ch;
 
 	SLsmg_gotorc(y,x);
-	ch = SLsmg_char_at();
-	/*
-	 * Pull out the character, change its color.
-	 * 0x02 is the current color, and I think the 0x80 pulls out the
-	 * extended attributes of the character.
-	 */
-	ch = SLSMG_BUILD_CHAR(SLSMG_EXTRACT_CHAR(ch),
-			      (SLSMG_EXTRACT_COLOR(ch) & 0x80) | 0x02);
-	SLsmg_write_raw(&ch,1);
+	SLsmg_char_at(&ch);
+	SLsmg_set_color(SLSMG_COLOR_BLACK);
+	SLsmg_write_char(' ');
 }
 
 /*

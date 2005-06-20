@@ -1,3 +1,12 @@
+pdmenu (1.2.86) unstable; urgency=low
+
+  * Switch to slang 2.
+  * Since slang 2 has removed SLSMG_BUILD_CHAR which was used to add shadows
+    to characters, the shadow code was changed to just draw solid black
+    shadows that do not display the shadowed code underneath.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 20 Jun 2005 14:18:37 -0400
+
 pdmenu (1.2.85) unstable; urgency=low
 
   * First translation, to French. Closes: #253877
