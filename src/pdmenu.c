@@ -240,7 +240,7 @@ int main (int argc, char **argv) {
     BASE=3;
     MENU=4;
     SELBAR=5;
-    SHADOW=1;
+    SHADOW=2;
     MENU_HI=7;
     SELBAR_HI=8;
     UNSEL_MENU=9;

@@ -1,3 +1,10 @@
+pdmenu (1.2.87) unstable; urgency=low
+
+  * The Return of the Shadows
+    (thanks JED, apologies JMS)
+
+ -- Joey Hess <joeyh@debian.org>  Sat, 23 Jul 2005 09:22:01 -0400
+
 pdmenu (1.2.86) unstable; urgency=low
 
   * Switch to slang 2.

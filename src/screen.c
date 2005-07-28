@@ -56,10 +56,8 @@ void DrawBase (char *base) {
 /* Convert the character at the given screen position to a shadow */
 void _shadow_char (int x, int y) {
 	SLsmg_Char_Type ch;
-
-	SLsmg_gotorc(y,x);
-	SLsmg_set_color(SLSMG_COLOR_BLACK);
-	SLsmg_write_char(' ');
+	
+	SLsmg_set_color_in_region(SHADOW, y, x, 1, 1);
 }
 
 /*
