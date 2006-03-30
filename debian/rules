@@ -8,7 +8,7 @@ ifeq (s390,$(shell dpkg --print-architecture))
 GPMCONFIG = --without-gpm
 endif
 
-build: link-stamp build-stamp
+build: build-stamp
 build-stamp:
 	dh_testdir
 	./configure $(GPMCONFIG) --prefix=/usr --sysconfdir=/etc \
@@ -21,7 +21,7 @@ clean:
 	dh_testroot
 	dh_clean
 	-$(MAKE) distclean
-	rm -f build-stamp link-stamp
+	rm -f build-stamp
 
 binary-indep: build
 
@@ -48,24 +48,9 @@ binary-arch: build
 	dh_md5sums
 	dh_builddeb
 
-# Fix links when checking out of cvs by calling this target.
-link-stamp:
-	sh -e debian/fixlinks
-	touch link-stamp
-
-VERSION=$(shell expr "`dpkg-parsechangelog 2>/dev/null |grep Version:`" : '.*Version: \(.*\)')
-
-# Update the web page. Not intended for use by anyone except the
-# author.
-DIR=/home/web/kitenet.net/programs/pdmenu
-installhook:
-	cp debian/changelog $(DIR)/CHANGES
-	cp doc/TODO $(DIR)/TODO
-	cp README $(DIR)/README
-	cp doc/BUGS $(DIR)/BUGS
-	echo -n $(VERSION) > $(DIR)/LATEST-VERSION-IS
-	rm -f $(DIR)/*.tar.gz
-	ln -sf /home/joey/lib/debian/unstable/pdmenu_$(VERSION).tar.gz $(DIR)
+# Not intended for use by anyone except the author.
+announcedir:
+	@echo ${HOME}/src/joeywiki/code/pdmenu/news
 
 binary: binary-indep binary-arch
 .PHONY: build clean binary-indep binary-arch binary

@@ -1,3 +1,9 @@
+pdmenu (1.2.88) UNRELEASED; urgency=low
+
+  * Add links to svn.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 30 Mar 2006 15:12:17 -0500
+
 pdmenu (1.2.87) unstable; urgency=low
 
   * The Return of the Shadows
