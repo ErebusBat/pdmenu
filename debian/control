@@ -1,14 +1,14 @@
 Source: pdmenu
 Section: shells
 Priority: optional
-Build-Depends: debhelper (>= 4.0.8), libslang2-dev (>= 1.4.4-3), libgpmg1-dev [!hurd-i386 !s390], gettext, dpkg-dev (>= 1.9.0)
+Build-Depends: debhelper (>= 5), libslang2-dev (>= 1.4.4-3), libgpmg1-dev [!hurd-i386 !s390 !kfreebsd-i386 !kfreebsd-amd64], gettext, dpkg-dev (>= 1.9.0)
 Maintainer: Joey Hess <joeyh@debian.org>
-Standards-Version: 3.6.2
+Standards-Version: 3.7.2
 
 Package: pdmenu
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Suggests: menu (>= 2.0.0-5)
+Suggests: menu (>= 2.1.29)
 Conflicts: menu (<< 2.0.0-5)
 Description: simple full screen menu program
  A full screen menu program, intended to be comfortable login shell

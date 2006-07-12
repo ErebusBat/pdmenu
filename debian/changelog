@@ -1,8 +1,14 @@
-pdmenu (1.2.88) UNRELEASED; urgency=low
+pdmenu (1.2.88) unstable; urgency=low
 
   * Add links to svn.
+  * debhelper v5, current policy.
+  * Add !kfreebsd-any arch specifier to the libgpmg1-dev build dep.
+    Closes: #377792
+  * Deal with install-menu moving.
+  * Dummied up debian changelog format for first changelog entries, which
+    predated that format. My, lintian is getting picky.
 
- -- Joey Hess <joeyh@debian.org>  Thu, 30 Mar 2006 15:12:17 -0500
+ -- Joey Hess <joeyh@debian.org>  Tue, 11 Jul 2006 20:38:34 -0400
 
 pdmenu (1.2.87) unstable; urgency=low
 
@@ -1141,77 +1147,81 @@ pdmenu (0.3.1) unstable; urgency=low
 
  -- Joey Hess <jeh22@cornell.edu>  Sun, 3 Nov 1996 19:31:59 -0500
 
-0.3	3rd public release				21JUN96
-		Removed "-n" flag. Now, color is off by default. To turn it
-			on, either use the "-c" flag, or set the COLORTERM 
-			environment variable. (Setting COLORTERM has the side 
-			effect of making color work properly in jed, slrn, and 
-			maybe other programs that use the slang library.)
-		"make config" now works even if you only have perl 4.x, not
-			just 5.x
-		Ctrl-r forces a screen redraw.
-		Split config.h up into lots of little .h files, should make
-			it easier to configure different things.
+pdmenu (0.3) unstable; urgency=low
 
-0.3pre6 Final bugfix					15JUN96
-		'p' flag works again (oops...)
-		Revamped rc file processing.
-		Control and high-bit characters in menus are changed to spaces.
-		Tab characters in menus/windows are ok now.
-		Avoided making color combos that blink on the linux console 
-			be the default colors.
-		Allowed default colors to be configured in config.h
-		Commands that return null output can be run with the 'w'
-			flag without problems.	
-		Added "nop" command for a blank line in the menu.
+  * 0.3	3rd public release				21JUN96
+ 		Removed "-n" flag. Now, color is off by default. To turn it
+ 			on, either use the "-c" flag, or set the COLORTERM 
+ 			environment variable. (Setting COLORTERM has the side 
+ 			effect of making color work properly in jed, slrn, and 
+ 			maybe other programs that use the slang library.)
+ 		"make config" now works even if you only have perl 4.x, not
+ 			just 5.x
+ 		Ctrl-r forces a screen redraw.
+ 		Split config.h up into lots of little .h files, should make
+ 			it easier to configure different things.
+ 
+  * 0.3pre6 Final bugfix					15JUN96
+ 		'p' flag works again (oops...)
+ 		Revamped rc file processing.
+ 		Control and high-bit characters in menus are changed to spaces.
+ 		Tab characters in menus/windows are ok now.
+ 		Avoided making color combos that blink on the linux console 
+ 			be the default colors.
+ 		Allowed default colors to be configured in config.h
+ 		Commands that return null output can be run with the 'w'
+ 			flag without problems.	
+ 		Added "nop" command for a blank line in the menu.
 
-0.3pre5 More bugfixing					11MAR96
-		Kept it from stomping on $HOME. (oops..)
-		Fixed key handling, although it's still far from perfect.
-		Added home and end key handling.
-		Other minor fixes.
+  * 0.3pre5 More bugfixing					11MAR96
+ 		Kept it from stomping on $HOME. (oops..)
+ 		Fixed key handling, although it's still far from perfect.
+ 		Added home and end key handling.
+ 		Other minor fixes.
+ 
+  * 0.3pre4	Bugfix and minor improvements			27JAN96
+ 		No shadows in B&W mode, faster scrolling on slow terminals, 
+ 			and other cosmetic fixes.
+ 		Fixed nasty problem with menus greater than 127 lines long.
+ 		Fixed ShowMessage to work with broken gcc.
+ 		's' flag to exec command to set environment variables.
+ 		More robust parsing of rc file.
+ 		Sped up screen redraws, thanks to John E. Davis, author of
+ 			S-LANG.
+ 		Fixed make config.
 
-0.3pre4	Bugfix and minor improvements			27JAN96
-		No shadows in B&W mode, faster scrolling on slow terminals, 
-			and other cosmetic fixes.
-		Fixed nasty problem with menus greater than 127 lines long.
-		Fixed ShowMessage to work with broken gcc.
-		's' flag to exec command to set environment variables.
-		More robust parsing of rc file.
-		Sped up screen redraws, thanks to John E. Davis, author of
-			S-LANG.
-		Fixed make config.
+  * 0.3pre3	Creeping featureitus				18JAN96
+ 		Fixed 'd' without 'n' flag so it'll not segfault.
+ 		'e' flag to exec command to let you enter text.
+ 		'd' flag to exec command to display output of command in a
+ 			window.
+ 		Configurable colors via the "color" command.
+ 		Menus can now contain more items than will fit on the
+ 			screen; they scroll.
 
-0.3pre3	Creeping featureitus				18JAN96
-		Fixed 'd' without 'n' flag so it'll not segfault.
-		'e' flag to exec command to let you enter text.
-		'd' flag to exec command to display output of command in a
-			window.
-		Configurable colors via the "color" command.
-		Menus can now contain more items than will fit on the
-			screen; they scroll.
+  * 0.3pre2	Bugfix						11JAN96
+ 		Created autoconfig script ("make config").
+ 		Lots and lots of bugs fixed.
+ 		Added -n and -q switches.
 
-0.3pre2	Bugfix						11JAN96
-		Created autoconfig script ("make config").
-		Lots and lots of bugs fixed.
-		Added -n and -q switches.
+  * 0.3pre1	The need for speed				10JAN96
+ 		**IMPORTANT** This version is a total rewrite in C. It is
+ 		like the earlier versions in spirit only. There are sure to
+ 		be lots of bugs, and there is no support for configurable
+ 		menu colors in this version. However, it's now MUCH faster,
+ 		and easier to use, with loads of new options.
+ 
+  * 0.2	The enevitable bugfix				02DEC95
+ 		Added support for multiple menu files being used at once.
+ 			Just specify them all as parameters.
+ 		Got rid of the width item in the menu definitions.
+ 		Because of conflicts with multiple other programs named
+ 			"menu", the Makefile now installs it as pdmenu
+ 			instead. See INSTALL for details.
+ 		Added support for different colored menus.
+ 		Added a background title to the menus.
+ 		Fixed bug in detection of menus.
+ 
+  * 0.1     First public release                            26NOV95
 
-0.3pre1	The need for speed				10JAN96
-		**IMPORTANT** This version is a total rewrite in C. It is
-		like the earlier versions in spirit only. There are sure to
-		be lots of bugs, and there is no support for configurable
-		menu colors in this version. However, it's now MUCH faster,
-		and easier to use, with loads of new options.
-
-0.2	The enevitable bugfix				02DEC95
-		Added support for multiple menu files being used at once.
-			Just specify them all as parameters.
-		Got rid of the width item in the menu definitions.
-		Because of conflicts with multiple other programs named
-			"menu", the Makefile now installs it as pdmenu
-			instead. See INSTALL for details.
-		Added support for different colored menus.
-		Added a background title to the menus.
-		Fixed bug in detection of menus.
-
-0.1     First public release                            26NOV95
+ -- Joey Hess <jeh22@cornell.edu>  Sun, 3 Nov 1996 19:31:59 -0500

@@ -1,4 +1,4 @@
-#!/usr/sbin/install-menu
+#!/usr/bin/install-menu
 #
 # pdmenu menu-method for menus that include VC programs
 
