@@ -21,6 +21,10 @@ clean:
 	dh_testroot
 	dh_clean
 	-$(MAKE) distclean
+	-test -r /usr/share/misc/config.sub && \
+		cp -f /usr/share/misc/config.sub autoconf/config.sub
+	-test -r /usr/share/misc/config.guess && \
+		cp -f /usr/share/misc/config.guess autoconf/config.guess
 	rm -f build-stamp
 
 binary-indep: build

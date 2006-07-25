@@ -1,3 +1,10 @@
+pdmenu (1.2.89) unstable; urgency=low
+
+  * Add config.sub/config.guess update code to the debian/rules clean
+    target. Closes: #379702
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 25 Jul 2006 11:44:43 -0400
+
 pdmenu (1.2.88) unstable; urgency=low
 
   * Add links to svn.
