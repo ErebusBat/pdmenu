@@ -575,7 +575,7 @@ pdmenu (1.2.22) unstable; urgency=low
 pdmenu (1.2.21) unstable; urgency=low
 
   * Emacs-indented the source.
-	
+
  -- Joey Hess <joeyh@debian.org>  Sat,  4 Oct 1997 19:29:06 -0400
 
 pdmenu (1.2.20) unstable; urgency=low
