@@ -3,8 +3,7 @@ Name: pdmenu
 Packager: jeff.covey@pobox.com
 Version: 1.2.89
 Release: 1
-Url: http://kitenet.net/programs/pdmenu/
-Source: ftp://kitenet.net/pub/code/pdmenu/pdmenu_1.2.89.tar.gz
+Url: http://kitenet.net/~joey/code/pdmenu/
 Copyright: GPL
 Group: Shells/Menus
 Buildroot: /tmp

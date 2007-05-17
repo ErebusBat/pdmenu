@@ -16,7 +16,7 @@ anything to the menu. I hope that Pdmenu is better. :-)
 
 For more info, including source code and packages for Debian and 
 Red Hat visit Pdmenu's home page at:
-		http://kitenet.net/programs/pdmenu/
+		http://kitenet.net/~joey/code/pdmenu/
 
 I have just released Pdmenu 1.2.30. The biggest change in this new version
 of Pdmenu is that it no longer has hard coded limits of any sort. Now you

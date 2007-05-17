@@ -23,27 +23,22 @@ What is Pdmenu?
 	anything to the menu. I hope that Pdmenu is better. :-)
 
 	For more info, visit Pdmenu's home page at:
-		http://kitenet.net/programs/pdmenu/
+		http://kitenet.net/~joey/code/pdmenu/
 
 Please see INSTALL for building and installation instructions.
 
 Precompiled binaries:
 
 	rpm:
-        	If you use RedHat Linux, a pdmenu rpm is available.
-	        You'll find it on RedHat's ftp site, or at
-        	http://kitenet.net/programs/RPMS.cgi#pdmenu
-	        These may be a little out of date, I don't update them with 
-		each version. You can also build your own rpm using the 
-		redhat/pdmenu.spec spec file.
+        	If you use a RPM based distribution, a spec file is
+		included in the source tarball (redhat/pdmenu.spec) and
+		can be used to build a RPM.
 
 	deb:
 		If you use Debian Linux, a .deb of pdmenu is available from
 		ftp.debian.org or a mirror in the usual location. The pdmenu 
 		source tree will also build a .deb on its own on a debian 
-		system, just run "dpkg-buildpackage". Or you can download 
-		the latest .deb from 
-		http://kitenet.net/programs/debs.cgi#pdmenu
+		system, just run "dpkg-buildpackage".
 
 A few sample uses of Pdmenu:
 
