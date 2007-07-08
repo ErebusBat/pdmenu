@@ -1,3 +1,9 @@
+pdmenu (1.2.91) unstable; urgency=low
+
+  * Update menu file for new menu policy and de-hardcode path to pdmenu in it.
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 08 Jul 2007 16:28:55 -0400
+
 pdmenu (1.2.90) unstable; urgency=low
 
   * Correct urls to current location of the web page.
