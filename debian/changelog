@@ -1,3 +1,9 @@
+pdmenu (1.2.92) unstable; urgency=low
+
+  * Don't link with libtermcap, it's not needed.
+
+ -- Joey Hess <joeyh@debian.org>  Thu, 19 Jul 2007 14:09:04 -0400
+
 pdmenu (1.2.91) unstable; urgency=low
 
   * Update menu file for new menu policy and de-hardcode path to pdmenu in it.

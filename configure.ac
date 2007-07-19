@@ -116,27 +116,6 @@ if test "$ac_cv_use_gpm" = yes ; then
 	fi
 fi
 
-dnl If we cannot find terminfo, link with termcap.
-Terminfo_Dirs="/usr/lib/terminfo \
-	/usr/share/lib/terminfo \
-	/usr/local/lib/terminfo"
-TERMCAP=yes
-AC_MSG_CHECKING(for terminfo)
-for terminfo_dir in $Terminfo_Dirs
-do
-	if test -d $terminfo_dir; then
-		AC_MSG_RESULT(found)
-		TERMCAP=""
-		break
-	fi
-done
-if test "$TERMCAP"; then
-	AC_MSG_RESULT(not found)
-	AC_CHECK_LIB(termcap,tgetent)
-	# Note that if this fails, we continue and make probably dies with
-	# an error. Unless terminfo is hiding somewhere else..
-fi
-
 AC_CHECK_PROG(DATE_PROG,date,yes,no)
 if test "$DATE_PROG" = yes ; then
 	AC_MSG_CHECKING(for GNU compatable date utility)
