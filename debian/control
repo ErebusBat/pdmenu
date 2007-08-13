@@ -11,8 +11,8 @@ Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Suggests: menu (>= 2.1.29)
 Conflicts: menu (<< 2.0.0-5)
-Description: simple full screen menu program
- A full screen menu program, intended to be comfortable login shell
+Description: simple console menu program
+ A full screen console menu program, intended to be comfortable login shell
  for inexperienced users.
  .
  Pdmenu interfaces with Debian's menu system, to provide

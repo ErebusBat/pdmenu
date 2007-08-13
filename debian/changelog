@@ -1,3 +1,9 @@
+pdmenu (1.2.93) UNRELEASED; urgency=low
+
+  * Improve extended description.
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 13 Aug 2007 00:46:30 -0400
+
 pdmenu (1.2.92) unstable; urgency=low
 
   * Don't link with libtermcap, it's not needed.
