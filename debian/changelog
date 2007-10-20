@@ -1,9 +1,10 @@
-pdmenu (1.2.93) UNRELEASED; urgency=low
+pdmenu (1.2.93) unstable; urgency=low
 
-  * Improve extended description.
   * Pdmenu's repository has moved from svn to git.
+  * Improve extended description.
+  * Minor improvement to debian/rules clean.
 
- -- Joey Hess <joeyh@debian.org>  Mon, 15 Oct 2007 23:39:15 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 19 Oct 2007 20:55:24 -0400
 
 pdmenu (1.2.92) unstable; urgency=low
 

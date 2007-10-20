@@ -20,7 +20,7 @@ clean:
 	dh_testdir
 	dh_testroot
 	dh_clean
-	-$(MAKE) distclean
+	if [ -e Makefile ]; then $(MAKE) distclean; fi
 	-test -r /usr/share/misc/config.sub && \
 		cp -f /usr/share/misc/config.sub autoconf/config.sub
 	-test -r /usr/share/misc/config.guess && \
