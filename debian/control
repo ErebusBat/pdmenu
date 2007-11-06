@@ -5,6 +5,7 @@ Build-Depends: debhelper (>= 5), libslang2-dev (>= 1.4.4-3), libgpmg1-dev [!hurd
 Maintainer: Joey Hess <joeyh@debian.org>
 Standards-Version: 3.7.2
 Vcs-Git: git://git.kitenet.net/pdmenu
+Homepage: http://kitenet.net/~joey/code/pdmenu/
 
 Package: pdmenu
 Architecture: any
