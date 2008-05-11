@@ -1,3 +1,10 @@
+pdmenu (1.2.94) UNRELEASED; urgency=low
+
+  * Added a Russian translation from Yuri Kozlov.
+    Closes: #480646
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 11 May 2008 13:20:39 -0400
+
 pdmenu (1.2.93) unstable; urgency=low
 
   * Pdmenu's repository has moved from svn to git.
