@@ -229,7 +229,10 @@ int main (int argc, char **argv) {
   strcpy(ScreenObjNames[9],UNSEL_MENU_NAME);
   strcpy(FG[8],UNSEL_MENU_FG_DEFAULT);
   strcpy(BG[8],UNSEL_MENU_BG_DEFAULT);
-  
+ 
+  /* Enable utf-8 in slang. */
+  SLutf8_enable(-1);
+
   /* Parse parameters and load pdmenurc file. */
   m=GetConfig(argc,argv);
 

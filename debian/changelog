@@ -1,3 +1,11 @@
+pdmenu (1.2.95) unstable; urgency=low
+
+  * Actually enable Russian translation in Makefile.
+  * Put in a workaround for slang bug #407835. (If it is a bug.. workaround is
+    just to enable its OS-specific utf-8 sensing code.)
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 22 Jul 2008 12:50:30 -0400
+
 pdmenu (1.2.94) unstable; urgency=low
 
   * Added a Russian translation from Yuri Kozlov.

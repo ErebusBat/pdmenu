@@ -4,7 +4,7 @@ XGETTEXT	= xgettext --keyword=_ --keyword=N_ --add-comments=TRANS:
 POTFILE		= po/pdmenu.pot
 SRCFILES	= $(wildcard $(SRCDIR)/*.c)
 OBJFILES	:= $(SRCFILES:%.c=%.o)
-LANGS		= fr
+LANGS		= fr ru
 MOS		:= $(addprefix po/, $(addsuffix .mo, $(LANGS)))
 LOCALEDIR	= $(INSTALL_PREFIX)/usr/share/locale
 
