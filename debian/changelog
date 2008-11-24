@@ -1,3 +1,11 @@
+pdmenu (1.2.95+nmu1) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Handle disconnection by gpm server gracefully. Closes: #505502.
+    Based on patch by Samuel Thibault <samuel.thibault@ens-lyon.org>.
+
+ -- Ben Hutchings <ben@decadent.org.uk>  Mon, 24 Nov 2008 02:19:18 +0000
+
 pdmenu (1.2.95) unstable; urgency=low
 
   * Actually enable Russian translation in Makefile.

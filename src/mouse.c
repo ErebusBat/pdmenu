@@ -44,17 +44,29 @@ int CheckMouse() {
 
     retval = select(gpm_fd+1, &rfds, NULL, NULL, &tv);
 
-    if (retval) { /* data available */
-      if ((FD_ISSET(gpm_fd, &rfds)) &&  /* data is for mice */
-	  (Gpm_GetEvent(&event))) { /* can read something */
-	if ((event.type & GPM_DOWN) && (event.buttons & GPM_B_LEFT)) 
-	  return(MOUSE_BUTTON_LEFT);
-	if ((event.type & GPM_DOWN) && (event.buttons & GPM_B_RIGHT))
-	  return(MOUSE_BUTTON_RIGHT);
-	if (event.dy > 0)
-	  return(MOUSE_DOWN);
-	if (event.dy < 0)
-	  return(MOUSE_UP);
+    if (retval > 0) { /* data available */
+      if (FD_ISSET(gpm_fd, &rfds)) {
+	  /* data is for mice */
+	switch (Gpm_GetEvent(&event)) {
+	case 1:
+	  /* can read something */
+	  if ((event.type & GPM_DOWN) && (event.buttons & GPM_B_LEFT)) 
+	    return(MOUSE_BUTTON_LEFT);
+	  if ((event.type & GPM_DOWN) && (event.buttons & GPM_B_RIGHT))
+	    return(MOUSE_BUTTON_RIGHT);
+	  if (event.dy > 0)
+	    return(MOUSE_DOWN);
+	  if (event.dy < 0)
+	    return(MOUSE_UP);
+	  break;
+	case -1:
+	  /* can read nothing */
+	  break;
+	case 0:
+	  /* disconnected */
+	  gpm_ok = 0;
+	  return(MOUSE_NOTHING);
+	} /* switch */
       } else { /* data is for keyboard */
 	return(MOUSE_NOTHING);
       } /* else */
