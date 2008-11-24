@@ -1,3 +1,9 @@
+pdmenu (1.2.96) unstable; urgency=low
+
+  * ACK NMU. Closes: #505502
+
+ -- Joey Hess <joeyh@debian.org>  Mon, 24 Nov 2008 10:23:51 -0500
+
 pdmenu (1.2.95+nmu1) unstable; urgency=low
 
   * Non-maintainer upload.
