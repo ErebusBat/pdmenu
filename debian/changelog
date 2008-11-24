@@ -1,6 +1,8 @@
 pdmenu (1.2.96) unstable; urgency=low
 
   * ACK NMU. Closes: #505502
+  * Fix a few man page issues.
+  * Switch to new format copyright.
 
  -- Joey Hess <joeyh@debian.org>  Mon, 24 Nov 2008 10:23:51 -0500
 
