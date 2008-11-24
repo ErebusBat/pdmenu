@@ -421,7 +421,7 @@ The id of the menu to remove. If the menu wih id \fImenuid\fR does not exist,
 no error is reported.
 .PP
 This command is typically used after creating and using a new menu via the 
-'makemenu' flag to \fIexec\fR, to remove a menu that is no longer needed.
+ 'makemenu' flag to \fIexec\fR, to remove a menu that is no longer needed.
 For example, if you have the followng pdmenurc:
 
  menu:main:Main Menu
