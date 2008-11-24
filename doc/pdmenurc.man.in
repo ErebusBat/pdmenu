@@ -313,7 +313,7 @@ output to the screen. (Conflicts with: 'pause')
 pause
 Pause after the command exits. Use this if you need to see the output of the
 command. (Conflicts with: 'noclear', 'display', 'truncate', 'makemenu',
-'setenv')
+and 'setenv')
 .TP
 display
 Display the output of the command in a window. If this flag is set, the 'pause'
