@@ -4,7 +4,7 @@ Packager: jeff.covey@pobox.com
 Version: 1.2.96
 Release: 1
 Url: http://kitenet.net/~joey/code/pdmenu/
-Copyright: GPL
+License: GPL
 Group: Shells/Menus
 Buildroot: /tmp
 Requires: gpm, slang >= 0.99.34
