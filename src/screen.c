@@ -122,11 +122,15 @@ RETSIGTYPE Sigwinch_Handler (int sig) {
  */
 void Screen_Init () {
   static int SLkp_init_ran;
+  static int got_terminfo;
   
   if (screen_is_setup == 0) {
     SLsig_block_signals(); /* Block signals while initializing. */
 
-    SLtt_get_terminfo();
+    if (got_terminfo != 1) {
+ 	   SLtt_get_terminfo();
+	   got_terminfo = 1;
+    }
 
     /* note this has to run immediatly after SLtt_get_terminfo to work */
     if (Lowbit)
