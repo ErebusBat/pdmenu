@@ -100,7 +100,7 @@ By default,
 will use nice high bit line drawing characters if it
 thinks your terminal is capable. Sometimes it gets this wrong and you get
 borders that look all messed up. Then you should use this --lowbit switch to
-force it to use low bit line draing characters.
+force it to use low bit line drawing characters.
 .IP "-n, --numeric"
 Disables the use of the keys 2 and 8 for moving up and down. This is useful
 if you want to use numbered hotkeys.
