@@ -43,7 +43,7 @@ Exit the current menu, or exit
 .I pdmenu 
 if used on the first menu. Does not
 work in the text edit windows. (This will not work if there is also a hotkey 
-set up for \*(L'q\*(R', the hotkey takes precedence.)
+set up for 'q', the hotkey takes precedence.)
 .IP "ESC"
 Close the currently active window, and return to the previous window, or
 exit 
@@ -85,9 +85,8 @@ By default, at the opening menu, 'q' will exit \fIpdmenu\fP.
 If the \-q switch is
 specified, this will not be the case. This is useful if you want to prevent 
 the user from ever exiting \fIpdmenu\fP.
-.SP
-This also disables control-c and the right mouse button from exiting
-\fIpdmenu\fP.
+(This also disables control-c and the right mouse button from exiting
+\fIpdmenu\fP.)
 .IP "-r, --retro"
 This makes
 .I pdmenu

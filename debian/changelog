@@ -1,11 +1,11 @@
-pdmenu (1.2.97) UNRELEASED; urgency=low
+pdmenu (1.2.97) unstable; urgency=low
 
   * Avoid crash when running inside screen by not re-running
     SLtt_get_terminfo() when returning from running a command.
     (This smells like a bug in slang.)
     Closes: #523097
 
- -- Joey Hess <joeyh@debian.org>  Thu, 09 Apr 2009 12:49:14 -0400
+ -- Joey Hess <joeyh@debian.org>  Thu, 09 Apr 2009 12:50:58 -0400
 
 pdmenu (1.2.96) unstable; urgency=low
 
