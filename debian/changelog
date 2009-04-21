@@ -1,3 +1,9 @@
+pdmenu (1.2.98) UNRELEASED; urgency=low
+
+  * Spanish translation from Juan Ramón Jiménez García.
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 21 Apr 2009 14:27:07 -0400
+
 pdmenu (1.2.97) unstable; urgency=low
 
   * Avoid crash when running inside screen by not re-running
