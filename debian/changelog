@@ -1,8 +1,8 @@
-pdmenu (1.2.98) UNRELEASED; urgency=low
+pdmenu (1.2.98) unstable; urgency=low
 
   * Spanish translation from Juan Ramón Jiménez García.
 
- -- Joey Hess <joeyh@debian.org>  Tue, 21 Apr 2009 14:27:07 -0400
+ -- Joey Hess <joeyh@debian.org>  Fri, 31 Jul 2009 13:47:46 -0400
 
 pdmenu (1.2.97) unstable; urgency=low
 
