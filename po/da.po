@@ -1,0 +1,141 @@
+# Danish translation pdmenu.
+# Copyright (C) 2011 pdmenu og nedenst??ende overs??ttere.
+# This file is distributed under the same license as the pdmenu package.
+# Joe Hansen <joedalton2@yahoo.dk>, 2011.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pdmenu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-07-23 09:12-0400\n"
+"PO-Revision-Date: 2011-01-07 17:30+01:00\n"
+"Last-Translator: Joe Hansen <joedalton2@yahoo.dk>\n"
+"Language-Team: Danish <debian-l10n-danish@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/actions.c:95
+msgid "Please wait..."
+msgstr "Vent venligst..."
+
+#: src/actions.c:108
+msgid "Press Esc to close window."
+msgstr "Tryk Esc for at lukke vindue."
+
+#: src/actions.c:200
+msgid "Command returned no output"
+msgstr "Kommando returnerede ingen uddata"
+
+#: src/actions.c:316
+msgid "Press Enter to return to Pdmenu."
+msgstr "Tryk Retur for at returnere til Pdmenu."
+
+#: src/error.c:31
+#, c-format
+msgid "pdmenu error: "
+msgstr "pdmenu-fejl: "
+
+#: src/inputbox.c:53 src/inputbox.c:77
+msgid "Press Enter when done, or Esc to cancel"
+msgstr "Tryk Retur n??r f??rdig, eller Esc for at afbryde"
+
+#: src/menu.c:427
+msgid "Arrow keys move, Esc exits current menu, Enter runs program"
+msgstr "Flyt med piletaster, Esc afslutter aktuel menu, Retur k??rer program"
+
+#: src/menu.c:458
+#, c-format
+msgid "Attempt to remove menu \"%s\" failed: menu is on screen."
+msgstr "Fors??g p?? at fjerne menu ??%s?? mislykkedes: Menu er p?? sk??rmen."
+
+#: src/pdmenu.c:29
+#, c-format
+msgid ""
+"Usage: pdmenu [options] [menufiles ..]\n"
+"\tmenufiles                 the rc files to read instead of\n"
+"\t                          ~/.pdmenurc or %spdmenurc\n"
+"\t-h        --help          display this help\n"
+"\t-c        --color         enable color\n"
+"\t-u        --unpark        cursor moves to current selection\n"
+"\t-q        --quit          'q' key does not exit program\n"
+"\t-mmenuid  --menu=menuid   display menu with this menuid on startup\n"
+"\t-v        --version       show version information\n"
+"\t-r        --retro         draw menus using old style\n"
+"\t-l        --lowbit        do not use high bit line drawing characters\n"
+"\t-n        --numeric       do not use 8 and 2 for moving up and down\n"
+msgstr ""
+"Brug: pdmenu [tilvalg] [menufiler..]\n"
+"\tmenufiler                 rc-filerne der skal l??ses i steden for\n"
+"\t                          ~/.pdmenurc eller %spdmenurc\n"
+"\t-h        --help          vis denne hj??lpetekst\n"
+"\t-c        --color         aktiver farve\n"
+"\t-u        --unpark        mark??r flytter til aktuel markering\n"
+"\t-q        --quit          q-tasten medf??rer ikke afslutning af program\n"
+"\t-mmenuid  --menu=menuid   vis menu med denne menuid ved opstart\n"
+"\t-v        --version       vis versionsinformation\n"
+"\t-r        --retro         tegn menuer med brug af gammel stil\n"
+"\t-l        --lowbit        brug ikke h??jbit linjetegningstegn\n"
+"\t-n        --numeric       brug ikke 8 og 2 for bev??gelse op og ned\n"
+
+#: src/pdmenu.c:44
+msgid "(Long options are disabled.)"
+msgstr "(Lange tilvalg er deaktiveret.)"
+
+#: src/pdmenu.c:51
+#, c-format
+msgid "Pdmenu %s GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>\n"
+msgstr "Pdmenu %s GPL-ophavsret 1995-2002 af Joey Hess <joey@kitenet.net>\n"
+
+#: src/pdmenu.c:159
+msgid "Unable to find any pdmenurc files, or all pdmenurc files are empty."
+msgstr ""
+"Kan ikke finde nogen pdmenurc-filer, eller ogs?? er alle pdmenurc-filer "
+"tomme."
+
+#: src/pdmenu.c:170
+#, c-format
+msgid "Menu \"%s\" is not defined."
+msgstr "Menu ??%s?? er ikke defineret."
+
+#: src/pdmenu.c:197
+msgid "Pdmenu"
+msgstr "Pdmenu"
+
+#: src/rc.c:186
+#, c-format
+msgid "%s:%i Invalid screen part name, \"%s\"."
+msgstr "%s:%i Ugyldigt sk??rmpartsnavn, ??%s??."
+
+#: src/rc.c:197
+#, c-format
+msgid "%s:%i \"endgroup\" found outside of group block."
+msgstr "%s:%i ??endgroup?? fundet uden for gruppeblok."
+
+#: src/rc.c:201
+#, c-format
+msgid "%s:%i Invalid or misplaced keyword, \"%s\"."
+msgstr "%s:%i Ugyldigt eller fejlplaceret n??gleord, ??%s??."
+
+#: src/rc.c:241
+#, c-format
+msgid "%s:%i Nested \"group\" commands."
+msgstr "%s:%i Indlejrede gruppekommandoer (group)."
+
+#: src/rc.c:333
+#, c-format
+msgid "%s: \"group\" command used without \"endgroup\"."
+msgstr "%s: gruppekommando (group) brugt uden ??endgroup??."
+
+#: src/screen.c:138
+msgid "Unable to initialize key mappings."
+msgstr "Kunne ikke initialisere n??gleovers??ttelser."
+
+#: src/screen.c:184
+msgid "Error: The screen is too small."
+msgstr "Fejl: Sk??rmen er for lille."
+
+#: src/window.c:37
+#, c-format
+msgid "Welcome to Pdmenu %s by Joey Hess <joey@kitenet.net>"
+msgstr "Velkommen til Pdmenu %s af Joey Hess <joey@kitenet.net>"
