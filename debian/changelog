@@ -1,8 +1,8 @@
-pdmenu (1.2.99) UNRELEASED; urgency=low
+pdmenu (1.2.99) unstable; urgency=low
 
   * Add Danish translation from Joe Dalton. Closes: #609579
 
- -- Joey Hess <joeyh@debian.org>  Mon, 10 Jan 2011 15:17:38 -0400
+ -- Joey Hess <joeyh@debian.org>  Sun, 06 Feb 2011 00:02:31 -0400
 
 pdmenu (1.2.98) unstable; urgency=low
 
