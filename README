@@ -2,7 +2,7 @@ Pdmenu, a simple menu program:
 
 	By Joey Hess <joey@kitenet.net>
 
-	This program is Copyright 1995-2002 by Joey Hess, and may be 
+	This program is Copyright 1995-2011 by Joey Hess, and may be 
 	distributed under the terms of the GPL.
 
 What is Pdmenu?
@@ -71,6 +71,9 @@ Thanks go out to:
 		answer questions about the less-documented parts.
 	Lassen Software, Inc, whose dos-based Program Manager Plus software 
 		was the inspiration for this program.
+	All the people mentioned in debian/changelog who sent in patches,
+		translations, etc, and have kept pdmenu under development much
+		longer than I would have expected.
 
 Please, send me feedback.
 
