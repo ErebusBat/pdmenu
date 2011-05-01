@@ -1,3 +1,10 @@
+pdmenu (1.2.100) UNRELEASED; urgency=low
+
+  * Add support for "exec entries"; menu entries that pdmenu execs, 
+    replacing itself with their process. Contributed by Stephen Blott
+
+ -- Joey Hess <joeyh@debian.org>  Sun, 01 May 2011 11:18:01 -0400
+
 pdmenu (1.2.99) unstable; urgency=low
 
   * Add Danish translation from Joe Dalton. Closes: #609579

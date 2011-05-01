@@ -307,7 +307,36 @@ void RunCommand (Menu_Item_Type *i) {
 	 * This is what the whole pdmenu program comes down to.
 	 * The rest is fluff. ;-) 
 	 */
-	system(command);
+
+	/*
+	 * start: Steve Blott (smblott@gmail.com)
+	 *
+	 * add capability to exec() (rather than system()) a command, thereby
+	 * replacing the current process;  if the first word of command is
+	 * "exec", then exec() it, otherwise system() it
+	 */
+
+	char *cp = command;
+
+        while (isspace(cp[0]))
+	   cp++;
+
+	if ( strncmp(cp, "exec", 4) == 0 && isspace(cp[4]) )
+	{
+	   char *cv[4]; /* command vector */
+	   cv[0] = "sh";
+	   cv[1] = "-c";
+	   cv[2] = cp;
+	   cv[3] = 0;
+	   execvp(cv[0],cv);
+	   /* should not reach here; if the execvp fails, then pdmenu will
+	    * continue to run, silently ignoring the failure; if the execvp
+	    * succeeds but the subsequent exec fails, then pdmenu will silently
+	    * disappear (its process no longer exists), and no feedback will be
+	    * received */
+	}
+	else
+	   system(command);
 
 	if (! i->noclear_flag) { /* redraw screen */
 	  Screen_Init();

@@ -277,6 +277,19 @@ This runs a command. The syntax is:
 .TP
 command
 The actual command to run when this item is selected.
+.RS
+.PP
+Normally,
+.BR pdmenu (1)
+passes the command to
+.BR system (3)
+for exacution.  However, if the first token of the command is "exec", then the
+command is executed directly with the
+.BR execvp (3)
+system call.  As such, the 
+.BR pdmenu (1)
+process is wholly replaced by the command.
+.RE
 .TP
 desc
 The description of the command that appears in the menu.
