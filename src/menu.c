@@ -311,6 +311,23 @@ int SelHotKey(Menu_Type *m, int key) {
   return 0;
 }
 
+int HotKeyMatches(Menu_Type *m, int key, int i) {
+  return m->items[i]->hotkey != -1 &&
+	    ( (key==m->items[i]->text[m->items[i]->hotkey]) || toupper(key)==m->items[i]->text[m->items[i]->hotkey] );
+}
+
+int UniqHotKeyMatches(Menu_Type *m, int key) {
+   int i = 0;
+   int n = m->num;
+   int c = 0;
+
+   if ( HotKeyMatches(m,key,m->selected) )
+      for (i=0; i<n; i+=1)
+	if ( HotKeyMatches(m,key,i) )
+	  c += 1;
+   return c == 1;
+}
+
 /* 
  * Handle input in a menu.
  * Pass it the menu to handle, and a pointer to the function to be called 
@@ -414,10 +431,13 @@ int DoMenu (Menu_Type *m,int (*MenuAction)(), void (*Ctrl_C_Action)()) {
       c=MenuAction(m);
       if (c!=0)
 	return c;
+      break;
     case 65535:
       break;
     default:
       c=SelHotKey(m,key);
+      if ( Superhot && UniqHotKeyMatches(m,key) )
+	return MenuAction(m);
       if (c!=0)
 	break;
       /* No hotkeys match, so use q or ESC to close the menu. */

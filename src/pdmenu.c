@@ -31,6 +31,7 @@ Usage: pdmenu [options] [menufiles ..]\n\
 \tmenufiles                 the rc files to read instead of\n\
 \t                          ~/.pdmenurc or %spdmenurc\n\
 \t-h        --help          display this help\n\
+\t-s        --superhot      enable super hot keys\n\
 \t-c        --color         enable color\n\
 \t-u        --unpark        cursor moves to current selection\n\
 \t-q        --quit          'q' key does not exit program\n\
@@ -78,6 +79,7 @@ Menu_Type *GetConfig (int argc, char **argv) {
     {"version",0,NULL,'v'},
     {"menu",1,NULL,'m'},
     {"retro",0,NULL,'r'},
+    {"superhot",0,NULL,'s'},
     {"lowbit",0,NULL,'l'},
     {"numeric",0,NULL,'n'},
     {0, 0, 0, 0}
@@ -89,9 +91,9 @@ Menu_Type *GetConfig (int argc, char **argv) {
 
   while (c != -1) {
 #ifdef HAVE_GETOPT_LONG
-    c=getopt_long(argc,argv,"hcquvm:rln",long_options,NULL);
+    c=getopt_long(argc,argv,"hscquvm:rln",long_options,NULL);
 #elif HAVE_GETOPT
-    c=getopt(argc,argv,"hcquvm:rln");
+    c=getopt(argc,argv,"hscquvm:rln");
 #endif
     switch (c) {
     case 'q': /* 'q' does not exit pdmenu. */
@@ -114,6 +116,9 @@ Menu_Type *GetConfig (int argc, char **argv) {
       version(); /* exits program */
     case 'r':
       Retro=1;
+      break;
+    case 's':
+      Superhot=1;
       break;
     case 'l':
       Lowbit=1;
@@ -230,8 +235,10 @@ int main (int argc, char **argv) {
   strcpy(FG[8],UNSEL_MENU_FG_DEFAULT);
   strcpy(BG[8],UNSEL_MENU_BG_DEFAULT);
  
+#if (defined(SLANG_VERSION) && (SLANG_VERSION >= 20000))
   /* Enable utf-8 in slang. */
   SLutf8_enable(-1);
+#endif
 
   /* Parse parameters and load pdmenurc file. */
   m=GetConfig(argc,argv);

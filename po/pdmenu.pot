@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-07-23 09:12-0400\n"
+"POT-Creation-Date: 2011-05-01 11:19-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -28,7 +29,7 @@ msgstr ""
 msgid "Command returned no output"
 msgstr ""
 
-#: src/actions.c:316
+#: src/actions.c:345
 msgid "Press Enter to return to Pdmenu."
 msgstr ""
 
@@ -41,11 +42,11 @@ msgstr ""
 msgid "Press Enter when done, or Esc to cancel"
 msgstr ""
 
-#: src/menu.c:427
+#: src/menu.c:447
 msgid "Arrow keys move, Esc exits current menu, Enter runs program"
 msgstr ""
 
-#: src/menu.c:458
+#: src/menu.c:478
 #, c-format
 msgid "Attempt to remove menu \"%s\" failed: menu is on screen."
 msgstr ""
@@ -57,6 +58,7 @@ msgid ""
 "\tmenufiles                 the rc files to read instead of\n"
 "\t                          ~/.pdmenurc or %spdmenurc\n"
 "\t-h        --help          display this help\n"
+"\t-s        --superhot      enable super hot keys\n"
 "\t-c        --color         enable color\n"
 "\t-u        --unpark        cursor moves to current selection\n"
 "\t-q        --quit          'q' key does not exit program\n"
@@ -67,25 +69,25 @@ msgid ""
 "\t-n        --numeric       do not use 8 and 2 for moving up and down\n"
 msgstr ""
 
-#: src/pdmenu.c:44
+#: src/pdmenu.c:45
 msgid "(Long options are disabled.)"
 msgstr ""
 
-#: src/pdmenu.c:51
+#: src/pdmenu.c:52
 #, c-format
 msgid "Pdmenu %s GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>\n"
 msgstr ""
 
-#: src/pdmenu.c:159
+#: src/pdmenu.c:164
 msgid "Unable to find any pdmenurc files, or all pdmenurc files are empty."
 msgstr ""
 
-#: src/pdmenu.c:170
+#: src/pdmenu.c:175
 #, c-format
 msgid "Menu \"%s\" is not defined."
 msgstr ""
 
-#: src/pdmenu.c:197
+#: src/pdmenu.c:202
 msgid "Pdmenu"
 msgstr ""
 
@@ -114,11 +116,11 @@ msgstr ""
 msgid "%s: \"group\" command used without \"endgroup\"."
 msgstr ""
 
-#: src/screen.c:138
+#: src/screen.c:142
 msgid "Unable to initialize key mappings."
 msgstr ""
 
-#: src/screen.c:184
+#: src/screen.c:188
 msgid "Error: The screen is too small."
 msgstr ""
 

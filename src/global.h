@@ -36,3 +36,5 @@ int Retro;
 int Lowbit;
 /* Don't use 2 or 8 for up and down if set */
 int Numeric;
+/* Use superhot hot keys */
+int Superhot;
