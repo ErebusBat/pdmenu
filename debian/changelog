@@ -1,3 +1,9 @@
+pdmenu (1.3.1) unstable; urgency=low
+
+  * Use arch wildcards in build deps. Closes: #634487
+
+ -- Joey Hess <joeyh@debian.org>  Tue, 19 Jul 2011 09:22:38 -0400
+
 pdmenu (1.3.0) unstable; urgency=low
 
   * Add support for "exec entries"; menu entries that pdmenu execs, 
