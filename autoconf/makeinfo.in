@@ -1,0 +1,17 @@
+prefix		= @prefix@
+exec_prefix	= @exec_prefix@
+BINDIR		= @bindir@
+MANDIR		= @mandir@
+LIBDIR		= @libdir@/pdmenu
+SYSCONFDIR	= @sysconfdir@
+DATADIR		= @datadir@
+CC		= @CC@
+INSTALL		= @INSTALL@
+LN_S		= @LN_S@
+VER		= @VER@
+DEFINES		= -DETCDIR=\"${SYSCONFDIR}/\" -DVER=\"${VER}\" @DEFS@ \
+		  $(PROFILE) -D__USE_FIXED_PROTOTYPES__ -D_GNU_SOURCE \
+		  -DLOCALEDIR=\"@datadir@/locale\"
+CFLAGS		= $(DEFINES) @gcc_cflags@ @CFLAGS@
+LIBS		= @LIBS@ $(EFENCE)
+INSTALL_PROGRAM	= ${INSTALL}

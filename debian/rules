@@ -1,0 +1,40 @@
+#!/usr/bin/make -f
+
+CFLAGS=-O2 -Wall -g
+INSTALL_PROGRAM=install
+
+%:
+	dh $@
+
+override_dh_auto_configure:
+	./configure $(GPMCONFIG) --prefix=/usr --sysconfdir=/etc \
+		--mandir=/usr/share/man CFLAGS="$(CFLAGS)"
+
+override_dh_auto_test:
+	# make test is interactive; skip it
+
+override_dh_auto_clean:
+	if [ -e Makefile ]; then $(MAKE) distclean; fi
+	-test -r /usr/share/misc/config.sub && \
+		cp -f /usr/share/misc/config.sub autoconf/config.sub
+	-test -r /usr/share/misc/config.guess && \
+		cp -f /usr/share/misc/config.guess autoconf/config.guess
+
+override_dh_auto_install:
+	$(MAKE) INSTALL_PREFIX=debian/pdmenu \
+		INSTALL_PROGRAM="$(INSTALL_PROGRAM)" install
+
+override_dh_installmenu:
+	dh_installmenu
+	install debian/menu-method-x11 debian/pdmenu/etc/menu-methods/pdmenu-x11
+	install debian/menu-method-vc  debian/pdmenu/etc/menu-methods/pdmenu-vc
+
+override_dh_installexamples:
+	dh_installexamples -X.in -X.pl examples/*
+
+override_dh_compress:
+	dh_compress -X examples/
+
+# Not intended for use by anyone except the author.
+announcedir:
+	@echo ${HOME}/src/joeywiki/code/pdmenu/news

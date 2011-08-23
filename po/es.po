@@ -1,0 +1,138 @@
+# Pdmenu Spanish translation.
+# Copyright (C) 2009
+# This file is distributed under the same license as the pdmenu package.
+# Juan Ramon Jimenez Garcia <juan@tiflolinux.org>, 2009.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pdmenu 1.2.93\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-07-23 09:12-0400\n"
+"PO-Revision-Date: 2009-04-16 10:49+0100\n"
+"Last-Translator: Juan Ramon Jimenez Garcia <juan@tiflolinux.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-15\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: src/actions.c:95
+msgid "Please wait..."
+msgstr "Por favor, espere..."
+
+#: src/actions.c:108
+msgid "Press Esc to close window."
+msgstr "Pulse Escape para cerrar la ventana"
+
+#: src/actions.c:200
+msgid "Command returned no output"
+msgstr "El comando no devolvió ninguna salida"
+
+#: src/actions.c:316
+msgid "Press Enter to return to Pdmenu."
+msgstr "Pulse Enter para volver a Pdmenu"
+
+#: src/error.c:31
+#, c-format
+msgid "pdmenu error: "
+msgstr "Error de pdmenu"
+
+#: src/inputbox.c:53 src/inputbox.c:77
+msgid "Press Enter when done, or Esc to cancel"
+msgstr "Pulse Enter cuando finalice o Escape para cancelar"
+
+#: src/menu.c:427
+msgid "Arrow keys move, Esc exits current menu, Enter runs program"
+msgstr "Cursores para moverse, Escape para salir del menú actual, Enter ejecuta un programa"
+
+#: src/menu.c:458
+#, c-format
+msgid "Attempt to remove menu \"%s\" failed: menu is on screen."
+msgstr "Ha fallado el intento de borrar el menú \"%s\": el menú está en la pantalla "
+
+#: src/pdmenu.c:29
+#, c-format
+msgid ""
+"Usage: pdmenu [options] [menufiles ..]\n"
+"\tmenufiles                 the rc files to read instead of\n"
+"\t                          ~/.pdmenurc or %spdmenurc\n"
+"\t-h        --help          display this help\n"
+"\t-c        --color         enable color\n"
+"\t-u        --unpark        cursor moves to current selection\n"
+"\t-q        --quit          'q' key does not exit program\n"
+"\t-mmenuid  --menu=menuid   display menu with this menuid on startup\n"
+"\t-v        --version       show version information\n"
+"\t-r        --retro         draw menus using old style\n"
+"\t-l        --lowbit        do not use high bit line drawing characters\n"
+"\t-n        --numeric       do not use 8 and 2 for moving up and down\n"
+msgstr "Uso: pdmenu [opciones] [menufile ..]\n"
+"\tmenufile                  fichero rc de entrada que se usará en lugar de \n"
+"\t                          ~/.pdmenurc o %spdmenurc\n"
+"\t-h        --help          muestra esta ayuda\n"
+"\t-c        --color         habilita el color\n"
+"\t-u        --unpark        el cursor se mueve a la selección actual\n"
+"\t-q        --quit          la tecla 'q' no hace salir del programa\n"
+"\t-mmenuid  --menu=menuid   muestra el menú con este menuid en el arranque\n"
+"\t-v        --version       muestra información sobre la versión\n"
+"\t-r        --retro         dibuja los menús utilizando un estilo antiguo\n"
+"\t-l        --lowbit        no usa los caracteres semigráficos\n"
+"\t-n        --numeric       no usa el 8 ni el 2 para moverse arriba y abajo\n"
+
+#: src/pdmenu.c:44
+msgid "(Long options are disabled.)"
+msgstr "(Las opciones largas están deshabilitadas)"
+
+#: src/pdmenu.c:51
+#, c-format
+msgid "Pdmenu %s GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>\n"
+msgstr "Pdmenu %s GPL Copyright (C) 1995-2002 por Joey Hess <joey@kitenet.net>\n"
+
+#: src/pdmenu.c:159
+msgid "Unable to find any pdmenurc files, or all pdmenurc files are empty."
+msgstr "No se encuentra ningún fichero pdmenurc o todos están vacios"
+
+#: src/pdmenu.c:170
+#, c-format
+msgid "Menu \"%s\" is not defined."
+msgstr "El menú \"%s\" no está definido"
+
+#: src/pdmenu.c:197
+msgid "Pdmenu"
+msgstr "Pdmenu"
+
+#: src/rc.c:186
+#, c-format
+msgid "%s:%i Invalid screen part name, \"%s\"."
+msgstr "%s:%i Nombre de parte de pantalla incorrecto, \"%s\"."
+
+#: src/rc.c:197
+#, c-format
+msgid "%s:%i \"endgroup\" found outside of group block."
+msgstr "%s:%i  encontrado \"endgroup\" fuera de un bloque de grupo."
+
+#: src/rc.c:201
+#, c-format
+msgid "%s:%i Invalid or misplaced keyword, \"%s\"."
+msgstr "%s:%i Clave incorrecta o fuera de lugar, \"%s\"."
+
+#: src/rc.c:241
+#, c-format
+msgid "%s:%i Nested \"group\" commands."
+msgstr "%s:%i Comandos \"group\" anidados."
+
+#: src/rc.c:333
+#, c-format
+msgid "%s: \"group\" command used without \"endgroup\"."
+msgstr "%s: Comando \"group\" utilizado sin \"endgroup\"."
+
+#: src/screen.c:138
+msgid "Unable to initialize key mappings."
+msgstr "Imposible inicializar el mapa de teclas."
+
+#: src/screen.c:184
+msgid "Error: The screen is too small."
+msgstr "Error: La pantalla es demasiado pequeña."
+
+#: src/window.c:37
+#, c-format
+msgid "Welcome to Pdmenu %s by Joey Hess <joey@kitenet.net>"
+msgstr "Bienvenido a Pdmenu %s por Joey Hess <joey@kitenet.net>"

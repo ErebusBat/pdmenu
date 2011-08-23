@@ -1,0 +1,143 @@
+# translation of ru.po to Russian
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Yuri Kozlov <kozlov.y@gmail.com>, 2008.
+msgid ""
+msgstr ""
+"Project-Id-Version: pdmenu 1.2.93\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-07-23 09:12-0400\n"
+"PO-Revision-Date: 2008-05-11 14:49+0400\n"
+"Last-Translator: Yuri Kozlov <kozlov.y@gmail.com>\n"
+"Language-Team: Russian <debian-l10n-russian@lists.debian.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: src/actions.c:95
+msgid "Please wait..."
+msgstr "Подождите..."
+
+#: src/actions.c:108
+msgid "Press Esc to close window."
+msgstr "Чтобы закрыть окно, нажмите Esc."
+
+#: src/actions.c:200
+msgid "Command returned no output"
+msgstr "Команда ничего не вернула"
+
+#: src/actions.c:316
+msgid "Press Enter to return to Pdmenu."
+msgstr "Чтобы вернуться в Pdmenu, нажмите Enter."
+
+#: src/error.c:31
+#, c-format
+msgid "pdmenu error: "
+msgstr "ошибка pdmenu: "
+
+#: src/inputbox.c:53 src/inputbox.c:77
+msgid "Press Enter when done, or Esc to cancel"
+msgstr "Для завершения нажмите Enter, а для отмены Esc"
+
+#: src/menu.c:427
+msgid "Arrow keys move, Esc exits current menu, Enter runs program"
+msgstr "Клавиши стрелок для перемещения, Esc для выхода из текущего меню, Enter для запуска программы"
+
+#: src/menu.c:458
+#, c-format
+msgid "Attempt to remove menu \"%s\" failed: menu is on screen."
+msgstr "Не удалось удалить меню \"%s\": меню на экране."
+
+#: src/pdmenu.c:29
+#, c-format
+msgid ""
+"Usage: pdmenu [options] [menufiles ..]\n"
+"\tmenufiles                 the rc files to read instead of\n"
+"\t                          ~/.pdmenurc or %spdmenurc\n"
+"\t-h        --help          display this help\n"
+"\t-c        --color         enable color\n"
+"\t-u        --unpark        cursor moves to current selection\n"
+"\t-q        --quit          'q' key does not exit program\n"
+"\t-mmenuid  --menu=menuid   display menu with this menuid on startup\n"
+"\t-v        --version       show version information\n"
+"\t-r        --retro         draw menus using old style\n"
+"\t-l        --lowbit        do not use high bit line drawing characters\n"
+"\t-n        --numeric       do not use 8 and 2 for moving up and down\n"
+msgstr ""
+"Использование: pdmenu [параметры] [файлы_меню ..]\n"
+"\tфайлы_меню                файлы rc, которые нужно использовать\n"
+"\t                          вместо ~/.pdmenurc или %spdmenurc\n"
+"\t-h        --help          показать эту справку\n"
+"\t-c        --color         включить цвета\n"
+"\t-u        --unpark        курсор перемещается в текущий выбранный пункт\n"
+"\t-q        --quit          по клавише 'q' программа не завершается\n"
+"\t-mmenuid  --menu=menuid   показать меню с menuid при запуске\n"
+"\t-v        --version       показать информацию о версии\n"
+"\t-r        --retro         рисовать меню в старом стиле\n"
+"\t-l        --lowbit        не использовать символы рамок для рисования\n"
+"\t-n        --numeric       не использовать клавиши 8 и 2\n"
+"                            для перемещения вверх и вниз\n"
+
+#: src/pdmenu.c:44
+msgid "(Long options are disabled.)"
+msgstr "(длинные названия параметров выключены.)"
+
+#: src/pdmenu.c:51
+#, c-format
+msgid "Pdmenu %s GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>\n"
+msgstr "Pdmenu %s GPL Copyright (C) 1995-2002 by Joey Hess <joey@kitenet.net>\n"
+
+#: src/pdmenu.c:159
+msgid "Unable to find any pdmenurc files, or all pdmenurc files are empty."
+msgstr "Не удалось найти ни одного файла pdmenurc, или все файлы pdmenurc пусты."
+
+#: src/pdmenu.c:170
+#, c-format
+msgid "Menu \"%s\" is not defined."
+msgstr "Меню \"%s\" не определено."
+
+#: src/pdmenu.c:197
+msgid "Pdmenu"
+msgstr "Pdmenu"
+
+#: src/rc.c:186
+#, c-format
+msgid "%s:%i Invalid screen part name, \"%s\"."
+msgstr "%s:%i неверная экранная часть в имени, \"%s\"."
+
+#: src/rc.c:197
+#, c-format
+msgid "%s:%i \"endgroup\" found outside of group block."
+msgstr "%s:%i найдена \"endgroup\" вне группового блока."
+
+#: src/rc.c:201
+#, c-format
+msgid "%s:%i Invalid or misplaced keyword, \"%s\"."
+msgstr "%s:%i неверное или не там указанное ключевое слово, \"%s\"."
+
+#: src/rc.c:241
+#, c-format
+msgid "%s:%i Nested \"group\" commands."
+msgstr "%s:%i вложенные команды \"group\"."
+
+#: src/rc.c:333
+#, c-format
+msgid "%s: \"group\" command used without \"endgroup\"."
+msgstr "%s: команда \"group\" используется без \"endgroup\"."
+
+#: src/screen.c:138
+msgid "Unable to initialize key mappings."
+msgstr "Не удалось выполнить инициализацию привязки клавиш."
+
+#: src/screen.c:184
+msgid "Error: The screen is too small."
+msgstr "Ошибка: экран слишком мал."
+
+#: src/window.c:37
+#, c-format
+msgid "Welcome to Pdmenu %s by Joey Hess <joey@kitenet.net>"
+msgstr "Приветствуем в Pdmenu %s, Joey Hess <joey@kitenet.net>"
+

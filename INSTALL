@@ -1,0 +1,64 @@
+                        Compilation and Installation
+
+Quick Start:
+	If you're in a hurry to see Pdmenu, just run "make test" now --
+	pdmenu will be compiled, and will run on a sample pdmenurc file.
+	Then, read the rest of this file. :-)
+
+Libraries:
+	To compile Pdmenu, you need the S-Lang library. This can be
+	found at ftp://space.mit.edu/pub/davis/slang/
+
+	Optionally, if you wish to compile pdmenu with mouse support, you
+	need to install the GPM library. Find it on a linux ftp site near 
+	you.
+
+Configuration:
+	Pdmenu uses an autoconf configure script. Typically, if you want
+	the pdmenu binary installed in /usr/bin, and the pdmenurc file
+	installed in /etc, you should type:
+
+		./configure --prefix=/usr --sysconfdir=/etc
+
+	To get a list of all the possible arguments the configure script can
+	use, type:
+
+		./configure --help
+
+	Note that if you have slang installed in a nonstandard location, you 
+	might need to set two variables before you are run ./configure in 
+	the next step:
+
+		SLANG_LIB_LOC	Set this to the directory where the slang
+				libraries are located.
+		SLANG_H_LOC	Set this to the filename where slang.h is
+				located.
+
+	After running configure, you might want to take a look at
+	makeinfo, which is part of Pdmenu's makefile - there are a few
+	options you can turn on there. You can also look at
+	src/config.h and modify some things there. This is optional.
+
+Compilation:
+	Pdmenu has been compiled on many flavors of Unix. You shouldn't 
+	have any problems with those OS's, but for others, you're on your 
+	own. If you get it to work on something else, please let me know.
+
+	To build Pdmenu, type:
+
+		make
+
+Testing:
+	To try out the program before installing it, type:
+	
+		make test
+
+Installation:
+	To install Pdmenu, become root and type:
+
+		make install
+
+
+Report any problems to me, <joey@kitenet.net>.
+
+Please see the README and man pages for more information about Pdmenu.
